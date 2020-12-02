@@ -1,4 +1,4 @@
-defmodule ChargebeeElixirElixir.AddonTest do
+defmodule ChargebeeElixir.AddonTest do
   use ExUnit.Case
   import Mox
 

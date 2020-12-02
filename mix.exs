@@ -6,11 +6,15 @@ defmodule ChargebeeElixir.MixProject do
       app: :chargebee_elixir,
       name: "chargebee-elixir",
       description: "Elixir implementation of Chargebee API (WIP)",
-      licenses: "MIT",
-      links: "https://github.com/NicolasMarlier/chargebee-elixir",
+      package: %{
+        licenses: ["MIT"],
+        links: %{
+          github: "https://github.com/NicolasMarlier/chargebee-elixir"
+        }
+      },
       source_url: "https://github.com/NicolasMarlier/chargebee-elixir",
       homepage_url: "https://github.com/NicolasMarlier/chargebee-elixir",
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()

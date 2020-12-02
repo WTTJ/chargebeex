@@ -18,6 +18,7 @@ defmodule ChargebeeElixir.Interface do
 
   def post(path, data) do
     body = data
+      |> transform_arrays_for_chargebee
       |> Plug.Conn.Query.encode()
     http_client().post!(
       fullpath(path),
@@ -65,5 +66,40 @@ defmodule ChargebeeElixir.Interface do
     [
       {"Authorization", "Basic #{"#{api_key}:" |> Base.encode64}"}
     ]
+  end
+
+  def transform_arrays_for_chargebee(data) do
+    case data do
+      map_data when is_map(map_data) ->
+        map_data
+          |> Enum.map(fn {k, v} ->
+              {k, transform_arrays_for_chargebee(v)}
+            end)
+          |> Enum.into(%{})
+      list_data when is_list(list_data) ->
+        transformed_list_data = list_data
+          |> Enum.map(fn item -> transform_arrays_for_chargebee(item) end)
+        transformed_list_data
+          |> Enum.map(fn (item) -> case item do
+                map_item when is_map(map_item) -> Map.keys(map_item)
+                _ -> raise ChargebeeElixir.IncorrectDataFormatError,
+                  message: "Unsupported data: lists should contains objects only"
+              end
+            end)
+          |> List.flatten
+          |> Enum.uniq
+          |> Enum.map(fn (key) ->
+            {
+              key,
+              transformed_list_data
+                |> Enum.with_index
+                |> Enum.map(fn {item, index} -> {index, item[key]} end)
+                |> Enum.filter(fn {_index, item} -> !is_nil(item) end)
+                |> Enum.into(%{})
+            }
+          end)
+          |> Enum.into(%{})
+      other_data -> other_data
+    end
   end
 end

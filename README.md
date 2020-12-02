@@ -3,7 +3,7 @@
 
 Elixir implementation of [Chargebee API](https://apidocs.chargebee.com/docs/api).
 
-## v0.1.0
+## v0.1.1
 This is a work in progress: right now, we only implement those methods:
 - list
 - retrieve
@@ -43,4 +43,9 @@ config :chargebee_elixir,
 ```elixir
 # e.g.
 ChargebeeElixir.Plan.list()
+```
+
+## Run tests
+```sh
+mix test
 ```

@@ -1,4 +1,4 @@
-defmodule ChargebeeElixirElixir.PortalSessionTest do
+defmodule ChargebeeElixir.PortalSessionTest do
   use ExUnit.Case
   import Mox
 

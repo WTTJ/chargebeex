@@ -13,3 +13,7 @@ end
 defmodule ChargebeeElixir.UnknownError do
   defexception message: "Unknown"
 end
+
+defmodule ChargebeeElixir.IncorrectDataFormatError do
+  defexception message: "Unknown"
+end
