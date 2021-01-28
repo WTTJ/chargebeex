@@ -16,6 +16,7 @@ on those resources:
   - also checkout_new
   - also checkout_existing
 - subscription
+  - also create_for_customer
 - plan
 - portal_session
 - subscription
@@ -48,4 +49,9 @@ ChargebeeElixir.Plan.list()
 ## Run tests
 ```sh
 mix test
+```
+
+## Generate doc tests
+```sh
+sh generate_doc.sh
 ```

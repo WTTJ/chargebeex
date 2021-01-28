@@ -6,7 +6,7 @@ defmodule ChargebeeElixir.Resource do
       @resource unquote(resource)
 
       def retrieve(id) do
-        Interface.get("#{resource_base_path()}/#{id}")[@resource]
+        Interface.get(resource_path(id))[@resource]
       rescue
         e in ChargebeeElixir.NotFoundError -> nil
       end
@@ -28,8 +28,19 @@ defmodule ChargebeeElixir.Resource do
         Interface.post("#{resource_base_path()}#{path}", params)[@resource]
       end
 
+      def create_for_parent(parent_path, params, path \\ "") do
+        Interface.post(
+          "#{parent_path}#{resource_base_path()}#{path}",
+          params
+        )[@resource]
+      end
+
       def resource_base_path() do
         "/#{@resource}s"
+      end
+
+      def resource_path(id) do
+        "#{resource_base_path()}/#{id}"
       end
     end
   end
