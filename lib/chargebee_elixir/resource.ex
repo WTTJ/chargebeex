@@ -28,6 +28,10 @@ defmodule ChargebeeElixir.Resource do
         Interface.post("#{resource_base_path()}#{path}", params)[@resource]
       end
 
+      def post_endpoint(id, endpoint, params) do
+        Interface.post("#{resource_path(id)}#{endpoint}", params)[@resource]
+      end
+
       def create_for_parent(parent_path, params, path \\ "") do
         Interface.post(
           "#{parent_path}#{resource_base_path()}#{path}",

@@ -14,7 +14,7 @@ defmodule ChargebeeElixir.MixProject do
       },
       source_url: "https://github.com/NicolasMarlier/chargebee-elixir",
       homepage_url: "https://github.com/NicolasMarlier/chargebee-elixir",
-      version: "0.1.2",
+      version: "0.1.3",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps()

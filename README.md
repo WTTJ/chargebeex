@@ -20,6 +20,8 @@ on those resources:
 - plan
 - portal_session
 - subscription
+- invoice
+  - also close
 
 ## Installation
 The package can be installed by adding `chargebee_elixir` to your list of dependencies in `mix.exs`:
@@ -27,7 +29,7 @@ The package can be installed by adding `chargebee_elixir` to your list of depend
 ```elixir
 def deps do
   [
-    {:chargebee_elixir, "~> 0.1.0"}
+    {:chargebee_elixir, "~> 0.1.3"}
   ]
 end
 ```
