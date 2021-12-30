@@ -11,7 +11,7 @@ defmodule ChargebeeElixir.SubscriptionTest do
         plan_id: "plan-a",
         addons: [
           %{id: "addon-a"},
-          %{id: "addon-b"},
+          %{id: "addon-b"}
         ]
       }
     )
@@ -22,13 +22,17 @@ defmodule ChargebeeElixir.SubscriptionTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+        fn url, data, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+
           assert data == "addons[id][0]=addon-a&addons[id][1]=addon-b&plan_id=plan-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 401
           }
@@ -44,13 +48,17 @@ defmodule ChargebeeElixir.SubscriptionTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+        fn url, data, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+
           assert data == "addons[id][0]=addon-a&addons[id][1]=addon-b&plan_id=plan-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 404
           }
@@ -66,13 +74,17 @@ defmodule ChargebeeElixir.SubscriptionTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+        fn url, data, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+
           assert data == "addons[id][0]=addon-a&addons[id][1]=addon-b&plan_id=plan-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 400,
             body: '{"message": "Unknown"}'
@@ -89,13 +101,17 @@ defmodule ChargebeeElixir.SubscriptionTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+        fn url, data, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/customers/cus_1/subscriptions"
+
           assert data == "addons[id][0]=addon-a&addons[id][1]=addon-b&plan_id=plan-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 200,
             body: '{"subscription": {"id": "sub-a"}}'

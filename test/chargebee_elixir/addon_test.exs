@@ -9,9 +9,10 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
+        fn url, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons/1234"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 401
           }
@@ -27,9 +28,10 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
+        fn url, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons/1234"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 404
           }
@@ -43,9 +45,10 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
+        fn url, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons/1234"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 200,
             body: '{"addon": {"id": 1234}}'
@@ -62,9 +65,10 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
+        fn url, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 401
           }
@@ -80,9 +84,10 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
+        fn url, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 200,
             body: '{"list": [{"addon": {"id": 1234}}]}'
@@ -97,9 +102,12 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/addons?id%5Bin%5D=%5B1234%2C1235%5D"
+        fn url, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/addons?id%5Bin%5D=%5B1234%2C1235%5D"
+
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 200,
             body: '{
@@ -113,9 +121,12 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :get!,
-        fn (url, headers) ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/addons?id%5Bin%5D=%5B1234%2C1235%5D&offset=1235"
+        fn url, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/addons?id%5Bin%5D=%5B1234%2C1235%5D&offset=1235"
+
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+
           %{
             status_code: 200,
             body: '{
@@ -125,7 +136,10 @@ defmodule ChargebeeElixir.AddonTest do
         end
       )
 
-      assert ChargebeeElixir.Addon.list(%{"id[in]": "[1234,1235]"}) == [%{"id" => 1234}, %{"id" => 1235}]
+      assert ChargebeeElixir.Addon.list(%{"id[in]": "[1234,1235]"}) == [
+               %{"id" => 1234},
+               %{"id" => 1235}
+             ]
     end
   end
 
@@ -134,13 +148,15 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
+        fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons"
           assert data == "id=addon-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 401
           }
@@ -156,13 +172,15 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
+        fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons"
           assert data == "id=addon-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 400,
             body: '{"message": "Unknown"}'
@@ -179,13 +197,15 @@ defmodule ChargebeeElixir.AddonTest do
       expect(
         ChargebeeElixir.HTTPoisonMock,
         :post!,
-        fn (url, data, headers) ->
+        fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/addons"
           assert data == "id=addon-a"
+
           assert headers == [
-            {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
-            {"Content-Type", "application/x-www-form-urlencoded"}
-          ]
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
           %{
             status_code: 200,
             body: '{"addon": {"id": "addon-a"}}'

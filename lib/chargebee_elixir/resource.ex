@@ -18,9 +18,11 @@ defmodule ChargebeeElixir.Resource do
       def list(params) do
         case Interface.get(resource_base_path(), params) do
           %{"list" => current_list, "next_offset" => next_offset} ->
-            Enum.map(current_list, fn(hash) -> hash[@resource] end) ++ __MODULE__.list(Map.merge(params, %{"offset" => next_offset}))
+            Enum.map(current_list, fn hash -> hash[@resource] end) ++
+              __MODULE__.list(Map.merge(params, %{"offset" => next_offset}))
+
           %{"list" => current_list} ->
-            Enum.map(current_list, fn(hash) -> hash[@resource] end)
+            Enum.map(current_list, fn hash -> hash[@resource] end)
         end
       end
 

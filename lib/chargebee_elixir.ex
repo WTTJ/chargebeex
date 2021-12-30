@@ -1,3 +1,2 @@
 defmodule ChargebeeElixir do
-
 end
