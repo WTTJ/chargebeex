@@ -1,2 +1,2 @@
-defmodule ChargebeeElixir do
+defmodule Chargebeex do
 end

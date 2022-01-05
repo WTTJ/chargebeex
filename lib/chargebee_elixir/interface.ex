@@ -1,20 +1,35 @@
-defmodule ChargebeeElixir.Interface do
-  def get(path) do
-    get(path, %{})
+defmodule Chargebeex.Interface do
+  def endpoint(path, params \\ %{}) do
+    namespace = Application.get_env(:chargebeex, :namespace)
+    host = Application.get_env(:chargebeex, :host)
+    base_path = Application.get_env(:chargebeex, :path)
+
+    uri = %URI{
+      host: "#{namespace}.#{host}",
+      path: "#{base_path}#{path}",
+      scheme: "https"
+    }
+
+    case params do
+      params when params == %{} ->
+        uri
+
+      params ->
+        %{uri | query: URI.encode_query(params)}
+    end
+    |> URI.to_string()
   end
 
-  def get(path, params) do
-    params_string =
-      params
-      |> URI.encode_query()
+  def get(path, params \\ %{}) do
+    url = endpoint(path, params)
 
-    url =
-      [fullpath(path), params_string]
-      |> Enum.filter(fn s -> String.length(s) > 0 end)
-      |> Enum.join("?")
+    case apply(http_client(), :get, [url, "", default_headers()]) do
+      {:ok, status_code, headers, body} when status_code in 200..299 ->
+        {:ok, status_code, headers, Jason.decode!(body)}
 
-    http_client().get!(url, headers())
-    |> handle_response()
+      {:ok, status_code, headers, body} ->
+        {:error, status_code, headers, Jason.decode!(body)}
+    end
   end
 
   def post(path, data) do
@@ -23,98 +38,75 @@ defmodule ChargebeeElixir.Interface do
       |> transform_arrays_for_chargebee
       |> Plug.Conn.Query.encode()
 
-    http_client().post!(
-      fullpath(path),
-      body,
-      headers() ++ [{"Content-Type", "application/x-www-form-urlencoded"}]
-    )
-    |> handle_response()
-  end
+    url = endpoint(path)
 
-  defp handle_response(%{body: body, status_code: 200}) do
-    body
-    |> Jason.decode!()
-  end
+    case apply(http_client(), :post, [url, body, default_headers(:post)]) do
+      {:ok, status_code, headers, body} when status_code in 200..299 ->
+        {:ok, status_code, headers, Jason.decode!(body)}
 
-  defp handle_response(%{body: body, status_code: 400}) do
-    message =
-      body
-      |> Jason.decode!()
-      |> Map.get("message")
-
-    raise ChargebeeElixir.InvalidRequestError, message: message
-  end
-
-  defp handle_response(%{status_code: 401}) do
-    raise ChargebeeElixir.UnauthorizedError
-  end
-
-  defp handle_response(%{status_code: 404}) do
-    raise ChargebeeElixir.NotFoundError
-  end
-
-  defp handle_response(%{}) do
-    raise ChargebeeElixir.UnknownError
+      {:ok, status_code, headers, body} ->
+        {:error, status_code, headers, Jason.decode!(body)}
+    end
   end
 
   defp http_client() do
-    Application.get_env(:chargebee_elixir, :http_client, HTTPoison)
+    Application.get_env(:chargebeex, :http_client, Chargebeex.Client.Hackney)
   end
 
-  defp fullpath(path) do
-    namespace = Application.get_env(:chargebee_elixir, :namespace)
-    "https://#{namespace}.chargebee.com/api/v2#{path}"
+  defp default_headers(verb \\ :get) do
+    []
+    |> add_basic_auth(verb)
+    |> add_content_type(verb)
   end
 
-  defp headers() do
-    api_key = Application.get_env(:chargebee_elixir, :api_key)
-
-    [
-      {"Authorization", "Basic #{"#{api_key}:" |> Base.encode64()}"}
-    ]
+  defp add_basic_auth(headers, _verb) do
+    api_key = Application.get_env(:chargebeex, :api_key)
+    headers ++ [{"Authorization", "Basic #{"#{api_key}:" |> Base.encode64()}"}]
   end
 
-  def transform_arrays_for_chargebee(data) do
-    case data do
-      map_data when is_map(map_data) ->
-        map_data
-        |> Enum.map(fn {k, v} ->
-          {k, transform_arrays_for_chargebee(v)}
-        end)
-        |> Enum.into(%{})
+  defp add_content_type(headers, :post) do
+    headers ++ [{"Content-Type", "application/x-www-form-urlencoded"}]
+  end
 
-      list_data when is_list(list_data) ->
-        transformed_list_data =
-          list_data
-          |> Enum.map(fn item -> transform_arrays_for_chargebee(item) end)
+  defp add_content_type(headers, _verb), do: headers
 
+  def transform_arrays_for_chargebee(data) when is_map(data) do
+    data
+    |> Enum.map(fn {k, v} ->
+      {k, transform_arrays_for_chargebee(v)}
+    end)
+    |> Enum.into(%{})
+  end
+
+  def transform_arrays_for_chargebee(data) when is_list(data) do
+    transformed_list_data =
+      data
+      |> Enum.map(&transform_arrays_for_chargebee/1)
+
+    transformed_list_data
+    |> Enum.map(fn item ->
+      case item do
+        map_item when is_map(map_item) ->
+          Map.keys(map_item)
+
+        _ ->
+          raise "Unsupported data: lists should contains objects only"
+      end
+    end)
+    |> List.flatten()
+    |> Enum.uniq()
+    |> Enum.map(fn key ->
+      {
+        key,
         transformed_list_data
-        |> Enum.map(fn item ->
-          case item do
-            map_item when is_map(map_item) ->
-              Map.keys(map_item)
-
-            _ ->
-              raise ChargebeeElixir.IncorrectDataFormatError,
-                message: "Unsupported data: lists should contains objects only"
-          end
-        end)
-        |> List.flatten()
-        |> Enum.uniq()
-        |> Enum.map(fn key ->
-          {
-            key,
-            transformed_list_data
-            |> Enum.with_index()
-            |> Enum.map(fn {item, index} -> {index, item[key]} end)
-            |> Enum.filter(fn {_index, item} -> !is_nil(item) end)
-            |> Enum.into(%{})
-          }
-        end)
+        |> Enum.with_index()
+        |> Enum.map(fn {item, index} -> {index, item[key]} end)
+        |> Enum.filter(fn {_index, item} -> !is_nil(item) end)
         |> Enum.into(%{})
-
-      other_data ->
-        other_data
-    end
+      }
+    end)
+    |> Enum.into(%{})
   end
+
+  def transform_arrays_for_chargebee(data), do: data
 end
