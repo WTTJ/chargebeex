@@ -11,7 +11,7 @@ defmodule ChargebeeElixir.Interface do
     }
 
     case params do
-      %{} ->
+      params when params == %{} ->
         uri
 
       params ->

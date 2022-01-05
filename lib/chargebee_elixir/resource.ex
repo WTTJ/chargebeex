@@ -39,9 +39,14 @@ defmodule ChargebeeElixir.Resource do
         end
       end
 
-      # def update(id, endpoint, params) do
-      #   Interface.post("#{resource_path(id)}#{endpoint}", params)[@resource]
-      # end
+      def update(id, params) do
+        with path <- resource_path(id),
+             {:ok, status_code, _headers, %{@resource => content}} <-
+               Interface.post(path, params),
+             parsed <- apply(__MODULE__, :build, [content]) do
+          {:ok, parsed}
+        end
+      end
 
       # def create_for_parent(parent_path, params, path \\ "") do
       #   Interface.post(
