@@ -79,7 +79,6 @@ defmodule ChargebeeElixir.CustomerTest do
                Customer.list()
     end
 
-    @tag :debug
     test "with limit & offset params should succeed" do
       expect(
         ChargebeeElixir.HTTPClientMock,

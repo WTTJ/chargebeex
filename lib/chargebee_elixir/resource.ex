@@ -9,7 +9,7 @@ defmodule ChargebeeElixir.Resource do
 
       def retrieve(id) do
         with path <- resource_path(id),
-             {:ok, status_code, _headers, %{@resource => content}} <- Interface.get(path),
+             {:ok, _status_code, _headers, %{@resource => content}} <- Interface.get(path),
              parsed <- apply(__MODULE__, :build, [content]) do
           {:ok, parsed}
         end
@@ -17,7 +17,7 @@ defmodule ChargebeeElixir.Resource do
 
       def list(params \\ %{}) do
         with path <- resource_base_path(),
-             {:ok, status_code, _headers, result} <- Interface.get(path, params) do
+             {:ok, _status_code, _headers, result} <- Interface.get(path, params) do
           case result do
             %{"list" => resources, "next_offset" => next_offset} ->
               {:ok, Enum.map(resources, &apply(__MODULE__, :build, [&1])),
@@ -32,7 +32,7 @@ defmodule ChargebeeElixir.Resource do
 
       def create(params) do
         with path <- resource_base_path(),
-             {:ok, status_code, _headers, %{@resource => content}} <-
+             {:ok, _status_code, _headers, %{@resource => content}} <-
                Interface.post(path, params),
              parsed <- apply(__MODULE__, :build, [content]) do
           {:ok, parsed}
@@ -41,7 +41,7 @@ defmodule ChargebeeElixir.Resource do
 
       def update(id, params) do
         with path <- resource_path(id),
-             {:ok, status_code, _headers, %{@resource => content}} <-
+             {:ok, _status_code, _headers, %{@resource => content}} <-
                Interface.post(path, params),
              parsed <- apply(__MODULE__, :build, [content]) do
           {:ok, parsed}
@@ -64,6 +64,11 @@ defmodule ChargebeeElixir.Resource do
       def resource_path(id) do
         "#{resource_base_path()}/#{id}"
       end
+
+      defoverridable retrieve: 1
+      defoverridable list: 1
+      defoverridable create: 1
+      defoverridable update: 2
     end
   end
 end
