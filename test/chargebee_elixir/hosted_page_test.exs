@@ -7,8 +7,8 @@ defmodule ChargebeeElixir.HostedPageTest do
   describe "checkout_new" do
     test "correct data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/hosted_pages/checkout_new"
 
@@ -42,8 +42,8 @@ defmodule ChargebeeElixir.HostedPageTest do
   describe "checkout_existing" do
     test "correct data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url ==
                    "https://test-namespace.chargebee.com/api/v2/hosted_pages/checkout_existing"

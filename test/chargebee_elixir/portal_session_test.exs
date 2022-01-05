@@ -7,8 +7,8 @@ defmodule ChargebeeElixir.PortalSessionTest do
   describe "create" do
     test "incorrect auth" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/portal_sessions"
           assert data == ""
@@ -31,8 +31,8 @@ defmodule ChargebeeElixir.PortalSessionTest do
 
     test "incorrect data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/portal_sessions"
           assert data == ""
@@ -56,8 +56,8 @@ defmodule ChargebeeElixir.PortalSessionTest do
 
     test "correct data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/portal_sessions"
           assert data == "customer[id]=cus_1234&redirect_url=https%3A%2F%2Fredirect.com"

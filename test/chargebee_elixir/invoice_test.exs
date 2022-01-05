@@ -16,8 +16,8 @@ defmodule ChargebeeElixir.InvoiceTest do
   describe "close" do
     test "incorrect auth" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url ==
                    "https://test-namespace.chargebee.com/api/v2/invoices/draft_inv_abcde/close"
@@ -42,8 +42,8 @@ defmodule ChargebeeElixir.InvoiceTest do
 
     test "not found" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url ==
                    "https://test-namespace.chargebee.com/api/v2/invoices/draft_inv_abcde/close"
@@ -68,8 +68,8 @@ defmodule ChargebeeElixir.InvoiceTest do
 
     test "incorrect data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url ==
                    "https://test-namespace.chargebee.com/api/v2/invoices/draft_inv_abcde/close"
@@ -95,8 +95,8 @@ defmodule ChargebeeElixir.InvoiceTest do
 
     test "correct data" do
       expect(
-        ChargebeeElixir.HTTPoisonMock,
-        :post!,
+        ChargebeeElixir.HTTPClientMock,
+        :post,
         fn url, data, headers ->
           assert url ==
                    "https://test-namespace.chargebee.com/api/v2/invoices/draft_inv_abcde/close"

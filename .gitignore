@@ -27,3 +27,4 @@ chargebee_elixir-*.tar
 /tmp
 .elixir_ls
 generate_doc.sh
+.env
