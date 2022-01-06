@@ -1,21 +1,25 @@
 defmodule ChargebeeElixir.CustomerTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   import Mox
 
-  alias ChargebeeElixir.Fixtures.APIReturns
+  alias ChargebeeElixir.Fixtures.Common
   alias ChargebeeElixir.Customer
 
   setup :verify_on_exit!
 
   describe "retrieve" do
     test "with bad authentication should fail" do
-      unauthorized = APIReturns.unauthorized()
+      unauthorized = Common.unauthorized()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -24,12 +28,16 @@ defmodule ChargebeeElixir.CustomerTest do
     end
 
     test "with resource not found should fail" do
-      not_found = APIReturns.not_found()
+      not_found = Common.not_found()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 404, [], Jason.encode!(not_found)}
         end
       )
@@ -41,7 +49,11 @@ defmodule ChargebeeElixir.CustomerTest do
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 200, [], Jason.encode!(%{customer: %{id: 1234}})}
         end
       )
@@ -52,12 +64,16 @@ defmodule ChargebeeElixir.CustomerTest do
 
   describe "list" do
     test "with bad authentication should fail" do
-      unauthorized = APIReturns.unauthorized()
+      unauthorized = Common.unauthorized()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -69,7 +85,11 @@ defmodule ChargebeeElixir.CustomerTest do
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 200, [],
            Jason.encode!(%{list: [%{customer: %{id: 0000}}, %{customer: %{id: 9999}}]})}
         end
@@ -83,7 +103,11 @@ defmodule ChargebeeElixir.CustomerTest do
       expect(
         ChargebeeElixir.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers?limit=1"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           result = %{
             list: [%{customer: %{id: 0000}}],
             next_offset: "foobar"
@@ -100,12 +124,21 @@ defmodule ChargebeeElixir.CustomerTest do
 
   describe "create" do
     test "with bad authentication should fail" do
-      unauthorized = APIReturns.unauthorized()
+      unauthorized = Common.unauthorized()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -114,40 +147,68 @@ defmodule ChargebeeElixir.CustomerTest do
     end
 
     test "with invalid data should fail" do
-      bad_request = APIReturns.bad_request()
+      bad_request = Common.bad_request()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == "foobar=foo"
+
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
       )
 
-      assert {:error, 400, [], ^bad_request} = Customer.create(%{})
+      assert {:error, 400, [], ^bad_request} = Customer.create(%{foobar: "foo"})
     end
 
     test "with valid data should succeed" do
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
-          {:ok, 200, [], Jason.encode!(%{customer: %{id: "foobar"}})}
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == "email=foobar%40company.com"
+
+          {:ok, 200, [], Jason.encode!(%{customer: %{id: "foobar", email: "foobar@company.com"}})}
         end
       )
 
-      assert {:ok, %Customer{id: "foobar"}} = ChargebeeElixir.Customer.create(%{})
+      assert {:ok, %Customer{id: "foobar"}} =
+               ChargebeeElixir.Customer.create(%{email: "foobar@company.com"})
     end
   end
 
   describe "update" do
     test "with bad authentication should fail" do
-      unauthorized = APIReturns.unauthorized()
+      unauthorized = Common.unauthorized()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -156,30 +217,49 @@ defmodule ChargebeeElixir.CustomerTest do
     end
 
     test "with invalid data should fail" do
-      bad_request = APIReturns.bad_request()
+      bad_request = Common.bad_request()
 
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == "email=foobar%40company.com"
+
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
       )
 
-      assert {:error, 400, [], ^bad_request} = Customer.update("foobar", %{})
+      assert {:error, 400, [], ^bad_request} =
+               Customer.update("foobar", %{email: "foobar@company.com"})
     end
 
     test "with valid data should succeed" do
       expect(
         ChargebeeElixir.HTTPClientMock,
         :post,
-        fn _url, _data, _headers ->
+        fn url, data, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert data == "email=foobar%40company.com"
+
           {:ok, 200, [], Jason.encode!(%{customer: %{id: "foobar"}})}
         end
       )
 
       assert {:ok, %Customer{id: "foobar"}} =
-               ChargebeeElixir.Customer.update("foobar", %{email: "foobar@comany.com"})
+               ChargebeeElixir.Customer.update("foobar", %{email: "foobar@company.com"})
     end
   end
 end
