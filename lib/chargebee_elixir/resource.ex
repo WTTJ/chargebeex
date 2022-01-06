@@ -48,13 +48,6 @@ defmodule ChargebeeElixir.Resource do
         end
       end
 
-      # def create_for_parent(parent_path, params, path \\ "") do
-      #   Interface.post(
-      #     "#{parent_path}#{resource_base_path()}#{path}",
-      #     params
-      #   )[@resource]
-      # end
-
       def build(%{@resource => raw_data}), do: apply(__MODULE__, :build, [raw_data])
 
       def resource_base_path() do

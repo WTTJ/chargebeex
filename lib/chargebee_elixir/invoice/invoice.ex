@@ -91,8 +91,4 @@ defmodule ChargebeeElixir.Invoice do
 
     struct(__MODULE__, attrs)
   end
-
-  # def close(id, params \\ %{}) do
-  #   post_endpoint(id, "/close", params)
-  # end
 end

@@ -1,5 +1,5 @@
 defmodule ChargebeeElixir.EventTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   import Mox
 

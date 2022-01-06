@@ -90,8 +90,7 @@ defmodule ChargebeeElixir.Interface do
           Map.keys(map_item)
 
         _ ->
-          raise ChargebeeElixir.IncorrectDataFormatError,
-            message: "Unsupported data: lists should contains objects only"
+          raise "Unsupported data: lists should contains objects only"
       end
     end)
     |> List.flatten()
