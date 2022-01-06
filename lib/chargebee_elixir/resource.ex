@@ -1,9 +1,9 @@
-defmodule ChargebeeElixir.Resource do
+defmodule Chargebeex.Resource do
   @callback build(raw_data: Map.t()) :: {:ok, struct()}
 
   defmacro __using__(resource) do
     quote bind_quoted: [resource: resource] do
-      alias ChargebeeElixir.Interface
+      alias Chargebeex.Interface
 
       @resource resource
 

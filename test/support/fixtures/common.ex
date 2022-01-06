@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Fixtures.Common do
+defmodule Chargebeex.Fixtures.Common do
   def not_found(params \\ %{}) do
     %{
       "message" => "Plan is not present",

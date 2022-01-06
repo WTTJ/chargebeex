@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Event do
+defmodule Chargebeex.Event do
   defstruct [
     :api_version,
     :content,
@@ -13,7 +13,7 @@ defmodule ChargebeeElixir.Event do
 
   @resource "event"
 
-  use ChargebeeElixir.Resource, @resource
+  use Chargebeex.Resource, @resource
 
   def build(raw_data) do
     attrs = %{
@@ -45,6 +45,6 @@ defmodule ChargebeeElixir.Event do
     |> Enum.into(%{})
   end
 
-  defp get_module("customer"), do: ChargebeeElixir.Customer
+  defp get_module("customer"), do: Chargebeex.Customer
   defp get_module(_), do: nil
 end

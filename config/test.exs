@@ -1,6 +1,6 @@
 use Mix.Config
 
-config :chargebee_elixir,
+config :chargebeex,
   namespace: "test-namespace",
   api_key: "test_chargeebee_api_key",
-  http_client: ChargebeeElixir.HTTPClientMock
+  http_client: Chargebeex.HTTPClientMock

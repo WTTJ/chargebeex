@@ -1,10 +1,10 @@
-defmodule ChargebeeElixir.CustomerTest do
+defmodule Chargebeex.CustomerTest do
   use ExUnit.Case, async: true
 
   import Mox
 
-  alias ChargebeeElixir.Fixtures.Common
-  alias ChargebeeElixir.Customer
+  alias Chargebeex.Fixtures.Common
+  alias Chargebeex.Customer
 
   setup :verify_on_exit!
 
@@ -13,7 +13,7 @@ defmodule ChargebeeElixir.CustomerTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
@@ -31,7 +31,7 @@ defmodule ChargebeeElixir.CustomerTest do
       not_found = Common.not_found()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
@@ -47,7 +47,7 @@ defmodule ChargebeeElixir.CustomerTest do
 
     test "with resource found should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234"
@@ -67,7 +67,7 @@ defmodule ChargebeeElixir.CustomerTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers"
@@ -83,7 +83,7 @@ defmodule ChargebeeElixir.CustomerTest do
 
     test "with no param, no offset should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers"
@@ -101,7 +101,7 @@ defmodule ChargebeeElixir.CustomerTest do
 
     test "with limit & offset params should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers?limit=1"
@@ -127,7 +127,7 @@ defmodule ChargebeeElixir.CustomerTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers"
@@ -150,7 +150,7 @@ defmodule ChargebeeElixir.CustomerTest do
       bad_request = Common.bad_request()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers"
@@ -171,7 +171,7 @@ defmodule ChargebeeElixir.CustomerTest do
 
     test "with valid data should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers"
@@ -188,7 +188,7 @@ defmodule ChargebeeElixir.CustomerTest do
       )
 
       assert {:ok, %Customer{id: "foobar"}} =
-               ChargebeeElixir.Customer.create(%{email: "foobar@company.com"})
+               Chargebeex.Customer.create(%{email: "foobar@company.com"})
     end
   end
 
@@ -197,7 +197,7 @@ defmodule ChargebeeElixir.CustomerTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
@@ -220,7 +220,7 @@ defmodule ChargebeeElixir.CustomerTest do
       bad_request = Common.bad_request()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
@@ -242,7 +242,7 @@ defmodule ChargebeeElixir.CustomerTest do
 
     test "with valid data should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :post,
         fn url, data, headers ->
           assert url == "https://test-namespace.chargebee.com/api/v2/customers/foobar"
@@ -259,7 +259,7 @@ defmodule ChargebeeElixir.CustomerTest do
       )
 
       assert {:ok, %Customer{id: "foobar"}} =
-               ChargebeeElixir.Customer.update("foobar", %{email: "foobar@company.com"})
+               Chargebeex.Customer.update("foobar", %{email: "foobar@company.com"})
     end
   end
 end

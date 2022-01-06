@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Fixtures.Event do
+defmodule Chargebeex.Fixtures.Event do
   def customer_updated(params \\ %{}) do
     %{
       event: %{

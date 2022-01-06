@@ -1,5 +1,5 @@
-defmodule ChargebeeElixir.Client.Hackney do
-  @behaviour ChargebeeElixir.Client
+defmodule Chargebeex.Client.Hackney do
+  @behaviour Chargebeex.Client
 
   def get(url, body, headers \\ []) do
     request(:get, url, body, headers, [:with_body])

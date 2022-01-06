@@ -1,8 +1,8 @@
-defmodule ChargebeeElixir.Interface do
+defmodule Chargebeex.Interface do
   def endpoint(path, params \\ %{}) do
-    namespace = Application.get_env(:chargebee_elixir, :namespace)
-    host = Application.get_env(:chargebee_elixir, :host)
-    base_path = Application.get_env(:chargebee_elixir, :path)
+    namespace = Application.get_env(:chargebeex, :namespace)
+    host = Application.get_env(:chargebeex, :host)
+    base_path = Application.get_env(:chargebeex, :path)
 
     uri = %URI{
       host: "#{namespace}.#{host}",
@@ -50,7 +50,7 @@ defmodule ChargebeeElixir.Interface do
   end
 
   defp http_client() do
-    Application.get_env(:chargebee_elixir, :http_client, ChargebeeElixir.Client.Hackney)
+    Application.get_env(:chargebeex, :http_client, Chargebeex.Client.Hackney)
   end
 
   defp default_headers(verb \\ :get) do
@@ -60,7 +60,7 @@ defmodule ChargebeeElixir.Interface do
   end
 
   defp add_basic_auth(headers, _verb) do
-    api_key = Application.get_env(:chargebee_elixir, :api_key)
+    api_key = Application.get_env(:chargebeex, :api_key)
     headers ++ [{"Authorization", "Basic #{"#{api_key}:" |> Base.encode64()}"}]
   end
 

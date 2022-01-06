@@ -1,2 +1,2 @@
 ExUnit.start()
-Mox.defmock(ChargebeeElixir.HTTPClientMock, for: ChargebeeElixir.Client)
+Mox.defmock(Chargebeex.HTTPClientMock, for: Chargebeex.Client)

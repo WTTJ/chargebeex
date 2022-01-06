@@ -1,13 +1,13 @@
-defmodule ChargebeeElixir.EventTest do
+defmodule Chargebeex.EventTest do
   use ExUnit.Case, async: true
 
   import Mox
 
-  alias ChargebeeElixir.Fixtures.Common
-  alias ChargebeeElixir.Fixtures.Event, as: FixtureEvent
+  alias Chargebeex.Fixtures.Common
+  alias Chargebeex.Fixtures.Event, as: FixtureEvent
 
-  alias ChargebeeElixir.Event
-  alias ChargebeeElixir.Customer
+  alias Chargebeex.Event
+  alias Chargebeex.Customer
 
   setup :verify_on_exit!
 
@@ -16,7 +16,7 @@ defmodule ChargebeeElixir.EventTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           {:ok, 401, [], Jason.encode!(unauthorized)}
@@ -30,7 +30,7 @@ defmodule ChargebeeElixir.EventTest do
       not_found = Common.not_found()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           {:ok, 404, [], Jason.encode!(not_found)}
@@ -42,7 +42,7 @@ defmodule ChargebeeElixir.EventTest do
 
     test "with resource found should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           {:ok, 200, [], Jason.encode!(FixtureEvent.customer_updated())}
@@ -58,7 +58,7 @@ defmodule ChargebeeElixir.EventTest do
       unauthorized = Common.unauthorized()
 
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           {:ok, 401, [], Jason.encode!(unauthorized)}
@@ -70,7 +70,7 @@ defmodule ChargebeeElixir.EventTest do
 
     test "with no param, no offset should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           {:ok, 200, [],
@@ -85,7 +85,7 @@ defmodule ChargebeeElixir.EventTest do
 
     test "with limit & offset params should succeed" do
       expect(
-        ChargebeeElixir.HTTPClientMock,
+        Chargebeex.HTTPClientMock,
         :get,
         fn _url, _body, _headers ->
           result = %{

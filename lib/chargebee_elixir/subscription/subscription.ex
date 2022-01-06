@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Subscription do
+defmodule Chargebeex.Subscription do
   defstruct [
     :activated_at,
     :billing_period,
@@ -27,7 +27,7 @@ defmodule ChargebeeElixir.Subscription do
 
   @resource "subscription"
 
-  use ChargebeeElixir.Resource, @resource
+  use Chargebeex.Resource, @resource
 
   def build(raw_data) do
     attrs = %{

@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Customer do
+defmodule Chargebeex.Customer do
   defstruct [
     :allow_direct_debit,
     :auto_collection,
@@ -24,7 +24,7 @@ defmodule ChargebeeElixir.Customer do
 
   @resource "customer"
 
-  use ChargebeeElixir.Resource, @resource
+  use Chargebeex.Resource, @resource
 
   def build(raw_data) do
     attrs = %{

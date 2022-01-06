@@ -7,7 +7,7 @@
 # General application configuration
 use Mix.Config
 
-config :chargebee_elixir,
+config :chargebeex,
   host: "chargebee.com",
   path: "/api/v2",
   namespace: System.get_env("CHARGEBEEX_NAMESPACE"),

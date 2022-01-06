@@ -1,9 +1,9 @@
-defmodule ChargebeeElixir.MixProject do
+defmodule Chargebeex.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :chargebee_elixir,
+      app: :chargebeex,
       name: "chargebee-elixir",
       description: "Elixir implementation of Chargebee API (WIP)",
       package: %{

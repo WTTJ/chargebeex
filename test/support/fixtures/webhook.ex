@@ -1,5 +1,5 @@
-defmodule ChargebeeElixir.Fixtures.Webhook do
-  alias ChargebeeElixir.Fixtures.Event, as: FixtureEvent
+defmodule Chargebeex.Fixtures.Webhook do
+  alias Chargebeex.Fixtures.Event, as: FixtureEvent
 
   def customer_updated(params \\ %{}) do
     FixtureEvent.customer_updated()

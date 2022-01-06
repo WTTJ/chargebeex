@@ -1,4 +1,4 @@
-defmodule ChargebeeElixir.Invoice do
+defmodule Chargebeex.Invoice do
   defstruct [
     :adjustment_credit_notes,
     :amount_adjusted,
@@ -43,7 +43,7 @@ defmodule ChargebeeElixir.Invoice do
   ]
 
   @resource "invoice"
-  use ChargebeeElixir.Resource, @resource
+  use Chargebeex.Resource, @resource
 
   def build(raw_data) do
     attrs = %{
