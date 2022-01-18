@@ -31,8 +31,7 @@ The package can be installed by adding `chargebeex` to your list of dependencies
 # mix.exs
 def deps do
   [
-    {:chargebeex, "~> 0.1.3"}
-  ]
+    {:chargebeex, git: "git@github.com:WTTJ/chargebeex.git"}
 end
 ```
 
