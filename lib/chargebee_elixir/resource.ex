@@ -1,67 +1,35 @@
 defmodule Chargebeex.Resource do
   @callback build(raw_data: Map.t()) :: {:ok, struct()}
 
-  defmacro __using__(resource) do
-    quote bind_quoted: [resource: resource] do
-      alias Chargebeex.Interface
+  defmacro __using__(opts) do
+    only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update])
 
-      @resource resource
+    quote bind_quoted: [opts: opts, only: only] do
+      @resource Keyword.fetch!(opts, :resource)
+      import Chargebeex.Action, only: [retrieve: 3, list: 3, create: 3, update: 4]
 
-      def retrieve(id) do
-        with path <- resource_path(id),
-             {:ok, _status_code, _headers, %{@resource => content}} <- Interface.get(path),
-             parsed <- apply(__MODULE__, :build, [content]) do
-          {:ok, parsed}
-        end
+      if :retrieve in only do
+        def retrieve(id), do: retrieve(__MODULE__, @resource, id)
+        defoverridable retrieve: 1
       end
 
-      def list(params \\ %{}) do
-        with path <- resource_base_path(),
-             {:ok, _status_code, _headers, result} <- Interface.get(path, params) do
-          case result do
-            %{"list" => resources, "next_offset" => next_offset} ->
-              {:ok, Enum.map(resources, &apply(__MODULE__, :build, [&1])),
-               %{"next_offset" => next_offset}}
-
-            %{"list" => resources} ->
-              {:ok, Enum.map(resources, &apply(__MODULE__, :build, [&1])),
-               %{"next_offset" => nil}}
-          end
-        end
+      if :list in only do
+        def list(params \\ %{}), do: list(__MODULE__, @resource, params)
+        defoverridable list: 0
+        defoverridable list: 1
       end
 
-      def create(params) do
-        with path <- resource_base_path(),
-             {:ok, _status_code, _headers, %{@resource => content}} <-
-               Interface.post(path, params),
-             parsed <- apply(__MODULE__, :build, [content]) do
-          {:ok, parsed}
-        end
+      if :create in only do
+        def create(params), do: create(__MODULE__, @resource, params)
+        defoverridable create: 1
       end
 
-      def update(id, params) do
-        with path <- resource_path(id),
-             {:ok, _status_code, _headers, %{@resource => content}} <-
-               Interface.post(path, params),
-             parsed <- apply(__MODULE__, :build, [content]) do
-          {:ok, parsed}
-        end
+      if :update in only do
+        def update(id, params), do: update(__MODULE__, @resource, id, params)
+        defoverridable update: 2
       end
 
       def build(%{@resource => raw_data}), do: apply(__MODULE__, :build, [raw_data])
-
-      def resource_base_path() do
-        "/#{@resource}s"
-      end
-
-      def resource_path(id) do
-        "#{resource_base_path()}/#{id}"
-      end
-
-      defoverridable retrieve: 1
-      defoverridable list: 1
-      defoverridable create: 1
-      defoverridable update: 2
     end
   end
 end

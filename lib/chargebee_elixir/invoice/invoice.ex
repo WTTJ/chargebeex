@@ -42,8 +42,7 @@ defmodule Chargebeex.Invoice do
     :write_off_amount
   ]
 
-  @resource "invoice"
-  use Chargebeex.Resource, @resource
+  use Chargebeex.Resource, resource: "invoice"
 
   def build(raw_data) do
     attrs = %{

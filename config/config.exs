@@ -9,9 +9,7 @@ use Mix.Config
 
 config :chargebeex,
   host: "chargebee.com",
-  path: "/api/v2",
-  namespace: System.get_env("CHARGEBEEX_NAMESPACE"),
-  api_key: System.get_env("CHARGEBEEX_API_KEY")
+  path: "/api/v2"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

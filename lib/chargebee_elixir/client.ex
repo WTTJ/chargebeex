@@ -1,4 +1,4 @@
-defmodule Chargebeex.Interface do
+defmodule Chargebeex.Client do
   def endpoint(path, params \\ %{}) do
     namespace = Application.get_env(:chargebeex, :namespace)
     host = Application.get_env(:chargebeex, :host)
