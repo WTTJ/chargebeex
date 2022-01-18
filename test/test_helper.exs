@@ -1,2 +1,2 @@
 ExUnit.start()
-Hammox.defmock(Chargebeex.HTTPClientMock, for: Chargebeex.Client)
+Hammox.defmock(Chargebeex.HTTPClientMock, for: Chargebeex.ClientBehaviour)

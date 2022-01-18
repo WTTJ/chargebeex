@@ -11,9 +11,7 @@ defmodule Chargebeex.Event do
     :webhook_status
   ]
 
-  @resource "event"
-
-  use Chargebeex.Resource, @resource
+  use Chargebeex.Resource, resource: "event", only: [:retrieve, :list]
 
   def build(raw_data) do
     attrs = %{

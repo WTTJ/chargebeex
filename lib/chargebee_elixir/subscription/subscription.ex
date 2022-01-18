@@ -25,9 +25,7 @@ defmodule Chargebeex.Subscription do
     :updated_at
   ]
 
-  @resource "subscription"
-
-  use Chargebeex.Resource, @resource
+  use Chargebeex.Resource, resource: "subscription"
 
   def build(raw_data) do
     attrs = %{

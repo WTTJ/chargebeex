@@ -22,9 +22,7 @@ defmodule Chargebeex.Customer do
     :updated_at
   ]
 
-  @resource "customer"
-
-  use Chargebeex.Resource, @resource
+  use Chargebeex.Resource, resource: "customer"
 
   def build(raw_data) do
     attrs = %{
