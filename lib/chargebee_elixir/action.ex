@@ -41,11 +41,11 @@ defmodule Chargebeex.Action do
     end
   end
 
-  defp resource_base_path(resource) do
+  def resource_base_path(resource) do
     "/#{resource}s"
   end
 
-  defp resource_path(resource, id) do
+  def resource_path(resource, id) do
     "#{resource_base_path(resource)}/#{id}"
   end
 end
