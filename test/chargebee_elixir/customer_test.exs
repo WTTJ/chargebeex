@@ -58,7 +58,7 @@ defmodule Chargebeex.CustomerTest do
         end
       )
 
-      assert {:ok, %Customer{id: 1234}} == Customer.retrieve(1234)
+      assert {:ok, %Customer{id: 1234, _raw_payload: %{"id" => 1234}}} == Customer.retrieve(1234)
     end
   end
 

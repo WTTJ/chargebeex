@@ -10,6 +10,7 @@ defmodule Chargebeex.Customer do
     :email,
     :excess_payments,
     :id,
+    :locale,
     :net_term_days,
     :object,
     :pii_cleared,
@@ -19,7 +20,8 @@ defmodule Chargebeex.Customer do
     :resource_version,
     :taxability,
     :unbilled_charges,
-    :updated_at
+    :updated_at,
+    :_raw_payload
   ]
 
   use Chargebeex.Resource, resource: "customer"
@@ -36,6 +38,7 @@ defmodule Chargebeex.Customer do
       email: raw_data["email"],
       excess_payments: raw_data["excess_payments"],
       id: raw_data["id"],
+      locale: raw_data["locale"],
       net_term_days: raw_data["net_term_days"],
       object: raw_data["object"],
       pii_cleared: raw_data["pii_cleared"],
@@ -45,7 +48,8 @@ defmodule Chargebeex.Customer do
       resource_version: raw_data["resource_version"],
       taxability: raw_data["taxability"],
       unbilled_charges: raw_data["unbilled_charges"],
-      updated_at: raw_data["updated_at"]
+      updated_at: raw_data["updated_at"],
+      _raw_payload: raw_data
     }
 
     struct(__MODULE__, attrs)

@@ -22,7 +22,8 @@ defmodule Chargebeex.Subscription do
     :status,
     :subscription_items,
     :total_dues,
-    :updated_at
+    :updated_at,
+    :_raw_payload
   ]
 
   use Chargebeex.Resource, resource: "subscription"
@@ -51,7 +52,8 @@ defmodule Chargebeex.Subscription do
       status: raw_data["status"],
       subscription_items: raw_data["subscription_items"],
       total_dues: raw_data["total_dues"],
-      updated_at: raw_data["updated_at"]
+      updated_at: raw_data["updated_at"],
+      _raw_payload: raw_data
     }
 
     struct(__MODULE__, attrs)

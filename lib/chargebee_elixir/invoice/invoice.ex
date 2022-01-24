@@ -39,7 +39,8 @@ defmodule Chargebeex.Invoice do
     :term_finalized,
     :total,
     :updated_at,
-    :write_off_amount
+    :write_off_amount,
+    :_raw_payload
   ]
 
   use Chargebeex.Resource, resource: "invoice"
@@ -85,7 +86,8 @@ defmodule Chargebeex.Invoice do
       term_finalized: raw_data["term_finalized"],
       total: raw_data["total"],
       updated_at: raw_data["updated_at"],
-      write_off_amount: raw_data["write_off_amount"]
+      write_off_amount: raw_data["write_off_amount"],
+      _raw_payload: raw_data
     }
 
     struct(__MODULE__, attrs)
