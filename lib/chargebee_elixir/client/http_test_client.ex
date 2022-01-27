@@ -16,7 +16,19 @@ defmodule Chargebeex.Client.HTTPTestClient do
   def post(url, body, _headers) do
     store(url, :post, body)
 
-    {:ok, 200, [], "{}"}
+    {:ok, 200, [],
+     Jason.encode!(%{
+       get_resource(url) => %{
+         id: System.unique_integer([:positive, :monotonic]) |> Integer.to_string()
+       }
+     })}
+  end
+
+  defp get_resource(url) do
+    url
+    |> String.split("/")
+    |> List.last()
+    |> String.replace_trailing("s", "")
   end
 
   def storage_key(url, verb), do: Enum.join([verb, url], "|")
