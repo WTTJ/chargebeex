@@ -25,8 +25,7 @@ defmodule Chargebeex.Action do
 
   def create(module, resource, params) do
     with path <- resource_base_path(resource),
-         {:ok, _status_code, _headers, %{^resource => content}} <-
-           Client.post(path, params),
+         {:ok, _status_code, _headers, content} <- Client.post(path, params),
          parsed <- apply(module, :build, [content]) do
       {:ok, parsed}
     end
@@ -34,8 +33,7 @@ defmodule Chargebeex.Action do
 
   def update(module, resource, id, params) do
     with path <- resource_path(resource, id),
-         {:ok, _status_code, _headers, %{^resource => content}} <-
-           Client.post(path, params),
+         {:ok, _status_code, _headers, content} <- Client.post(path, params),
          parsed <- apply(module, :build, [content]) do
       {:ok, parsed}
     end
