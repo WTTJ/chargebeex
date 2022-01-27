@@ -54,4 +54,116 @@ defmodule Chargebeex.Customer do
 
     struct(__MODULE__, attrs)
   end
+
+  @doc """
+  Allows to create a Customer
+
+  ## Examples
+
+      iex> Chargebeex.Customer.create(%{company: "MyCompany"})
+      {:ok, %Chargebeex.Customer{
+          _raw_payload: [...],
+          allow_direct_debit: false,
+          auto_collection: "on",
+          card_status: "no_card",
+          channel: "web",
+          company: "MyCompany",
+          created_at: 1643297894,
+          deleted: false,
+          email: nil,
+          excess_payments: 0,
+          id: "AzyzkCSvjSUpY4xuB",
+          locale: nil,
+          net_term_days: 0,
+          object: "customer",
+          pii_cleared: "active",
+          preferred_currency_code: "EUR",
+          promotional_credits: 0,
+          refundable_credits: 0,
+          resource_version: 1643297894617,
+          taxability: "taxable",
+          unbilled_charges: 0,
+          updated_at: 1643297894
+      }}
+  """
+  def create(params), do: super(params)
+
+  @doc """
+  Allows to list Customers
+
+  Available filters can be found here: https://apidocs.chargebee.com/docs/api/customers#list_customers
+
+  ## Examples
+
+      iex> filters = %{limit: 2}
+      iex(2)> Chargebeex.Customer.list(filters)
+      {:ok, [%Chargebeex.Customer{...}, %Chargebeex.Customer{...}], %{"next_offset" => nil}}
+  """
+  def list(params), do: super(params)
+
+  @doc """
+  Allows to retrieve a Customer.
+
+  ## Examples
+
+      iex> Chargebeex.Customer.retrieve("AzyzkCSvjSUpY4xuB")
+      {:ok, %Chargebeex.Customer{
+          _raw_payload: [...],
+          allow_direct_debit: false,
+          auto_collection: "on",
+          card_status: "no_card",
+          channel: "web",
+          company: "MyCompany",
+          created_at: 1643297894,
+          deleted: false,
+          email: nil,
+          excess_payments: 0,
+          id: "AzyzkCSvjSUpY4xuB",
+          locale: nil,
+          net_term_days: 0,
+          object: "customer",
+          pii_cleared: "active",
+          preferred_currency_code: "EUR",
+          promotional_credits: 0,
+          refundable_credits: 0,
+          resource_version: 1643297894617,
+          taxability: "taxable",
+          unbilled_charges: 0,
+          updated_at: 1643297894
+      }}
+  """
+  def retrieve(params), do: super(params)
+
+  @doc """
+  Allows to update a Customer
+
+  ## Examples
+
+      iex> Chargebeex.Customer.update("AzyzkCSvjSUpY4xuB", %{company: "MyUpdatedCompany"})
+      {:ok, %Chargebeex.Customer{
+          _raw_payload: [...],
+          allow_direct_debit: false,
+          auto_collection: "on",
+          card_status: "no_card",
+          channel: "web",
+          company: "MyUpdatedCompany",
+          created_at: 1643297894,
+          deleted: false,
+          email: nil,
+          excess_payments: 0,
+          id: "AzyzkCSvjSUpY4xuB",
+          locale: nil,
+          net_term_days: 0,
+          object: "customer",
+          pii_cleared: "active",
+          preferred_currency_code: "EUR",
+          promotional_credits: 0,
+          refundable_credits: 0,
+          resource_version: 1643297894617,
+          taxability: "taxable",
+          unbilled_charges: 0,
+          updated_at: 1643297894
+      }}
+  """
+  def update(id, params), do: super(id, params)
 end
