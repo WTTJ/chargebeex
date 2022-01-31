@@ -29,7 +29,17 @@ defmodule Chargebeex.Customer do
     extra: [
       {:update_payment_method, :post, true},
       {:update_billing_info, :post, true},
-      {:assign_payment_role, :post, true}
+      {:assign_payment_role, :post, true},
+      {:record_excess_payment, :post, true},
+      {:collect_payment, :post, true},
+      {:move, :post, true},
+      {:change_billing_date, :post, true},
+      {:merge, :post, true},
+      {:clear_personal_data, :post, false},
+      {:relationships, :post, true},
+      {:delete_relationship, :post, false},
+      {:hierarchy, :get, true},
+      {:update_hierarchy_settings, :post, true}
     ]
 
   def build(raw_data) do
