@@ -13,7 +13,10 @@ defmodule Chargebeex.PortalSession do
     :_raw_payload
   ]
 
-  use Chargebeex.Resource, resource: "portal_session", only: [:create, :retrieve]
+  use Chargebeex.Resource,
+    resource: "portal_session",
+    only: [:create, :retrieve],
+    extra: [{:logout, :post, false}]
 
   def build(raw_data) do
     attrs = %{
@@ -31,13 +34,5 @@ defmodule Chargebeex.PortalSession do
     }
 
     struct(__MODULE__, attrs)
-  end
-
-  def logout(id) do
-    path = Chargebeex.Action.resource_path("portal_session", id)
-
-    with {:ok, 200, _headers, data} <- Chargebeex.Client.post(path <> "/logout", %{}) do
-      {:ok, build(data)}
-    end
   end
 end

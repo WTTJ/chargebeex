@@ -47,7 +47,7 @@ defmodule Chargebeex.Action do
     end
   end
 
-  def generic_action(verb, module, resource, action, id, params) do
+  def generic_action(verb, module, resource, action, id, params \\ %{}) do
     with path <- resource_path_generic(resource, id, action),
          {:ok, _status_code, _headers, content} <- apply(Client, verb, [path, params]),
          parsed <- apply(module, :build, [content]) do

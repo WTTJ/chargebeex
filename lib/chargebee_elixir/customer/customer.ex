@@ -27,9 +27,9 @@ defmodule Chargebeex.Customer do
   use Chargebeex.Resource,
     resource: "customer",
     extra: [
-      {:update_payment_method, :post},
-      {:update_billing_info, :post},
-      {:assign_payment_role, :post}
+      {:update_payment_method, :post, true},
+      {:update_billing_info, :post, true},
+      {:assign_payment_role, :post, true}
     ]
 
   def build(raw_data) do
