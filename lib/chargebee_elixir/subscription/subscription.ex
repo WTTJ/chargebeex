@@ -26,7 +26,7 @@ defmodule Chargebeex.Subscription do
     :_raw_payload
   ]
 
-  use Chargebeex.Resource, resource: "subscription"
+  use Chargebeex.Resource, resource: "subscription", only: [:list, :retrieve, :update]
 
   def build(raw_data) do
     attrs = %{
