@@ -26,7 +26,12 @@ defmodule Chargebeex.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      env: [host: "chargebee.com", path: "/api/v2"]
+      env: [
+        host: "chargebee.com",
+        path: "/api/v2",
+        namespace: System.get_env("CHARGEBEEX_NAMESPACE"),
+        api_key: System.get_env("CHARGEBEEX_API_KEY")
+      ]
     ]
   end
 
