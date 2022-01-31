@@ -55,6 +55,30 @@ defmodule Chargebeex.Customer do
     struct(__MODULE__, attrs)
   end
 
+  @type t :: %__MODULE__{
+          allow_direct_debit: boolean(),
+          auto_collection: String.t(),
+          card_status: String.t(),
+          channel: String.t(),
+          company: String.t(),
+          created_at: integer(),
+          deleted: boolean(),
+          email: String.t(),
+          excess_payments: integer(),
+          id: String.t(),
+          locale: String.t(),
+          net_term_days: integer(),
+          object: String.t(),
+          pii_cleared: String.t(),
+          preferred_currency_code: String.t(),
+          promotional_credits: integer(),
+          refundable_credits: integer(),
+          resource_version: integer(),
+          taxability: String.t(),
+          unbilled_charges: integer(),
+          updated_at: integer()
+        }
+
   @doc """
   Allows to create a Customer
 
