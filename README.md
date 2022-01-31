@@ -9,19 +9,10 @@ Marlier](https://github.com/NicolasMarlier/chargebee-elixir)
 ⚠️ Chargebeex is currently in development and is not suitable for production
 use, as the API can break at any time.
 
-## v0.1.3
+## Current status
 
-- list
-- retrieve
-- create
-- update
-
-on those resources:
-
-- customer
-- subscription
-- invoice
-- event (list/retrieve only)
+Some functions are auto-generated and can not work properly. Please open an
+issue if this is the case.
 
 ## Installation
 

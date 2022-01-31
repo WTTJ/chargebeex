@@ -6,7 +6,8 @@ defmodule Chargebeex.Resource do
 
     quote bind_quoted: [opts: opts, only: only] do
       @resource Keyword.fetch!(opts, :resource)
-      import Chargebeex.Action, only: [retrieve: 3, list: 3, create: 3, update: 4, delete: 3]
+      import Chargebeex.Action,
+        only: [retrieve: 3, list: 3, create: 3, update: 4, delete: 3, generic_action: 6]
 
       if :retrieve in only do
         def retrieve(id), do: retrieve(__MODULE__, @resource, id)
@@ -35,6 +36,21 @@ defmodule Chargebeex.Resource do
       end
 
       def build(%{@resource => raw_data}), do: apply(__MODULE__, :build, [raw_data])
+
+      opts
+      |> Keyword.get(:extra, [])
+      |> Enum.each(fn {function_name, verb} ->
+        def unquote(function_name)(id, params) do
+          generic_action(
+            unquote(verb),
+            __MODULE__,
+            @resource,
+            unquote(function_name) |> Atom.to_string(),
+            id,
+            params
+          )
+        end
+      end)
     end
   end
 end

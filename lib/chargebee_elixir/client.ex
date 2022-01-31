@@ -32,9 +32,9 @@ defmodule Chargebeex.Client do
     end
   end
 
-  def post(path, data \\ %{}) do
+  def post(path, params \\ %{}) do
     body =
-      data
+      params
       |> transform_arrays_for_chargebee
       |> Plug.Conn.Query.encode()
 

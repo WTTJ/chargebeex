@@ -47,12 +47,24 @@ defmodule Chargebeex.Action do
     end
   end
 
+  def generic_action(verb, module, resource, action, id, params) do
+    with path <- resource_path_generic(resource, id, action),
+         {:ok, _status_code, _headers, content} <- apply(Client, verb, [path, params]),
+         parsed <- apply(module, :build, [content]) do
+      {:ok, parsed}
+    end
+  end
+
   def resource_base_path(resource) do
     "/#{resource}s"
   end
 
   def resource_path(resource, id) do
     "#{resource_base_path(resource)}/#{id}"
+  end
+
+  def resource_path_generic(resource, id, action) do
+    Path.join([resource_base_path(resource), id, action])
   end
 
   def delete_path(resource, id) do

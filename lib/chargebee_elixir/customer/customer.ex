@@ -24,7 +24,13 @@ defmodule Chargebeex.Customer do
     :_raw_payload
   ]
 
-  use Chargebeex.Resource, resource: "customer"
+  use Chargebeex.Resource,
+    resource: "customer",
+    extra: [
+      {:update_payment_method, :post},
+      {:update_billing_info, :post},
+      {:assign_payment_role, :post}
+    ]
 
   def build(raw_data) do
     attrs = %{
