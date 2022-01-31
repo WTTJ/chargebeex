@@ -4,16 +4,16 @@ defmodule Chargebeex.MixProject do
   def project do
     [
       app: :chargebeex,
-      name: "chargebee-elixir",
-      description: "Elixir implementation of Chargebee API (WIP)",
+      name: "chargebeex",
+      description: "Elixir implementation of Chargebee API v2",
       package: %{
         licenses: ["MIT"],
         links: %{
-          github: "https://github.com/NicolasMarlier/chargebee-elixir"
+          github: "https://github.com/maximemenager/chargebeex"
         }
       },
-      source_url: "https://github.com/NicolasMarlier/chargebee-elixir",
-      homepage_url: "https://github.com/NicolasMarlier/chargebee-elixir",
+      source_url: "https://github.com/maximemenager/chargebeex",
+      homepage_url: "https://github.com/maximemenager/chargebeex",
       version: "0.1.3",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
