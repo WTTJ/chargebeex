@@ -32,7 +32,7 @@ defmodule Chargebeex.Client do
     end
   end
 
-  def post(path, data) do
+  def post(path, data \\ %{}) do
     body =
       data
       |> transform_arrays_for_chargebee

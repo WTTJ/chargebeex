@@ -39,11 +39,23 @@ defmodule Chargebeex.Action do
     end
   end
 
+  def delete(module, resource, id) do
+    with path <- delete_path(resource, id),
+         {:ok, _status_code, _headers, content} <- Client.post(path),
+         parsed <- apply(module, :build, [content]) do
+      {:ok, parsed}
+    end
+  end
+
   def resource_base_path(resource) do
     "/#{resource}s"
   end
 
   def resource_path(resource, id) do
     "#{resource_base_path(resource)}/#{id}"
+  end
+
+  def delete_path(resource, id) do
+    Path.join([resource_path(resource, id), "delete"])
   end
 end

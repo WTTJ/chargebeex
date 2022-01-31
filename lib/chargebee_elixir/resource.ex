@@ -2,11 +2,11 @@ defmodule Chargebeex.Resource do
   @callback build(raw_data: Map.t()) :: {:ok, struct()}
 
   defmacro __using__(opts) do
-    only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update])
+    only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update, :delete])
 
     quote bind_quoted: [opts: opts, only: only] do
       @resource Keyword.fetch!(opts, :resource)
-      import Chargebeex.Action, only: [retrieve: 3, list: 3, create: 3, update: 4]
+      import Chargebeex.Action, only: [retrieve: 3, list: 3, create: 3, update: 4, delete: 3]
 
       if :retrieve in only do
         def retrieve(id), do: retrieve(__MODULE__, @resource, id)
@@ -27,6 +27,11 @@ defmodule Chargebeex.Resource do
       if :update in only do
         def update(id, params), do: update(__MODULE__, @resource, id, params)
         defoverridable update: 2
+      end
+
+      if :delete in only do
+        def delete(id), do: delete(__MODULE__, @resource, id)
+        defoverridable delete: 1
       end
 
       def build(%{@resource => raw_data}), do: apply(__MODULE__, :build, [raw_data])

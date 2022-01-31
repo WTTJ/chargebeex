@@ -190,4 +190,37 @@ defmodule Chargebeex.Customer do
       }}
   """
   def update(id, params), do: super(id, params)
+
+  @doc """
+  Deletes a Customer
+
+  ## Examples
+
+      iex> Chargebeex.Customer.delete("AzyzkCSvjSUpY4xuB")
+      {:ok, %Chargebeex.Customer{
+          _raw_payload: [...],
+          allow_direct_debit: false,
+          auto_collection: "on",
+          card_status: "no_card",
+          channel: "web",
+          company: "MyUpdatedCompany",
+          created_at: 1643297894,
+          deleted: false,
+          email: nil,
+          excess_payments: 0,
+          id: "AzyzkCSvjSUpY4xuB",
+          locale: nil,
+          net_term_days: 0,
+          object: "customer",
+          pii_cleared: "active",
+          preferred_currency_code: "EUR",
+          promotional_credits: 0,
+          refundable_credits: 0,
+          resource_version: 1643297894617,
+          taxability: "taxable",
+          unbilled_charges: 0,
+          updated_at: 1643297894
+      }}
+  """
+  def delete(id), do: super(id)
 end

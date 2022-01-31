@@ -262,4 +262,74 @@ defmodule Chargebeex.CustomerTest do
                Chargebeex.Customer.update("foobar", %{email: "foobar@company.com"})
     end
   end
+
+  describe "delete" do
+    test "with bad authentication should fail" do
+      unauthorized = Common.unauthorized()
+
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234/delete"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body == ""
+
+          {:ok, 401, [], Jason.encode!(unauthorized)}
+        end
+      )
+
+      assert {:error, 401, [], ^unauthorized} = Customer.delete("1234")
+    end
+
+    test "with resource not found should fail" do
+      not_found = Common.not_found()
+
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234/delete"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body == ""
+
+          {:ok, 404, [], Jason.encode!(not_found)}
+        end
+      )
+
+      assert {:error, 404, [], ^not_found} = Customer.delete("1234")
+    end
+
+    test "with resource found should succeed" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers/1234/delete"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body == ""
+
+          {:ok, 200, [], Jason.encode!(%{customer: %{id: "1234"}})}
+        end
+      )
+
+      assert {:ok, %Customer{id: "1234", _raw_payload: %{"id" => "1234"}}} ==
+               Customer.delete("1234")
+    end
+  end
 end
