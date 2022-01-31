@@ -16,7 +16,10 @@ defmodule Chargebeex.PortalSession do
   use Chargebeex.Resource,
     resource: "portal_session",
     only: [:create, :retrieve],
-    extra: [{:logout, :post, false}]
+    extra: [
+      {:logout, :post, false},
+      {:activate, :post, true}
+    ]
 
   def build(raw_data) do
     attrs = %{
