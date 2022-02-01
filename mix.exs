@@ -9,11 +9,11 @@ defmodule Chargebeex.MixProject do
       package: %{
         licenses: ["MIT"],
         links: %{
-          github: "https://github.com/maximemenager/chargebeex"
+          github: "https://github.com/WTTJ/chargebeex"
         }
       },
-      source_url: "https://github.com/maximemenager/chargebeex",
-      homepage_url: "https://github.com/maximemenager/chargebeex",
+      source_url: "https://github.com/WTTJ/chargebeex",
+      homepage_url: "https://github.com/WTTJ/chargebeex",
       version: "0.1.3",
       elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
