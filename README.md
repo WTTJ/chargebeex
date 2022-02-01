@@ -74,6 +74,37 @@ config :chargebeex,
 Chargebeex.Customer.list()
 ```
 
+### Custom Fields
+
+Chargebee provides a way to add user-specific fields for resources like
+Customer, Subscriptions, ... called [Custom
+Fields](https://www.chargebee.com/docs/2.0/custom_fields.html).
+
+These fields are prepended with the `cf_` prefix. Unfortunately, it is difficult
+to handle these fields in the resource structure, because these are dynamically
+provided.
+
+However, a special `_raw_payload` field is present in each structure,
+representing the raw result retrieved from the Chargebee API. You can retrieve
+you custom fields in this map.
+
+#### Example:
+
+```elixir
+ iex> Chargebeex.Customer.retrieve("barbaz")
+ {:ok, %Chargebeex.Customer{
+     _raw_payload: %{
+       "allow_direct_debit" => false,
+       "id" => "barbaz",
+       "cf_my_custom_field" => "foobar",
+       [...]
+     },
+     allow_direct_debit: false,
+     id: "barbaz"
+     [...]}
+  }
+```
+
 ## Run tests
 
 ```sh
