@@ -1,6 +1,8 @@
 defmodule Chargebeex.MixProject do
   use Mix.Project
 
+  @source_url "https://github.com/WTTJ/chargebeex"
+
   def project do
     [
       app: :chargebeex,
@@ -9,16 +11,17 @@ defmodule Chargebeex.MixProject do
       package: %{
         licenses: ["MIT"],
         links: %{
-          github: "https://github.com/WTTJ/chargebeex"
+          github: @source_url
         }
       },
-      source_url: "https://github.com/WTTJ/chargebeex",
-      homepage_url: "https://github.com/WTTJ/chargebeex",
-      version: "0.1.3",
-      elixir: "~> 1.11",
+      source_url: @source_url,
+      homepage_url: @source_url,
+      version: "0.1.0",
+      elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -48,6 +51,15 @@ defmodule Chargebeex.MixProject do
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:hammox, "~> 0.5", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  def docs do
+    [
+      main: "readme",
+      source_url: @source_url,
+      homepage_url: @source_url,
+      formatters: ["html"]
     ]
   end
 end
