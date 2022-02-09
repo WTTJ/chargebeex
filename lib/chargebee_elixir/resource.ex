@@ -18,55 +18,57 @@ defmodule Chargebeex.Resource do
         ]
 
       if :retrieve in only do
-        def retrieve(id), do: retrieve(__MODULE__, @resource, id)
+        def retrieve(id, opts \\ []), do: retrieve(@resource, id, opts)
         defoverridable retrieve: 1
+        defoverridable retrieve: 2
       end
 
       if :list in only do
-        def list(params \\ %{}), do: list(__MODULE__, @resource, params)
-        defoverridable list: 0
+        def list(params \\ %{}, opts \\ []), do: list(@resource, params, opts)
         defoverridable list: 1
+        defoverridable list: 2
       end
 
       if :create in only do
-        def create(params), do: create(__MODULE__, @resource, params)
+        def create(params, opts \\ []), do: create(@resource, params, opts)
         defoverridable create: 1
+        defoverridable create: 2
       end
 
       if :update in only do
-        def update(id, params), do: update(__MODULE__, @resource, id, params)
+        def update(id, params, opts \\ []), do: update(@resource, id, params, opts)
         defoverridable update: 2
+        defoverridable update: 3
       end
 
       if :delete in only do
-        def delete(id), do: delete(__MODULE__, @resource, id)
+        def delete(id, opts \\ []), do: delete(@resource, id, opts)
         defoverridable delete: 1
+        defoverridable delete: 2
       end
-
-      def build(%{@resource => raw_data}), do: apply(__MODULE__, :build, [raw_data])
 
       opts
       |> Keyword.get(:extra, [])
       |> Enum.each(fn {function_name, verb, accept_params} ->
         if accept_params do
-          def unquote(function_name)(id, params) do
+          def unquote(function_name)(id, params, opts \\ []) do
             generic_action(
               unquote(verb),
-              __MODULE__,
               @resource,
               unquote(function_name) |> Atom.to_string(),
               id,
-              params
+              params,
+              opts
             )
           end
         else
-          def unquote(function_name)(id) do
+          def unquote(function_name)(id, opts \\ []) do
             generic_action(
               unquote(verb),
-              __MODULE__,
               @resource,
               unquote(function_name) |> Atom.to_string(),
-              id
+              id,
+              opts
             )
           end
         end

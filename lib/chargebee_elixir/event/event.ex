@@ -1,4 +1,6 @@
 defmodule Chargebeex.Event do
+  alias Chargebeex.Builder
+
   defstruct [
     :api_version,
     :content,
@@ -9,7 +11,7 @@ defmodule Chargebeex.Event do
     :source,
     :user,
     :webhook_status,
-    :_raw_payload
+    _raw_payload: %{}
   ]
 
   use Chargebeex.Resource, resource: "event", only: [:retrieve, :list]
@@ -24,29 +26,16 @@ defmodule Chargebeex.Event do
       source: raw_data["source"],
       user: raw_data["user"],
       webhook_status: raw_data["webhook_status"],
-      content: parse_contents(raw_data["content"]),
+      content: parse_content(raw_data),
       _raw_payload: raw_data
     }
 
     struct(__MODULE__, attrs)
   end
 
-  defp parse_contents(nil), do: %{}
-
-  defp parse_contents(contents) do
-    contents
-    |> Enum.map(fn {k, v} ->
-      case get_module(k) do
-        nil ->
-          {k, v}
-
-        module ->
-          {k, apply(module, :build, [v])}
-      end
-    end)
-    |> Enum.into(%{})
+  defp parse_content(raw_data) do
+    raw_data
+    |> Map.get("content", %{})
+    |> Builder.build("event", with_extra: true)
   end
-
-  defp get_module("customer"), do: Chargebeex.Customer
-  defp get_module(_), do: nil
 end

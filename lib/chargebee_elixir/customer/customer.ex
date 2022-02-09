@@ -21,7 +21,7 @@ defmodule Chargebeex.Customer do
     :taxability,
     :unbilled_charges,
     :updated_at,
-    :_raw_payload
+    _raw_payload: %{}
   ]
 
   use Chargebeex.Resource,
@@ -126,7 +126,7 @@ defmodule Chargebeex.Customer do
           updated_at: 1643297894
       }}
   """
-  def create(params), do: super(params)
+  def create(params, opts \\ []), do: super(params, opts)
 
   @doc """
   Allows to list Customers
@@ -139,7 +139,7 @@ defmodule Chargebeex.Customer do
       iex(2)> Chargebeex.Customer.list(filters)
       {:ok, [%Chargebeex.Customer{...}, %Chargebeex.Customer{...}], %{"next_offset" => nil}}
   """
-  def list(params), do: super(params)
+  def list(params, opts \\ []), do: super(params, opts)
 
   @doc """
   Allows to retrieve a Customer.
@@ -172,7 +172,7 @@ defmodule Chargebeex.Customer do
           updated_at: 1643297894
       }}
   """
-  def retrieve(params), do: super(params)
+  def retrieve(params, opts \\ []), do: super(params, opts)
 
   @doc """
   Allows to update a Customer
@@ -205,7 +205,7 @@ defmodule Chargebeex.Customer do
           updated_at: 1643297894
       }}
   """
-  def update(id, params), do: super(id, params)
+  def update(id, params, opts \\ []), do: super(id, params, opts)
 
   @doc """
   Deletes a Customer
@@ -238,5 +238,5 @@ defmodule Chargebeex.Customer do
           updated_at: 1643297894
       }}
   """
-  def delete(id), do: super(id)
+  def delete(id, opts \\ []), do: super(id, opts)
 end

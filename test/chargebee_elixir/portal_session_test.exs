@@ -1,7 +1,7 @@
 defmodule Chargebeex.PortalSessionTest do
   use ExUnit.Case, async: true
 
-  import Mox
+  import Hammox
 
   alias Chargebeex.Fixtures.Common
   alias Chargebeex.PortalSession
@@ -54,12 +54,11 @@ defmodule Chargebeex.PortalSessionTest do
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
-          {:ok, 200, [], Jason.encode!(%{portal_session: %{id: 1234}})}
+          {:ok, 200, [], Jason.encode!(%{portal_session: %{}})}
         end
       )
 
-      assert {:ok, %PortalSession{id: 1234, _raw_payload: %{"id" => 1234}}} ==
-               PortalSession.retrieve(1234)
+      assert {:ok, %PortalSession{_raw_payload: %{}}} == PortalSession.retrieve(1234)
     end
   end
 
@@ -124,12 +123,11 @@ defmodule Chargebeex.PortalSessionTest do
 
           assert data == "customer[id]=foobar"
 
-          {:ok, 200, [], Jason.encode!(%{portal_session: %{id: "foobar", status: "created"}})}
+          {:ok, 200, [], Jason.encode!(%{portal_session: %{}})}
         end
       )
 
-      assert {:ok, %PortalSession{id: "foobar"}} =
-               PortalSession.create(%{customer: %{id: "foobar"}})
+      assert {:ok, %PortalSession{}} = PortalSession.create(%{customer: %{id: "foobar"}})
     end
   end
 
