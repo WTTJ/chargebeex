@@ -23,7 +23,7 @@ defmodule Chargebeex.Subscription do
     :subscription_items,
     :total_dues,
     :updated_at,
-    :_raw_payload
+    _raw_payload: %{}
   ]
 
   use Chargebeex.Resource, resource: "subscription", only: [:list, :retrieve, :update]

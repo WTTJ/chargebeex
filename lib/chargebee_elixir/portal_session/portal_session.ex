@@ -10,7 +10,7 @@ defmodule Chargebeex.PortalSession do
     :redirect_url,
     :status,
     :token,
-    :_raw_payload
+    _raw_payload: %{}
   ]
 
   use Chargebeex.Resource,

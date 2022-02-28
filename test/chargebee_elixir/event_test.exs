@@ -1,13 +1,11 @@
 defmodule Chargebeex.EventTest do
   use ExUnit.Case, async: true
 
-  import Mox
+  import Hammox
 
   alias Chargebeex.Fixtures.Common
-  alias Chargebeex.Fixtures.Event, as: FixtureEvent
 
   alias Chargebeex.Event
-  alias Chargebeex.Customer
 
   setup :verify_on_exit!
 
@@ -18,7 +16,11 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -32,7 +34,11 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 404, [], Jason.encode!(not_found)}
         end
       )
@@ -44,12 +50,16 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
-          {:ok, 200, [], Jason.encode!(FixtureEvent.customer_updated())}
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events/1234"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
+          {:ok, 200, [], Jason.encode!(%{event: %{}})}
         end
       )
 
-      assert {:ok, %Event{content: %{"customer" => %Customer{}}}} = Event.retrieve(1234)
+      assert {:ok, %Event{}} = Event.retrieve(1234)
     end
   end
 
@@ -60,7 +70,11 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 401, [], Jason.encode!(unauthorized)}
         end
       )
@@ -72,10 +86,14 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           {:ok, 200, [],
            Jason.encode!(%{
-             list: [FixtureEvent.customer_updated(), FixtureEvent.customer_updated()]
+             list: [%{event: %{}}, %{event: %{}}]
            })}
         end
       )
@@ -87,9 +105,13 @@ defmodule Chargebeex.EventTest do
       expect(
         Chargebeex.HTTPClientMock,
         :get,
-        fn _url, _body, _headers ->
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/events?limit=1"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
           result = %{
-            list: [FixtureEvent.customer_updated()],
+            list: [%{event: %{}}],
             next_offset: "foobar"
           }
 

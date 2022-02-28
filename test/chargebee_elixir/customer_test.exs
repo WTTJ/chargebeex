@@ -1,7 +1,7 @@
 defmodule Chargebeex.CustomerTest do
   use ExUnit.Case, async: true
 
-  import Mox
+  import Hammox
 
   alias Chargebeex.Fixtures.Common
   alias Chargebeex.Customer
@@ -54,11 +54,11 @@ defmodule Chargebeex.CustomerTest do
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
-          {:ok, 200, [], Jason.encode!(%{customer: %{id: 1234}})}
+          {:ok, 200, [], Jason.encode!(%{customer: %{}})}
         end
       )
 
-      assert {:ok, %Customer{id: 1234, _raw_payload: %{"id" => 1234}}} == Customer.retrieve(1234)
+      assert {:ok, %Customer{}} == Customer.retrieve(1234)
     end
   end
 
@@ -90,13 +90,11 @@ defmodule Chargebeex.CustomerTest do
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
-          {:ok, 200, [],
-           Jason.encode!(%{list: [%{customer: %{id: 0000}}, %{customer: %{id: 9999}}]})}
+          {:ok, 200, [], Jason.encode!(%{list: [%{customer: %{}}, %{customer: %{}}]})}
         end
       )
 
-      assert {:ok, [%Customer{id: 0000}, %Customer{id: 9999}], %{"next_offset" => nil}} =
-               Customer.list()
+      assert {:ok, [%Customer{}, %Customer{}], %{"next_offset" => nil}} = Customer.list()
     end
 
     test "with limit & offset params should succeed" do
@@ -117,8 +115,7 @@ defmodule Chargebeex.CustomerTest do
         end
       )
 
-      assert {:ok, [%Customer{id: 0000}], %{"next_offset" => "foobar"}} =
-               Customer.list(%{limit: 1})
+      assert {:ok, [%Customer{}], %{"next_offset" => "foobar"}} = Customer.list(%{limit: 1})
     end
   end
 
@@ -183,12 +180,11 @@ defmodule Chargebeex.CustomerTest do
 
           assert data == "email=foobar%40company.com"
 
-          {:ok, 200, [], Jason.encode!(%{customer: %{id: "foobar", email: "foobar@company.com"}})}
+          {:ok, 200, [], Jason.encode!(%{customer: %{}})}
         end
       )
 
-      assert {:ok, %Customer{id: "foobar"}} =
-               Chargebeex.Customer.create(%{email: "foobar@company.com"})
+      assert {:ok, %Customer{}} = Chargebeex.Customer.create(%{email: "foobar@company.com"})
     end
   end
 
@@ -254,11 +250,11 @@ defmodule Chargebeex.CustomerTest do
 
           assert data == "email=foobar%40company.com"
 
-          {:ok, 200, [], Jason.encode!(%{customer: %{id: "foobar"}})}
+          {:ok, 200, [], Jason.encode!(%{customer: %{}})}
         end
       )
 
-      assert {:ok, %Customer{id: "foobar"}} =
+      assert {:ok, %Customer{}} =
                Chargebeex.Customer.update("foobar", %{email: "foobar@company.com"})
     end
   end
@@ -324,12 +320,11 @@ defmodule Chargebeex.CustomerTest do
 
           assert body == ""
 
-          {:ok, 200, [], Jason.encode!(%{customer: %{id: "1234"}})}
+          {:ok, 200, [], Jason.encode!(%{customer: %{}})}
         end
       )
 
-      assert {:ok, %Customer{id: "1234", _raw_payload: %{"id" => "1234"}}} ==
-               Customer.delete("1234")
+      assert {:ok, %Customer{}} == Customer.delete("1234")
     end
   end
 end
