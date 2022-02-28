@@ -60,11 +60,22 @@ end
 
 ## Configuration
 
+
+Chargebeex can be configured using [Config](https://hexdocs.pm/elixir/1.12/Config.html) or environment variables.
+
+### Config
+
 ```elixir
-# config/dev.exs
 config :chargebeex,
-  namespace: "my_namespace",
-  api_key: "foobar"
+  namespace: "my-namespace",
+  api_key: "my-api-key"
+```
+
+### Environment variables
+
+```
+export CHARGEBEEX_API_KEY=my-api-key
+export CHARGEBEEX_NAMESPACE=my-namespace
 ```
 
 ## Usage
