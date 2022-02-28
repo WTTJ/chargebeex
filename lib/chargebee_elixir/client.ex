@@ -15,7 +15,7 @@ defmodule Chargebeex.Client do
         uri
 
       params ->
-        %{uri | query: URI.encode_query(params)}
+        %{uri | query: Plug.Conn.Query.encode(params)}
     end
     |> URI.to_string()
   end
