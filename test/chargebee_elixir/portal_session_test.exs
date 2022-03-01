@@ -58,7 +58,7 @@ defmodule Chargebeex.PortalSessionTest do
         end
       )
 
-      assert {:ok, %PortalSession{_raw_payload: %{}}} == PortalSession.retrieve(1234)
+      assert {:ok, %PortalSession{}} == PortalSession.retrieve(1234)
     end
   end
 
