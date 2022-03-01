@@ -7,36 +7,20 @@ defmodule Chargebeex.Builder.EventTest do
   alias Chargebeex.Event
 
   describe "build/1" do
-    test "should build a full event" do
+    test "should build an event" do
       builded =
         EventFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("event", with_extra: true)
+        |> Builder.build()
 
       assert %{"event" => %Event{}} = builded
     end
 
-    test "should build a simple event" do
-      builded =
-        EventFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("event")
-
-      assert %Event{} = builded
-
-      builded =
-        EventFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("event", with_extra: false)
-
-      assert %Event{} = builded
-    end
-
-    test "should build a list of full event" do
+    test "should build a list of events" do
       builded =
         EventFixture.list()
         |> Jason.decode!()
-        |> Builder.build("event", with_extra: true)
+        |> Builder.build()
 
       assert {[
                 %{"event" => %Event{}},
@@ -44,33 +28,12 @@ defmodule Chargebeex.Builder.EventTest do
               ], %{"next_offset" => _}} = builded
     end
 
-    test "should build a list of simple event" do
-      builded =
-        EventFixture.list()
-        |> Jason.decode!()
-        |> Builder.build("event", with_extra: false)
-
-      assert {[
-                %Event{},
-                %Event{}
-              ], %{"next_offset" => _}} = builded
-
-      builded =
-        EventFixture.list()
-        |> Jason.decode!()
-        |> Builder.build("event")
-
-      assert {[
-                %Event{},
-                %Event{}
-              ], %{"next_offset" => _}} = builded
-    end
-
     test "should have event params" do
       event =
         EventFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("event", with_extra: false)
+        |> Builder.build()
+        |> Map.get("event")
 
       params = EventFixture.event_params() |> Jason.decode!()
 

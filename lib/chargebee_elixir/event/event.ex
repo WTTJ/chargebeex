@@ -11,6 +11,7 @@ defmodule Chargebeex.Event do
     :source,
     :user,
     :webhook_status,
+    resources: %{},
     _raw_payload: %{}
   ]
 
@@ -36,6 +37,6 @@ defmodule Chargebeex.Event do
   defp parse_content(raw_data) do
     raw_data
     |> Map.get("content", %{})
-    |> Builder.build("event", with_extra: true)
+    |> Builder.build()
   end
 end

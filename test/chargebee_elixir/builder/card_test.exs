@@ -6,36 +6,21 @@ defmodule Chargebeex.Builder.CardTest do
   alias Chargebeex.Card
 
   describe "build/1" do
-    test "should build a full card" do
+    test "should build a card" do
       builded =
         CardFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("card", with_extra: true)
+        |> Builder.build()
 
       assert %{"card" => %Card{}} = builded
-    end
-
-    test "should build a simple card" do
-      builded =
-        CardFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("card")
-
-      assert %Card{} = builded
-
-      builded =
-        CardFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("card", with_extra: false)
-
-      assert %Card{} = builded
     end
 
     test "should have card params" do
       card =
         CardFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("card", with_extra: false)
+        |> Builder.build()
+        |> Map.get("card")
 
       params = CardFixture.card_params() |> Jason.decode!()
 

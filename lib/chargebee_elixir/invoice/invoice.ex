@@ -40,6 +40,7 @@ defmodule Chargebeex.Invoice do
     :total,
     :updated_at,
     :write_off_amount,
+    resources: %{},
     _raw_payload: %{}
   ]
 

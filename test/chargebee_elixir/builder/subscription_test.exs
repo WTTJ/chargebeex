@@ -6,62 +6,24 @@ defmodule Chargebeex.Builder.SubscriptionTest do
   alias Chargebeex.{Customer, Subscription}
 
   describe "build/1" do
-    test "should build a full subscription" do
+    test "should build a subscription" do
       builded =
         SubscriptionFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("subscription", with_extra: true)
+        |> Builder.build()
 
       assert %{"subscription" => %Subscription{}, "customer" => %Customer{}} = builded
     end
 
-    test "should build a simple subscription" do
-      builded =
-        SubscriptionFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("subscription")
-
-      assert %Subscription{} = builded
-
-      builded =
-        SubscriptionFixture.retrieve()
-        |> Jason.decode!()
-        |> Builder.build("subscription", with_extra: false)
-
-      assert %Subscription{} = builded
-    end
-
-    test "should build a list of full subscription" do
+    test "should build a list of subscription" do
       builded =
         SubscriptionFixture.list()
         |> Jason.decode!()
-        |> Builder.build("subscription", with_extra: true)
+        |> Builder.build()
 
       assert {[
-                %{"customer" => %Customer{}, "subscription" => %Subscription{}},
-                %{"customer" => %Customer{}, "subscription" => %Subscription{}}
-              ], %{"next_offset" => _}} = builded
-    end
-
-    test "should build a list of simple subscription" do
-      builded =
-        SubscriptionFixture.list()
-        |> Jason.decode!()
-        |> Builder.build("subscription", with_extra: false)
-
-      assert {[
-                %Subscription{},
-                %Subscription{}
-              ], %{"next_offset" => _}} = builded
-
-      builded =
-        SubscriptionFixture.list()
-        |> Jason.decode!()
-        |> Builder.build("subscription")
-
-      assert {[
-                %Subscription{},
-                %Subscription{}
+                %{"subscription" => %Subscription{}, "customer" => %Customer{}},
+                %{"subscription" => %Subscription{}, "customer" => %Customer{}}
               ], %{"next_offset" => _}} = builded
     end
 
@@ -69,7 +31,8 @@ defmodule Chargebeex.Builder.SubscriptionTest do
       subscription =
         SubscriptionFixture.retrieve()
         |> Jason.decode!()
-        |> Builder.build("subscription", with_extra: false)
+        |> Builder.build()
+        |> Map.get("subscription")
 
       params = SubscriptionFixture.subscription_params() |> Jason.decode!()
 
