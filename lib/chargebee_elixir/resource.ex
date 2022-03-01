@@ -69,4 +69,13 @@ defmodule Chargebeex.Resource do
       end)
     end
   end
+
+  def add_custom_fields(params, raw_data) do
+    custom_fields =
+      raw_data
+      |> Enum.filter(fn {k, _v} -> String.starts_with?(k, "cf_") end)
+      |> Map.new()
+
+    Map.put(params, :custom_fields, custom_fields)
+  end
 end

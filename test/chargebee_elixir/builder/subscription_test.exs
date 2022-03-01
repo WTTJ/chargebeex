@@ -60,5 +60,26 @@ defmodule Chargebeex.Builder.SubscriptionTest do
       assert subscription.total_dues == Map.get(params, "total_dues")
       assert subscription.updated_at == Map.get(params, "updated_at")
     end
+
+    test "should handle custom fields" do
+      subscription =
+        SubscriptionFixture.retrieve()
+        |> Jason.decode!()
+        |> Map.get("subscription")
+        |> Map.merge(%{
+          "cf_foo" => "baz",
+          "cf_bar" => "baz"
+        })
+
+      assert %Subscription{
+               custom_fields: %{
+                 "cf_foo" => "baz",
+                 "cf_bar" => "baz"
+               }
+             } =
+               %{"subscription" => subscription}
+               |> Builder.build()
+               |> Map.get("subscription")
+    end
   end
 end
