@@ -23,6 +23,7 @@ defmodule Chargebeex.Subscription do
     :subscription_items,
     :total_dues,
     :updated_at,
+    :resources,
     _raw_payload: %{}
   ]
 
