@@ -22,8 +22,7 @@ defmodule Chargebeex.Customer do
     :unbilled_charges,
     :updated_at,
     resources: %{},
-    custom_fields: %{},
-    _raw_payload: %{}
+    custom_fields: %{}
   ]
 
   use Chargebeex.Resource,
@@ -67,8 +66,7 @@ defmodule Chargebeex.Customer do
         resource_version: raw_data["resource_version"],
         taxability: raw_data["taxability"],
         unbilled_charges: raw_data["unbilled_charges"],
-        updated_at: raw_data["updated_at"],
-        _raw_payload: raw_data
+        updated_at: raw_data["updated_at"]
       }
       |> Chargebeex.Resource.add_custom_fields(raw_data)
 
@@ -106,7 +104,6 @@ defmodule Chargebeex.Customer do
 
       iex> Chargebeex.Customer.create(%{company: "MyCompany"})
       {:ok, %Chargebeex.Customer{
-          _raw_payload: [...],
           allow_direct_debit: false,
           auto_collection: "on",
           card_status: "no_card",
@@ -152,7 +149,6 @@ defmodule Chargebeex.Customer do
 
       iex> Chargebeex.Customer.retrieve("AzyzkCSvjSUpY4xuB")
       {:ok, %Chargebeex.Customer{
-          _raw_payload: [...],
           allow_direct_debit: false,
           auto_collection: "on",
           card_status: "no_card",
@@ -185,7 +181,6 @@ defmodule Chargebeex.Customer do
 
       iex> Chargebeex.Customer.update("AzyzkCSvjSUpY4xuB", %{company: "MyUpdatedCompany"})
       {:ok, %Chargebeex.Customer{
-          _raw_payload: [...],
           allow_direct_debit: false,
           auto_collection: "on",
           card_status: "no_card",
@@ -218,7 +213,6 @@ defmodule Chargebeex.Customer do
 
       iex> Chargebeex.Customer.delete("AzyzkCSvjSUpY4xuB")
       {:ok, %Chargebeex.Customer{
-          _raw_payload: [...],
           allow_direct_debit: false,
           auto_collection: "on",
           card_status: "no_card",

@@ -10,8 +10,7 @@ defmodule Chargebeex.PortalSession do
     :redirect_url,
     :status,
     :token,
-    resources: %{},
-    _raw_payload: %{}
+    resources: %{}
   ]
 
   use Chargebeex.Resource,
@@ -33,8 +32,7 @@ defmodule Chargebeex.PortalSession do
       object: raw_data["object"],
       redirect_url: raw_data["redirect_url"],
       status: raw_data["status"],
-      token: raw_data["token"],
-      _raw_payload: raw_data
+      token: raw_data["token"]
     }
 
     struct(__MODULE__, attrs)

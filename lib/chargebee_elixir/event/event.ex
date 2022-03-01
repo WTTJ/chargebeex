@@ -11,8 +11,7 @@ defmodule Chargebeex.Event do
     :source,
     :user,
     :webhook_status,
-    resources: %{},
-    _raw_payload: %{}
+    resources: %{}
   ]
 
   use Chargebeex.Resource, resource: "event", only: [:retrieve, :list]
@@ -27,8 +26,7 @@ defmodule Chargebeex.Event do
       source: raw_data["source"],
       user: raw_data["user"],
       webhook_status: raw_data["webhook_status"],
-      content: parse_content(raw_data),
-      _raw_payload: raw_data
+      content: parse_content(raw_data)
     }
 
     struct(__MODULE__, attrs)
