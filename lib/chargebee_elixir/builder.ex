@@ -1,5 +1,5 @@
 defmodule Chargebeex.Builder do
-  alias Chargebeex.{Customer, Event, PortalSession, Subscription}
+  alias Chargebeex.{Card, Customer, Event, PortalSession, Subscription}
 
   @type opts :: [:with_extra] | []
   @default_opts [with_extra: false]
@@ -32,11 +32,13 @@ defmodule Chargebeex.Builder do
   def build_resource(%{"customer" => params}), do: Customer.build(params)
   def build_resource(%{"portal_session" => params}), do: PortalSession.build(params)
   def build_resource(%{"event" => params}), do: Event.build(params)
+  def build_resource(%{"card" => params}), do: Card.build(params)
 
   def build_resource("subscription", params), do: Subscription.build(params)
   def build_resource("customer", params), do: Customer.build(params)
   def build_resource("portal_session", params), do: PortalSession.build(params)
   def build_resource("event", params), do: Event.build(params)
+  def build_resource("card", params), do: Card.build(params)
 
   def build_resource(_resource, params), do: params
 end
