@@ -60,7 +60,6 @@ end
 
 ## Configuration
 
-
 Chargebeex can be configured using [Config](https://hexdocs.pm/elixir/1.12/Config.html) or environment variables.
 
 ### Config
@@ -91,27 +90,20 @@ Chargebee provides a way to add user-specific fields for resources like
 Customer, Subscriptions, ... called [Custom
 Fields](https://www.chargebee.com/docs/2.0/custom_fields.html).
 
-These fields are prepended with the `cf_` prefix. Unfortunately, it is difficult
-to handle these fields in the resource structure, because these are dynamically
-provided.
-
-However, a special `_raw_payload` field is present in each structure,
-representing the raw result retrieved from the Chargebee API. You can retrieve
-you custom fields in this map.
+These fields are prepended with the `cf_` prefix. These fields can be accessed
+in the special `custom_fields` field of the structure. This is only available
+for Customers, Subscriptions, Product Families, Plans, Addones and Price Points.
 
 #### Example:
 
 ```elixir
  iex> Chargebeex.Customer.retrieve("barbaz")
  {:ok, %Chargebeex.Customer{
-     _raw_payload: %{
-       "allow_direct_debit" => false,
-       "id" => "barbaz",
-       "cf_my_custom_field" => "foobar",
-       [...]
-     },
+     id: "barbaz",
      allow_direct_debit: false,
-     id: "barbaz"
+     custom_fields: %{
+       "cf_my_custom_field" => "foobar"
+     },
      [...]}
   }
 ```
