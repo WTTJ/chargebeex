@@ -113,3 +113,6 @@ for Customers, Subscriptions, Product Families, Plans, Addones and Price Points.
 ```sh
 mix test
 ```
+
+## License
+MIT
