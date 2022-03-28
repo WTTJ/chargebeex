@@ -56,10 +56,29 @@ defmodule Chargebeex.MixProject do
 
   def docs do
     [
+      extras: extras(),
       main: "readme",
       source_url: @source_url,
       homepage_url: @source_url,
-      formatters: ["html"]
+      formatters: ["html"],
+      groups_for_modules: [
+        Client: [
+          Chargebeex.ClientBehaviour,
+          Chargebeex.Client.Hackney
+        ],
+        Resources: [
+          Chargebeex.Card,
+          Chargebeex.Customer,
+          Chargebeex.Event,
+          Chargebeex.Invoice,
+          Chargebeex.PortalSession,
+          Chargebeex.Subscription
+        ]
+      ]
     ]
+  end
+
+  defp extras() do
+    ["README.md": [title: "Overview"]]
   end
 end
