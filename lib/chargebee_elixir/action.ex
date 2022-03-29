@@ -52,7 +52,7 @@ defmodule Chargebeex.Action do
 
   defp put_resources(builded, resource) do
     builded
-    |> Map.get(resource)
+    |> Map.get(resource, %{})
     |> Map.merge(%{resources: Map.drop(builded, [resource])})
   end
 
