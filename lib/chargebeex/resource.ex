@@ -1,5 +1,5 @@
 defmodule Chargebeex.Resource do
-  @callback build(raw_data: Map.t()) :: {:ok, struct()}
+  @callback build(raw_data: map()) :: {:ok, struct()}
 
   defmacro __using__(opts) do
     only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update, :delete])
