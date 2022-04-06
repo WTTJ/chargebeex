@@ -1,8 +1,5 @@
 defmodule Chargebeex.Builder do
-  @moduledoc """
-    Chargebeex.Builder module role is to transform raw data to the an internal
-    Chargebeex structure
-  """
+  @moduledoc false
   alias Chargebeex.{Card, Customer, Event, PortalSession, Subscription}
 
   @spec build(raw_data :: map()) :: struct() | map()

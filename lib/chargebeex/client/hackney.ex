@@ -1,4 +1,5 @@
 defmodule Chargebeex.Client.Hackney do
+  @moduledoc false
   @behaviour Chargebeex.ClientBehaviour
 
   def get(url, body, headers \\ []) do
