@@ -2,8 +2,6 @@ defmodule Chargebeex.Builder do
   @moduledoc false
   alias Chargebeex.{Card, Customer, Event, PortalSession, Subscription}
 
-  @spec build(raw_data :: map()) :: struct() | map()
-
   def build(%{"list" => resources, "next_offset" => next_offset}) do
     {Enum.map(resources, &build/1), %{"next_offset" => next_offset}}
   end
