@@ -1,4 +1,5 @@
 defmodule Chargebeex.Action do
+  @moduledoc false
   alias Chargebeex.Client
   alias Chargebeex.Builder
 
