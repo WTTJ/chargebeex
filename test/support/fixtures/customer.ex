@@ -4,6 +4,18 @@ defmodule Chargebeex.Fixtures.Customer do
     {
       "allow_direct_debit": false,
       "auto_collection": "off",
+      "billing_address": {
+        "city": "Walnut",
+        "country": "US",
+        "first_name": "John",
+        "last_name": "Doe",
+        "line1": "PO Box 9999",
+        "object": "billing_address",
+        "state": "California",
+        "state_code": "CA",
+        "validation_status": "not_validated",
+        "zip": "91789"
+      },
       "card_status": "no_card",
       "created_at": 1612890938,
       "deleted": false,
@@ -21,6 +33,26 @@ defmodule Chargebeex.Fixtures.Customer do
       "taxability": "taxable",
       "unbilled_charges": 0,
       "updated_at": 1612890938
+    }
+    """
+  end
+
+  def retrieve() do
+    """
+    {
+      "customer": #{customer_params()}
+    }
+    """
+  end
+
+  def list() do
+    """
+    {
+      "list": [
+        #{retrieve()},
+        #{retrieve()}
+      ],
+      "next_offset": "1612890918000"
     }
     """
   end
