@@ -1,6 +1,6 @@
 defmodule Chargebeex.Builder do
   @moduledoc false
-  alias Chargebeex.{Card, Customer, Event, PortalSession, Subscription}
+  alias Chargebeex.{BillingAddress, Card, Customer, Event, PortalSession, Subscription}
 
   def build(%{"list" => resources, "next_offset" => next_offset}) do
     {Enum.map(resources, &build/1), %{"next_offset" => next_offset}}
@@ -21,12 +21,14 @@ defmodule Chargebeex.Builder do
   def build_resource(%{"portal_session" => params}), do: PortalSession.build(params)
   def build_resource(%{"event" => params}), do: Event.build(params)
   def build_resource(%{"card" => params}), do: Card.build(params)
+  def build_resource(%{"billing_address" => params}), do: BillingAddress.build(params)
 
   def build_resource("subscription", params), do: Subscription.build(params)
   def build_resource("customer", params), do: Customer.build(params)
   def build_resource("portal_session", params), do: PortalSession.build(params)
   def build_resource("event", params), do: Event.build(params)
   def build_resource("card", params), do: Card.build(params)
+  def build_resource("billing_address", params), do: BillingAddress.build(params)
 
   def build_resource(_resource, params), do: params
 end
