@@ -24,6 +24,9 @@ defmodule Chargebeex.Customer do
     :taxability,
     :unbilled_charges,
     :updated_at,
+    :vat_number,
+    :vat_number_validated_time,
+    :vat_number_status,
     resources: %{},
     custom_fields: %{}
   ]
@@ -72,7 +75,10 @@ defmodule Chargebeex.Customer do
         resource_version: raw_data["resource_version"],
         taxability: raw_data["taxability"],
         unbilled_charges: raw_data["unbilled_charges"],
-        updated_at: raw_data["updated_at"]
+        updated_at: raw_data["updated_at"],
+        vat_number: raw_data["vat_number"],
+        vat_number_validated_time: raw_data["vat_number_validated_time"],
+        vat_number_status: raw_data["vat_number_status"]
       }
       |> Chargebeex.Resource.add_custom_fields(raw_data)
 

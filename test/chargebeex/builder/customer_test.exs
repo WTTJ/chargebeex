@@ -55,6 +55,9 @@ defmodule Chargebeex.Builder.CustomerTest do
       assert customer.taxability == Map.get(params, "taxability")
       assert customer.unbilled_charges == Map.get(params, "unbilled_charges")
       assert customer.updated_at == Map.get(params, "updated_at")
+      assert customer.vat_number == Map.get(params, "vat_number")
+      assert customer.vat_number_validated_time == Map.get(params, "vat_number_validated_time")
+      assert customer.vat_number_status == Map.get(params, "vat_number_status")
     end
   end
 end

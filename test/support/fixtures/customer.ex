@@ -32,7 +32,10 @@ defmodule Chargebeex.Fixtures.Customer do
       "resource_version": 1612890938000,
       "taxability": "taxable",
       "unbilled_charges": 0,
-      "updated_at": 1612890938
+      "updated_at": 1612890938,
+      "vat_number": "55802162628",
+      "vat_number_status": "valid",
+      "vat_number_validated_time": "1649946996"
     }
     """
   end
