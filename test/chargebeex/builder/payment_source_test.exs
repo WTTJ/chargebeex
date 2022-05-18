@@ -50,6 +50,7 @@ defmodule Chargebeex.Builder.PaymentSourceTest do
       assert payment_source.issuing_country == Map.get(params, "issuing_country")
       assert payment_source.deleted == Map.get(params, "deleted")
       assert payment_source.business_entity_id == Map.get(params, "business_entity_id")
+      assert payment_source.customer_id == Map.get(params, "customer_id")
 
       assert %Card{} = payment_source.card
     end

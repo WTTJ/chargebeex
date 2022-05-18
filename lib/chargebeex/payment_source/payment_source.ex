@@ -33,6 +33,7 @@ defmodule Chargebeex.PaymentSource do
       resource_version: raw_data["resource_version"],
       updated_at: raw_data["updated_at"],
       created_at: raw_data["created_at"],
+      customer_id: raw_data["customer_id"],
       type: raw_data["type"],
       reference_id: raw_data["reference_id"],
       status: raw_data["status"],
