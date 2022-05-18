@@ -28,6 +28,7 @@ defmodule Chargebeex.Card do
     :powered_by,
     :customer_id,
     :masked_number,
+    :brand,
     # FIXME: "object" field is present in the returned API fields example, but
     # not as a card attribute definition
     :object
@@ -65,7 +66,8 @@ defmodule Chargebeex.Card do
       powered_by: raw_data["powered_by"],
       customer_id: raw_data["customer_id"],
       masked_number: raw_data["masked_number"],
-      object: raw_data["object"]
+      object: raw_data["object"],
+      brand: raw_data["brand"]
     }
 
     struct(__MODULE__, attrs)

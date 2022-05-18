@@ -17,7 +17,8 @@ defmodule Chargebeex.Fixtures.Card do
       "payment_source_id": "pm___test__XpbTXGTSRp3ENNCc",
       "resource_version": 1517486946205,
       "status": "valid",
-      "updated_at": 1517486946
+      "updated_at": 1517486946,
+      "brand": "visa"
     }
     """
   end

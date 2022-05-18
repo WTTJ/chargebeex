@@ -40,6 +40,7 @@ defmodule Chargebeex.Builder.CardTest do
       assert card.resource_version == Map.get(params, "resource_version")
       assert card.status == Map.get(params, "status")
       assert card.updated_at == Map.get(params, "updated_at")
+      assert card.brand == Map.get(params, "brand")
     end
   end
 end
