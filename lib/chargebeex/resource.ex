@@ -8,7 +8,7 @@ defmodule Chargebeex.Resource do
   @doc """
   Build a raw data map into in an internal structure.
   """
-  @callback build(raw_data :: map()) :: {:ok, struct()}
+  @callback build(raw_data :: map()) :: struct()
 
   @doc """
     Retrieve a resource
