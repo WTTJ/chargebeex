@@ -27,6 +27,8 @@ defmodule Chargebeex.Customer do
     :vat_number,
     :vat_number_validated_time,
     :vat_number_status,
+    :primary_payment_source_id,
+    :backup_payment_source_id,
     resources: %{},
     custom_fields: %{}
   ]
@@ -78,7 +80,9 @@ defmodule Chargebeex.Customer do
         updated_at: raw_data["updated_at"],
         vat_number: raw_data["vat_number"],
         vat_number_validated_time: raw_data["vat_number_validated_time"],
-        vat_number_status: raw_data["vat_number_status"]
+        vat_number_status: raw_data["vat_number_status"],
+        primary_payment_source_id: raw_data["primary_payment_source_id"],
+        backup_payment_source_id: raw_data["backup_payment_source_id"]
       }
       |> Chargebeex.Resource.add_custom_fields(raw_data)
 
@@ -109,7 +113,9 @@ defmodule Chargebeex.Customer do
           resource_version: integer(),
           taxability: String.t(),
           unbilled_charges: integer(),
-          updated_at: integer()
+          updated_at: integer(),
+          primary_payment_source_id: String.t(),
+          backup_payment_source_id: String.t()
         }
 
   @doc """

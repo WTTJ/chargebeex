@@ -35,7 +35,9 @@ defmodule Chargebeex.Fixtures.Customer do
       "updated_at": 1612890938,
       "vat_number": "55802162628",
       "vat_number_status": "valid",
-      "vat_number_validated_time": "1649946996"
+      "vat_number_validated_time": "1649946996",
+      "primary_payment_source_id": "pm_198avhT6H0gYlLyG",
+      "backup_payment_source_id": "pm_198avhT6H0gYlLyH"
     }
     """
   end
