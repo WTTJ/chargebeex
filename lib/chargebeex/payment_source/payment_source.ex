@@ -23,7 +23,7 @@ defmodule Chargebeex.PaymentSource do
     resources: %{}
   ]
 
-  alias Chargebeex.Card
+  alias Chargebeex.{BankAccount, Card}
 
   use Chargebeex.Resource, resource: "payment_source", only: [:retrieve, :list, :delete]
 
@@ -44,7 +44,7 @@ defmodule Chargebeex.PaymentSource do
       deleted: raw_data["deleted"],
       business_entity_id: raw_data["business_entity_id"],
       card: Card.build(raw_data["card"]),
-      bank_account: raw_data["bank_account"],
+      bank_account: BankAccount.build(raw_data["bank_account"]),
       amazon_payment: raw_data["amazon_payment"],
       upi: raw_data["upi"],
       paypal: raw_data["paypal"],
