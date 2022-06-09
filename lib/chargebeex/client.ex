@@ -26,10 +26,10 @@ defmodule Chargebeex.Client do
 
     case apply(http_client(), :get, [url, "", default_headers()]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, Jason.decode!(body)}
+        {:ok, status_code, headers, get_body_from_response(body)}
 
       {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, Jason.decode!(body)}
+        {:error, status_code, headers, get_body_from_response(body)}
     end
   end
 
@@ -43,10 +43,17 @@ defmodule Chargebeex.Client do
 
     case apply(http_client(), :post, [url, body, default_headers(:post)]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, Jason.decode!(body)}
+        {:ok, status_code, headers, get_body_from_response(body)}
 
       {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, Jason.decode!(body)}
+        {:error, status_code, headers, get_body_from_response(body)}
+    end
+  end
+
+  defp get_body_from_response(body) do
+    case Jason.decode(body) do
+      {:ok, parsed_body} -> parsed_body
+      {:error, _} -> body
     end
   end
 
