@@ -69,6 +69,10 @@ defmodule Chargebeex.Action do
     Path.join([resource_base_path(resource), id, action])
   end
 
+  def resource_path_generic_without_id(resource, action) do
+    Path.join([resource_base_path(resource), action])
+  end
+
   def delete_path(resource, id) do
     Path.join([resource_path(resource, id), "delete"])
   end
