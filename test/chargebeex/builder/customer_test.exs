@@ -38,6 +38,7 @@ defmodule Chargebeex.Builder.CustomerTest do
 
       assert customer.allow_direct_debit == Map.get(params, "allow_direct_debit")
       assert customer.auto_collection == Map.get(params, "auto_collection")
+      assert customer.business_customer_without_vat_number == false
       assert customer.card_status == Map.get(params, "card_status")
       assert customer.created_at == Map.get(params, "created_at")
       assert customer.deleted == Map.get(params, "deleted")

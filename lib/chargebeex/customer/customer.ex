@@ -3,6 +3,7 @@ defmodule Chargebeex.Customer do
     :allow_direct_debit,
     :auto_collection,
     :billing_address,
+    :business_customer_without_vat_number,
     :card_status,
     :channel,
     :company,
@@ -57,6 +58,7 @@ defmodule Chargebeex.Customer do
         allow_direct_debit: raw_data["allow_direct_debit"],
         auto_collection: raw_data["auto_collection"],
         billing_address: raw_data["billing_address"],
+        business_customer_without_vat_number: raw_data["business_customer_without_vat_number"],
         card_status: raw_data["card_status"],
         channel: raw_data["channel"],
         company: raw_data["company"],
@@ -93,6 +95,7 @@ defmodule Chargebeex.Customer do
           allow_direct_debit: boolean(),
           auto_collection: String.t(),
           billing_address: map(),
+          business_customer_without_vat_number: boolean(),
           card_status: String.t(),
           channel: String.t(),
           company: String.t(),
@@ -127,6 +130,7 @@ defmodule Chargebeex.Customer do
         {:ok, %Chargebeex.Customer{
           allow_direct_debit: false,
           auto_collection: "on",
+          business_customer_without_vat_number: false,
           card_status: "no_card",
           channel: "web",
           company: "MyCompany",
@@ -177,6 +181,7 @@ defmodule Chargebeex.Customer do
       {:ok, %Chargebeex.Customer{
           allow_direct_debit: false,
           auto_collection: "on",
+          business_customer_without_vat_number: false,
           card_status: "no_card",
           channel: "web",
           company: "MyCompany",
@@ -246,6 +251,7 @@ defmodule Chargebeex.Customer do
       {:ok, %Chargebeex.Customer{
           allow_direct_debit: false,
           auto_collection: "on",
+          business_customer_without_vat_number: false,
           card_status: "no_card",
           channel: "web",
           company: "MyUpdatedCompany",
@@ -315,6 +321,7 @@ defmodule Chargebeex.Customer do
       {:ok, %Chargebeex.Customer{
           allow_direct_debit: false,
           auto_collection: "on",
+          business_customer_without_vat_number: false,
           card_status: "no_card",
           channel: "web",
           company: "MyUpdatedCompany",
