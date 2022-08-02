@@ -16,6 +16,7 @@ defmodule Chargebeex.Fixtures.Customer do
         "validation_status": "not_validated",
         "zip": "91789"
       },
+      "business_customer_without_vat_number": false,
       "card_status": "no_card",
       "created_at": 1612890938,
       "deleted": false,

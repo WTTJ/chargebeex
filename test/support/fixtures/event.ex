@@ -6,6 +6,7 @@ defmodule Chargebeex.Fixtures.Event do
       "content": {
         "customer": {
           "allow_direct_debit": false,
+          "business_customer_without_vat_number": false,
           "auto_collection": "off",
           "card_status": "no_card",
           "created_at": 1517505958,
