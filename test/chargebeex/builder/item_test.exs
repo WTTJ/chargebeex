@@ -29,7 +29,7 @@ defmodule Chargebeex.Builder.ItemTest do
       assert item.external_name == Map.get(params, "external_name")
       assert item.description == Map.get(params, "description")
       assert item.status == Map.get(params, "status")
-      assert item.resouce_version == Map.get(params, "resouce_version")
+      assert item.resource_version == Map.get(params, "resource_version")
       assert item.updated_at == Map.get(params, "updated_at")
       assert item.item_family_id == Map.get(params, "item_family_id")
       assert item.type == Map.get(params, "type")
