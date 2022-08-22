@@ -10,7 +10,9 @@ defmodule Chargebeex.Builder do
     HostedPage,
     PaymentSource,
     PortalSession,
-    Subscription
+    Subscription,
+    Item,
+    ItemPrice
   }
 
   def build(%{"list" => resources, "next_offset" => next_offset}) do
@@ -37,6 +39,8 @@ defmodule Chargebeex.Builder do
   def build_resource(%{"bank_account" => params}), do: BankAccount.build(params)
   def build_resource(%{"invoice" => params}), do: Invoice.build(params)
   def build_resource(%{"hosted_page" => params}), do: HostedPage.build(params)
+  def build_resource(%{"item" => params}), do: Item.build(params)
+  def build_resource(%{"item_price" => params}), do: ItemPrice.build(params)
 
   def build_resource("subscription", params), do: Subscription.build(params)
   def build_resource("customer", params), do: Customer.build(params)
@@ -48,6 +52,8 @@ defmodule Chargebeex.Builder do
   def build_resource("bank_account", params), do: BankAccount.build(params)
   def build_resource("invoice", params), do: Invoice.build(params)
   def build_resource("hosted_page", params), do: HostedPage.build(params)
+  def build_resource("item", params), do: Item.build(params)
+  def build_resource("item_price", params), do: ItemPrice.build(params)
 
   def build_resource(_resource, params), do: params
 end
