@@ -21,7 +21,7 @@ defmodule Chargebeex.Resource do
   @doc """
     Create a resource
   """
-  @callback create(params :: map()) :: {:ok, list()}
+  @callback create(params :: map()) :: {:ok, struct()}
   @doc """
     Update a resource
   """
