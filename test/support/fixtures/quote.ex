@@ -72,10 +72,30 @@ defmodule Chargebeex.Fixtures.Quote do
     """
   end
 
+  def quoted_subscription_params() do
+    """
+    {
+      "billing_period": 1,
+      "billing_period_unit": "year",
+      "remaining_billing_cycles": 1,
+      "object": "quoted_subscription",
+      "subscription_items": [{
+        "item_price_id": "Q4-22-Master-IT-Brand-Sub->5000-yearly",
+        "item_type": "plan",
+        "quantity": 1,
+        "unit_price": 5990000,
+        "billing_cycles": 1,
+        "object": "subscription_item"
+      }]
+    }
+    """
+  end
+
   def retrieve() do
     """
     {
-      "quote": #{quote_params()}
+      "quote": #{quote_params()},
+      "quoted_subscription": #{quoted_subscription_params()}
     }
     """
   end
