@@ -6,11 +6,6 @@ API](https://apidocs.chargebee.com/docs/api).
 This is a heavily inspired fork of the original work by [Nicolas
 Marlier](https://github.com/NicolasMarlier/chargebee-elixir)
 
-## Current status
-
-Some functions are auto-generated and can not work properly. Please open an
-issue if this is the case.
-
 ## Installation
 
 The package can be installed by adding `chargebeex` to your list of dependencies in `mix.exs`:
