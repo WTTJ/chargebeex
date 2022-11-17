@@ -1,4 +1,6 @@
 defmodule Chargebeex.Customer do
+  @resource "customer"
+
   defstruct [
     :allow_direct_debit,
     :auto_collection,
@@ -34,23 +36,7 @@ defmodule Chargebeex.Customer do
     custom_fields: %{}
   ]
 
-  use Chargebeex.Resource,
-    resource: "customer",
-    extra: [
-      {:update_payment_method, :post, true},
-      {:update_billing_info, :post, true},
-      {:assign_payment_role, :post, true},
-      {:record_excess_payment, :post, true},
-      {:collect_payment, :post, true},
-      {:move, :post, true},
-      {:change_billing_date, :post, true},
-      {:merge, :post, true},
-      {:clear_personal_data, :post, false},
-      {:relationships, :post, true},
-      {:delete_relationship, :post, false},
-      {:hierarchy, :get, true},
-      {:update_hierarchy_settings, :post, true}
-    ]
+  use Chargebeex.Resource, resource: @resource
 
   def build(raw_data) do
     attrs =
@@ -381,4 +367,56 @@ defmodule Chargebeex.Customer do
           }}
   """
   def delete(id), do: super(id)
+
+  def update_payment_method(id, params) do
+    generic_action(:post, @resource, "update_payment_method", id, params)
+  end
+
+  def update_billing_info(id, params) do
+    generic_action(:post, @resource, "update_billing_info", id, params)
+  end
+
+  def assign_payment_role(id, params) do
+    generic_action(:post, @resource, "assign_payment_role", id, params)
+  end
+
+  def record_excess_payment(id, params) do
+    generic_action(:post, @resource, "record_excess_payment", id, params)
+  end
+
+  def collect_payment(id, params) do
+    generic_action(:post, @resource, "collect_payment", id, params)
+  end
+
+  def move(id, params) do
+    generic_action(:post, @resource, "move", id, params)
+  end
+
+  def change_billing_date(id, params) do
+    generic_action(:post, @resource, "change_billing_date", id, params)
+  end
+
+  def merge(id, params) do
+    generic_action(:post, @resource, "merge", id, params)
+  end
+
+  def clear_personal_data(id) do
+    generic_action(:post, @resource, "clear_personal_data", id)
+  end
+
+  def relationships(id, params) do
+    generic_action(:post, @resource, "relationships", id, params)
+  end
+
+  def delete_relationship(id) do
+    generic_action(:post, @resource, "delete_relationship", id)
+  end
+
+  def hierarchy(id, params) do
+    generic_action(:get, @resource, "hierarchy", id, params)
+  end
+
+  def update_hierarchy_settings(id, params) do
+    generic_action(:post, @resource, "update_hierarchy_settings", id, params)
+  end
 end

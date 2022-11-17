@@ -75,31 +75,6 @@ defmodule Chargebeex.Resource do
         def delete(id), do: delete(@resource, id)
         defoverridable delete: 1
       end
-
-      opts
-      |> Keyword.get(:extra, [])
-      |> Enum.each(fn {function_name, verb, accept_params} ->
-        if accept_params do
-          def unquote(function_name)(id, params) do
-            generic_action(
-              unquote(verb),
-              @resource,
-              unquote(function_name) |> Atom.to_string(),
-              id,
-              params
-            )
-          end
-        else
-          def unquote(function_name)(id) do
-            generic_action(
-              unquote(verb),
-              @resource,
-              unquote(function_name) |> Atom.to_string(),
-              id
-            )
-          end
-        end
-      end)
     end
   end
 
