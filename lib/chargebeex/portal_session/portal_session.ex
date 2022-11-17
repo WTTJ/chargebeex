@@ -1,4 +1,5 @@
 defmodule Chargebeex.PortalSession do
+  @resource "portal_session"
   defstruct [
     :access_url,
     :created_at,
@@ -14,12 +15,8 @@ defmodule Chargebeex.PortalSession do
   ]
 
   use Chargebeex.Resource,
-    resource: "portal_session",
-    only: [:create, :retrieve],
-    extra: [
-      {:logout, :post, false},
-      {:activate, :post, true}
-    ]
+    resource: @resource,
+    only: [:create, :retrieve]
 
   def build(raw_data) do
     attrs = %{
@@ -37,4 +34,16 @@ defmodule Chargebeex.PortalSession do
 
     struct(__MODULE__, attrs)
   end
+
+  @doc """
+    Logs out the portal session. This should be called when customers logout of
+    your application.
+  """
+  def logout(id), do: generic_action(:post, @resource, "logout", id)
+
+  @doc """
+    When an user is sent back to your return URL with session details, you
+    should validate that information by calling this API.
+  """
+  def activate(id, params), do: generic_action(:post, @resource, "activate", id, params)
 end
