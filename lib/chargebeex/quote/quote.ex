@@ -40,7 +40,8 @@ defmodule Chargebeex.Quote do
     :valid_till,
     :vat_number,
     :vat_number_prefix,
-    :version
+    :version,
+    resources: %{}
   ]
 
   @typedoc """
@@ -95,7 +96,8 @@ defmodule Chargebeex.Quote do
           valid_till: non_neg_integer(),
           vat_number: String.t(),
           vat_number_prefix: String.t(),
-          version: pos_integer()
+          version: pos_integer(),
+          resources: map()
         }
 
   use Chargebeex.Resource,
