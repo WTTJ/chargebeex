@@ -13,7 +13,8 @@ defmodule Chargebeex.Builder do
     Subscription,
     Item,
     ItemPrice,
-    Quote
+    Quote,
+    QuotedSubscription
   }
 
   def build(%{"list" => resources, "next_offset" => next_offset}) do
@@ -43,6 +44,7 @@ defmodule Chargebeex.Builder do
   def build_resource(%{"item" => params}), do: Item.build(params)
   def build_resource(%{"item_price" => params}), do: ItemPrice.build(params)
   def build_resource(%{"quote" => params}), do: Quote.build(params)
+  def build_resource(%{"quoted_subscription" => params}), do: QuotedSubscription.build(params)
 
   def build_resource("subscription", params), do: Subscription.build(params)
   def build_resource("customer", params), do: Customer.build(params)
@@ -57,6 +59,7 @@ defmodule Chargebeex.Builder do
   def build_resource("item", params), do: Item.build(params)
   def build_resource("item_price", params), do: ItemPrice.build(params)
   def build_resource("quote", params), do: Quote.build(params)
+  def build_resource("quoted_subscription", params), do: QuotedSubscription.build(params)
 
   def build_resource(_resource, params), do: params
 end

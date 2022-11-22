@@ -4,6 +4,7 @@ defmodule Chargebeex.Builder.QuoteTest do
   alias Chargebeex.Builder
   alias Chargebeex.Fixtures.Quote, as: QuoteFixture
   alias Chargebeex.Quote
+  alias Chargebeex.QuotedSubscription
 
   describe "build/1" do
     test "should build a quote" do
@@ -64,6 +65,33 @@ defmodule Chargebeex.Builder.QuoteTest do
       assert builded_quote.vat_number == Map.get(params, "vat_number")
       assert builded_quote.vat_number_prefix == Map.get(params, "vat_number_prefix")
       assert builded_quote.version == Map.get(params, "version")
+    end
+
+    test "should build a quoted_subscription" do
+      builded =
+        QuoteFixture.retrieve()
+        |> Jason.decode!()
+        |> Builder.build()
+
+      assert %{"quoted_subscription" => %QuotedSubscription{}} = builded
+    end
+
+    test "should have the quoted_subscription params" do
+      quoted_subscription =
+        QuoteFixture.retrieve()
+        |> Jason.decode!()
+        |> Builder.build()
+        |> Map.get("quoted_subscription")
+
+      params = QuoteFixture.quoted_subscription_params() |> Jason.decode!()
+
+      assert quoted_subscription.billing_period == Map.get(params, "billing_period")
+      assert quoted_subscription.billing_period_unit == Map.get(params, "billing_period_unit")
+
+      assert quoted_subscription.remaining_billing_cycles ==
+               Map.get(params, "remaining_billing_cycles")
+
+      assert quoted_subscription.subscription_items == Map.get(params, "subscription_items")
     end
   end
 end
