@@ -145,4 +145,25 @@ defmodule Chargebeex.Quote do
 
     struct(__MODULE__, attrs)
   end
+
+  @doc """
+    Changes the quote produced for creating a new subscription items
+    (operation_type = `create_subscription_for_customer`)
+  """
+  def edit_create_subscription_quote_for_items(id, params),
+    do: generic_action(:post, "quote", "edit_create_subscription_quote_for_items", id, params)
+
+  @doc """
+    Changes the quote produced for updating the subscription items.
+    (operation_type = `change_subscription`)
+  """
+  def edit_update_subscription_quote_for_items(id, params),
+    do: generic_action(:post, "quote", "edit_update_subscription_quote_for_items", id, params)
+
+  @doc """
+    Changes the quote produced for adding one-time charges and charge items.
+    (operation_type = `onetime_invoice`)
+  """
+  def edit_for_charge_items_and_charges(id, params),
+    do: generic_action(:post, "quote", "edit_for_charge_items_and_charges", id, params)
 end
