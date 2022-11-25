@@ -38,7 +38,13 @@ defmodule Chargebeex.Fixtures.Customer do
       "vat_number_status": "valid",
       "vat_number_validated_time": "1649946996",
       "primary_payment_source_id": "pm_198avhT6H0gYlLyG",
-      "backup_payment_source_id": "pm_198avhT6H0gYlLyH"
+      "backup_payment_source_id": "pm_198avhT6H0gYlLyH",
+      "relationship": {
+        "invoice_owner_id": "BTcLQ4TK41I7DSPy",
+        "parent_id": "BTcLQ4TK41I7DSPy",
+        "payment_owner_id": "BTcLQ4TK41I7DSPy",
+        "root_id": "BTcLQ4TK41I7DSPy"
+      }
     }
     """
   end
