@@ -61,6 +61,7 @@ defmodule Chargebeex.Builder.CustomerTest do
       assert customer.vat_number_status == Map.get(params, "vat_number_status")
       assert customer.primary_payment_source_id == Map.get(params, "primary_payment_source_id")
       assert customer.backup_payment_source_id == Map.get(params, "backup_payment_source_id")
+      assert customer.relationship == Map.get(params, "relationship")
     end
   end
 end
