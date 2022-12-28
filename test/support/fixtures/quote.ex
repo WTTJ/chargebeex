@@ -86,6 +86,23 @@ defmodule Chargebeex.Fixtures.Quote do
         "unit_price": 5990000,
         "billing_cycles": 1,
         "object": "subscription_item"
+      }],
+      "discounts": [{
+        "id": "AzZTUdTQk9Jgg28o",
+        "invoice_name": "10% off",
+        "type": "percentage",
+        "percentage": 10.0,
+        "duration_type": "limited_period",
+        "period": 2,
+        "period_unit": "month",
+        "apply_on": "specific_item_price",
+        "item_price_id": "Test1-USD-Monthly",
+        "created_at": 1671708217,
+        "object": "discount"
+      }],
+      "coupons": [{
+        "coupon_id": "copy_of_RECURRINGFIXED",
+        "object": "coupon"
       }]
     }
     """
