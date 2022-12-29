@@ -91,6 +91,8 @@ defmodule Chargebeex.Builder.QuoteTest do
       assert quoted_subscription.remaining_billing_cycles ==
                Map.get(params, "remaining_billing_cycles")
 
+      assert quoted_subscription.discounts == Map.get(params, "discounts")
+      assert quoted_subscription.coupons == Map.get(params, "coupons")
       assert quoted_subscription.subscription_items == Map.get(params, "subscription_items")
     end
   end
