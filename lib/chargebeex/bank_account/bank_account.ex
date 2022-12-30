@@ -1,16 +1,18 @@
 defmodule Chargebeex.BankAccount do
-  defstruct [
-    :last4,
-    :name_on_account,
-    :first_name,
-    :last_name,
-    :bank_name,
-    :mandate_id,
-    :account_type,
-    :echeck_type,
-    :account_holder_type,
-    :email
-  ]
+  use TypedStruct
+
+  typedstruct do
+    field :last4, String.t()
+    field :name_on_account, String.t()
+    field :first_name, String.t()
+    field :last_name, String.t()
+    field :bank_name, String.t()
+    field :mandate_id, String.t()
+    field :account_type, String.t()
+    field :echeck_type, String.t()
+    field :account_holder_type, String.t()
+    field :email, String.t()
+  end
 
   def build(raw_data) do
     attrs = %{
@@ -28,17 +30,4 @@ defmodule Chargebeex.BankAccount do
 
     struct(__MODULE__, attrs)
   end
-
-  @type t :: %__MODULE__{
-          last4: String.t(),
-          name_on_account: String.t(),
-          first_name: String.t(),
-          last_name: String.t(),
-          bank_name: String.t(),
-          mandate_id: String.t(),
-          account_type: String.t(),
-          echeck_type: String.t(),
-          account_holder_type: String.t(),
-          email: String.t()
-        }
 end

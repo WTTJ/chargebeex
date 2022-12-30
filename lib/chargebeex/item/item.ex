@@ -1,34 +1,6 @@
 defmodule Chargebeex.Item do
-  @moduledoc """
-  Struct that represent a Chargebee's API item resource.
-  """
-
-  defstruct [
-    :id,
-    :name,
-    :external_name,
-    :description,
-    :status,
-    :resource_version,
-    :updated_at,
-    :item_family_id,
-    :type,
-    :redirect_url,
-    :included_in_mrr,
-    :item_applicability,
-    :gift_claim_redirect_url,
-    :unit,
-    :usage_calculation,
-    :archived_at,
-    :channel,
-    is_shippable: false,
-    is_giftable: false,
-    enabled_for_checkout: true,
-    enabled_in_portal: true,
-    metered: false,
-    metadata: %{},
-    applicable_items: []
-  ]
+  use TypedStruct
+  use Chargebeex.Resource, resource: "item"
 
   @typedoc """
   "active" | "archived" | "deleted"
@@ -55,34 +27,36 @@ defmodule Chargebeex.Item do
   """
   @type channel :: String.t()
 
-  @type t :: %__MODULE__{
-          id: String.t(),
-          name: String.t(),
-          external_name: String.t() | nil,
-          description: String.t() | nil,
-          status: status() | nil,
-          resource_version: non_neg_integer() | nil,
-          updated_at: non_neg_integer() | nil,
-          item_family_id: String.t() | nil,
-          type: type() | nil,
-          is_shippable: boolean(),
-          is_giftable: boolean(),
-          redirect_url: String.t() | nil,
-          enabled_for_checkout: boolean(),
-          enabled_in_portal: boolean(),
-          included_in_mrr: boolean() | nil,
-          item_applicability: item_applicability() | nil,
-          gift_claim_redirect_url: String.t() | nil,
-          unit: String.t() | nil,
-          metered: boolean(),
-          usage_calculation: usage_calculation() | nil,
-          archived_at: non_neg_integer() | nil,
-          channel: channel() | nil,
-          metadata: %{} | nil,
-          applicable_items: [%{id: String.t()}]
-        }
+  @moduledoc """
+  Struct that represent a Chargebee's API item resource.
+  """
 
-  use Chargebeex.Resource, resource: "item"
+  typedstruct do
+    field :id, String.t()
+    field :name, String.t()
+    field :external_name, String.t()
+    field :description, String.t()
+    field :status, status()
+    field :resource_version, non_neg_integer()
+    field :updated_at, non_neg_integer()
+    field :item_family_id, String.t()
+    field :type, type()
+    field :redirect_url, String.t()
+    field :included_in_mrr, boolean()
+    field :item_applicability, item_applicability()
+    field :gift_claim_redirect_url, String.t()
+    field :unit, String.t()
+    field :usage_calculation, usage_calculation()
+    field :archived_at, non_neg_integer()
+    field :channel, channel()
+    field :is_shippable, boolean(), default: false
+    field :is_giftable, boolean(), default: false
+    field :enabled_for_checkout, boolean(), default: true
+    field :enabled_in_portal, boolean(), default: true
+    field :metered, boolean(), default: false
+    field :metadata, map(), default: %{}
+    field :applicable_items, list(), default: []
+  end
 
   def build(raw_data) do
     attrs = %{

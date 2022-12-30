@@ -1,20 +1,22 @@
 defmodule Chargebeex.BillingAddress do
-  defstruct [
-    :first_name,
-    :last_name,
-    :email,
-    :company,
-    :phone,
-    :line1,
-    :line2,
-    :line3,
-    :city,
-    :state_code,
-    :state,
-    :country,
-    :zip,
-    :validation_status
-  ]
+  use TypedStruct
+
+  typedstruct do
+    field :first_name, String.t()
+    field :last_name, String.t()
+    field :email, String.t()
+    field :company, String.t()
+    field :phone, String.t()
+    field :line1, String.t()
+    field :line2, String.t()
+    field :line3, String.t()
+    field :city, String.t()
+    field :state_code, String.t()
+    field :state, String.t()
+    field :country, String.t()
+    field :zip, String.t()
+    field :validation_status, String.t()
+  end
 
   def build(raw_data) do
     attrs = %{
@@ -36,21 +38,4 @@ defmodule Chargebeex.BillingAddress do
 
     struct(__MODULE__, attrs)
   end
-
-  @type t :: %__MODULE__{
-          first_name: String.t(),
-          last_name: String.t(),
-          email: String.t(),
-          company: String.t(),
-          phone: String.t(),
-          line1: String.t(),
-          line2: String.t(),
-          line3: String.t(),
-          city: String.t(),
-          state_code: String.t(),
-          state: String.t(),
-          country: String.t(),
-          zip: String.t(),
-          validation_status: String.t()
-        }
 end

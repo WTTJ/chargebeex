@@ -1,22 +1,24 @@
 defmodule Chargebeex.PortalSession do
-  @resource "portal_session"
-  defstruct [
-    :access_url,
-    :created_at,
-    :customer_id,
-    :expires_at,
-    :id,
-    :linked_customers,
-    :object,
-    :redirect_url,
-    :status,
-    :token,
-    resources: %{}
-  ]
+  use TypedStruct
 
+  @resource "portal_session"
   use Chargebeex.Resource,
     resource: @resource,
     only: [:create, :retrieve]
+
+  typedstruct do
+    field :access_url, String.t()
+    field :created_at, non_neg_integer()
+    field :customer_id, String.t()
+    field :expires_at, non_neg_integer()
+    field :id, String.t()
+    field :linked_customers, list()
+    field :object, String.t()
+    field :redirect_url, String.t()
+    field :status, String.t()
+    field :token, String.t()
+    field :resources, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs = %{

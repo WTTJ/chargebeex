@@ -1,68 +1,6 @@
 defmodule Chargebeex.Subscription do
-  defstruct [
-    :id,
-    :currency_code,
-    :start_date,
-    :trial_end,
-    :billing_period,
-    :billing_period_unit,
-    :object,
-    :remaining_billing_cycles,
-    :po_number,
-    :plan_quantity_in_decimal,
-    :plan_unit_price_in_decimal,
-    :customer_id,
-    :status,
-    :trial_start,
-    :trial_end_action,
-    :current_term_start,
-    :current_term_end,
-    :next_billing_at,
-    :created_at,
-    :started_at,
-    :activated_at,
-    :contract_term_billing_cycle_on_renewal,
-    :override_relationship,
-    :pause_date,
-    :resume_date,
-    :cancelled_at,
-    :cancel_reason,
-    :created_from_ip,
-    :resource_version,
-    :updated_at,
-    :payment_source_id,
-    :plan_free_quantity_in_decimal,
-    :plan_amount_in_decimal,
-    :cancel_schedule_created_at,
-    :channel,
-    :net_term_days,
-    :due_invoices_count,
-    :due_since,
-    :total_dues,
-    :mrr,
-    :exchange_rate,
-    :base_currency_code,
-    :invoice_notes,
-    :deleted,
-    :changes_scheduled_at,
-    :cancel_reason_code,
-    :free_period,
-    :free_period_unit,
-    :create_pending_invoices,
-    :auto_close_invoices,
-    :business_entity_id,
-    has_scheduled_advance_invoices: false,
-    has_scheduled_changes: false,
-    metadata: %{},
-    custom_fields: %{},
-    subscription_items: [],
-    item_tiers: [],
-    charged_items: [],
-    coupons: [],
-    shipping_address: %{},
-    referral_info: %{},
-    contract_term: %{}
-  ]
+  use TypedStruct
+  use Chargebeex.Resource, resource: "subscription", only: [:list, :retrieve, :update]
 
   @typedoc """
   "future" | "in_trial" | "active" | "non_renewing" | "paused" | "cancelled"
@@ -89,72 +27,70 @@ defmodule Chargebeex.Subscription do
   """
   @type period_unit :: String.t()
 
-  @type t :: %__MODULE__{
-          id: binary(),
-          currency_code: binary() | nil,
-          start_date: non_neg_integer() | nil,
-          trial_end: non_neg_integer() | nil,
-          billing_period: binary() | nil,
-          billing_period_unit: period_unit() | nil,
-          object: binary() | nil,
-          remaining_billing_cycles: non_neg_integer() | nil,
-          po_number: binary() | nil,
-          plan_quantity_in_decimal: binary() | nil,
-          plan_unit_price_in_decimal: binary() | nil,
-          customer_id: binary(),
-          status: status(),
-          trial_start: binary() | nil,
-          trial_end_action: trial_end_action() | nil,
-          current_term_start: non_neg_integer() | nil,
-          current_term_end: non_neg_integer() | nil,
-          next_billing_at: non_neg_integer() | nil,
-          created_at: non_neg_integer() | nil,
-          started_at: non_neg_integer() | nil,
-          activated_at: non_neg_integer() | nil,
-          contract_term_billing_cycle_on_renewal: non_neg_integer() | nil,
-          override_relationship: boolean() | nil,
-          pause_date: non_neg_integer() | nil,
-          resume_date: non_neg_integer() | nil,
-          cancelled_at: non_neg_integer() | nil,
-          cancel_reason: cancel_reason() | nil,
-          created_from_ip: binary() | nil,
-          resource_version: non_neg_integer() | nil,
-          updated_at: non_neg_integer() | nil,
-          has_scheduled_advance_invoices: boolean(),
-          has_scheduled_changes: boolean(),
-          payment_source_id: binary() | nil,
-          plan_free_quantity_in_decimal: binary() | nil,
-          plan_amount_in_decimal: binary() | nil,
-          cancel_schedule_created_at: non_neg_integer() | nil,
-          channel: channel() | nil,
-          net_term_days: integer() | nil,
-          due_invoices_count: integer() | nil,
-          due_since: non_neg_integer() | nil,
-          total_dues: non_neg_integer() | nil,
-          mrr: non_neg_integer() | nil,
-          exchange_rate: float() | nil,
-          base_currency_code: binary() | nil,
-          invoice_notes: binary() | nil,
-          metadata: %{},
-          custom_fields: %{},
-          deleted: boolean(),
-          changes_scheduled_at: non_neg_integer() | nil,
-          cancel_reason_code: binary() | nil,
-          free_period: integer() | nil,
-          free_period_unit: period_unit() | nil,
-          create_pending_invoices: boolean() | nil,
-          auto_close_invoices: boolean() | nil,
-          business_entity_id: binary() | nil,
-          subscription_items: [%{}],
-          item_tiers: [%{}],
-          charged_items: [%{}],
-          coupons: [%{}],
-          shipping_address: %{},
-          referral_info: %{},
-          contract_term: %{}
-        }
-
-  use Chargebeex.Resource, resource: "subscription", only: [:list, :retrieve, :update]
+  typedstruct do
+    field :id, String.t()
+    field :currency_code, String.t()
+    field :start_date, non_neg_integer()
+    field :trial_end, non_neg_integer()
+    field :billing_period, String.t()
+    field :billing_period_unit, period_unit()
+    field :object, String.t()
+    field :remaining_billing_cycles, non_neg_integer()
+    field :po_number, String.t()
+    field :plan_quantity_in_decimal, String.t()
+    field :plan_unit_price_in_decimal, String.t()
+    field :customer_id, String.t()
+    field :status, status()
+    field :trial_start, String.t()
+    field :trial_end_action, trial_end_action()
+    field :current_term_start, non_neg_integer()
+    field :current_term_end, non_neg_integer()
+    field :next_billing_at, non_neg_integer()
+    field :created_at, non_neg_integer()
+    field :started_at, non_neg_integer()
+    field :activated_at, non_neg_integer()
+    field :contract_term_billing_cycle_on_renewal, non_neg_integer()
+    field :override_relationship, boolean()
+    field :pause_date, non_neg_integer()
+    field :resume_date, non_neg_integer()
+    field :cancelled_at, non_neg_integer()
+    field :cancel_reason, cancel_reason()
+    field :created_from_ip, String.t()
+    field :resource_version, non_neg_integer()
+    field :updated_at, non_neg_integer()
+    field :has_scheduled_advance_invoices, boolean()
+    field :has_scheduled_changes, boolean()
+    field :payment_source_id, String.t()
+    field :plan_free_quantity_in_decimal, String.t()
+    field :plan_amount_in_decimal, String.t()
+    field :cancel_schedule_created_at, non_neg_integer()
+    field :channel, channel()
+    field :net_term_days, non_neg_integer()
+    field :due_invoices_count, integer()
+    field :due_since, non_neg_integer()
+    field :total_dues, non_neg_integer()
+    field :mrr, non_neg_integer()
+    field :exchange_rate, float()
+    field :base_currency_code, String.t()
+    field :invoice_notes, String.t()
+    field :deleted, boolean()
+    field :changes_scheduled_at, non_neg_integer()
+    field :cancel_reason_code, String.t()
+    field :free_period, integer()
+    field :free_period_unit, period_unit()
+    field :create_pending_invoices, boolean()
+    field :metadata, map(), default: %{}
+    field :custom_fields, map(), default: %{}
+    field :auto_close_invoices, boolean()
+    field :business_entity_id, String.t()
+    field :subscription_items, list()
+    field :item_tiers, list()
+    field :charged_items, list()
+    field :coupons, list()
+    field :shipping_address, map(), default: %{}
+    field :referral_info, map(), default: %{}
+    field :contract_term, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs =

@@ -1,43 +1,44 @@
 defmodule Chargebeex.Customer do
+  use TypedStruct
+
   @resource "customer"
-
-  defstruct [
-    :allow_direct_debit,
-    :auto_collection,
-    :billing_address,
-    :business_customer_without_vat_number,
-    :card_status,
-    :channel,
-    :company,
-    :created_at,
-    :deleted,
-    :email,
-    :excess_payments,
-    :first_name,
-    :last_name,
-    :id,
-    :locale,
-    :net_term_days,
-    :object,
-    :pii_cleared,
-    :preferred_currency_code,
-    :promotional_credits,
-    :refundable_credits,
-    :resource_version,
-    :taxability,
-    :unbilled_charges,
-    :updated_at,
-    :vat_number,
-    :vat_number_validated_time,
-    :vat_number_status,
-    :primary_payment_source_id,
-    :backup_payment_source_id,
-    :relationship,
-    resources: %{},
-    custom_fields: %{}
-  ]
-
   use Chargebeex.Resource, resource: @resource
+
+  typedstruct do
+    field :allow_direct_debit, boolean()
+    field :auto_collection, String.t()
+    field :billing_address, map()
+    field :business_customer_without_vat_number, boolean()
+    field :card_status, String.t()
+    field :channel, String.t()
+    field :company, String.t()
+    field :created_at, integer()
+    field :deleted, boolean()
+    field :email, String.t()
+    field :excess_payments, integer()
+    field :first_name, String.t()
+    field :last_name, String.t()
+    field :id, String.t()
+    field :locale, String.t()
+    field :net_term_days, integer()
+    field :object, String.t()
+    field :pii_cleared, String.t()
+    field :preferred_currency_code, String.t()
+    field :promotional_credits, integer()
+    field :refundable_credits, integer()
+    field :resource_version, integer()
+    field :taxability, String.t()
+    field :unbilled_charges, integer()
+    field :updated_at, integer()
+    field :vat_number, String.t()
+    field :vat_number_validated_time, integer()
+    field :vat_number_status, String.t()
+    field :primary_payment_source_id, String.t()
+    field :backup_payment_source_id, String.t()
+    field :relationship, map()
+    field :resources, map(), default: %{}
+    field :custom_fields, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs =
@@ -78,37 +79,6 @@ defmodule Chargebeex.Customer do
 
     struct(__MODULE__, attrs)
   end
-
-  @type t :: %__MODULE__{
-          allow_direct_debit: boolean(),
-          auto_collection: String.t(),
-          billing_address: map(),
-          business_customer_without_vat_number: boolean(),
-          card_status: String.t(),
-          channel: String.t(),
-          company: String.t(),
-          created_at: integer(),
-          deleted: boolean(),
-          email: String.t(),
-          excess_payments: integer(),
-          first_name: String.t(),
-          id: String.t(),
-          last_name: String.t(),
-          locale: String.t(),
-          net_term_days: integer(),
-          object: String.t(),
-          pii_cleared: String.t(),
-          preferred_currency_code: String.t(),
-          promotional_credits: integer(),
-          refundable_credits: integer(),
-          resource_version: integer(),
-          taxability: String.t(),
-          unbilled_charges: integer(),
-          updated_at: integer(),
-          primary_payment_source_id: String.t(),
-          backup_payment_source_id: String.t(),
-          relationship: map()
-        }
 
   @doc """
   Allows to create a Customer

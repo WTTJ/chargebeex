@@ -1,20 +1,21 @@
 defmodule Chargebeex.Event do
+  use TypedStruct
+  use Chargebeex.Resource, resource: "event", only: [:retrieve, :list]
+
   alias Chargebeex.Builder
 
-  defstruct [
-    :api_version,
-    :content,
-    :event_type,
-    :id,
-    :object,
-    :occurred_at,
-    :source,
-    :user,
-    :webhook_status,
-    resources: %{}
-  ]
-
-  use Chargebeex.Resource, resource: "event", only: [:retrieve, :list]
+  typedstruct do
+    field :api_version, String.t()
+    field :content, map()
+    field :event_type, String.t()
+    field :id, String.t()
+    field :object, String.t()
+    field :occurred_at, integer()
+    field :source, String.t()
+    field :user, String.t()
+    field :webhook_status, String.t()
+    field :resources, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs = %{
