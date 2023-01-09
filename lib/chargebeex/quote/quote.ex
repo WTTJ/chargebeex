@@ -1,48 +1,9 @@
 defmodule Chargebeex.Quote do
-  @moduledoc """
-  Struct that represent a Chargebee's API quote.
-  """
+  use TypedStruct
 
-  defstruct [
-    :id,
-    :amount_due,
-    :amount_paid,
-    :billing_address,
-    :business_entity_id,
-    :charge_on_acceptance,
-    :contract_term_end,
-    :contract_term_start,
-    :contract_term_termination_fee,
-    :credits_applied,
-    :currency_code,
-    :customer_id,
-    :date,
-    :discounts,
-    :invoice_id,
-    :line_item_discounts,
-    :line_item_taxes,
-    :line_item_tiers,
-    :line_items,
-    :name,
-    :notes,
-    :operation_type,
-    :po_number,
-    :price_type,
-    :resource_version,
-    :shipping_address,
-    :status,
-    :sub_total,
-    :subscription_id,
-    :taxes,
-    :total,
-    :total_payable,
-    :updated_at,
-    :valid_till,
-    :vat_number,
-    :vat_number_prefix,
-    :version,
-    resources: %{}
-  ]
+  use Chargebeex.Resource,
+    resource: "quote",
+    only: [:retrieve, :list]
 
   @typedoc """
   "create_subscription_for_customer" | "change_subscription" | "onetime_invoice"
@@ -59,51 +20,50 @@ defmodule Chargebeex.Quote do
   """
   @type status :: String.t()
 
-  @type t :: %__MODULE__{
-          id: String.t(),
-          amount_due: non_neg_integer(),
-          amount_paid: non_neg_integer(),
-          billing_address: map(),
-          business_entity_id: String.t(),
-          charge_on_acceptance: non_neg_integer(),
-          contract_term_end: non_neg_integer(),
-          contract_term_start: non_neg_integer(),
-          contract_term_termination_fee: non_neg_integer(),
-          credits_applied: non_neg_integer(),
-          currency_code: String.t(),
-          customer_id: String.t(),
-          date: non_neg_integer(),
-          discounts: [map()],
-          invoice_id: String.t(),
-          line_item_discounts: [map()],
-          line_item_taxes: [map()],
-          line_item_tiers: [map()],
-          line_items: [map()],
-          name: String.t(),
-          notes: [String.t()],
-          operation_type: operation_type(),
-          po_number: String.t(),
-          price_type: price_type(),
-          resource_version: non_neg_integer(),
-          shipping_address: map(),
-          status: status(),
-          sub_total: non_neg_integer(),
-          subscription_id: String.t(),
-          taxes: [map()],
-          total: non_neg_integer(),
-          total_payable: non_neg_integer(),
-          updated_at: non_neg_integer(),
-          valid_till: non_neg_integer(),
-          vat_number: String.t(),
-          vat_number_prefix: String.t(),
-          version: pos_integer(),
-          resources: map()
-        }
+  typedstruct do
+    field :id, String.t()
+    field :amount_due, non_neg_integer()
+    field :amount_paid, non_neg_integer()
+    field :billing_address, map()
+    field :business_entity_id, String.t()
+    field :charge_on_acceptance, non_neg_integer()
+    field :contract_term_end, non_neg_integer()
+    field :contract_term_start, non_neg_integer()
+    field :contract_term_termination_fee, non_neg_integer()
+    field :credits_applied, non_neg_integer()
+    field :currency_code, String.t()
+    field :customer_id, String.t()
+    field :date, non_neg_integer()
+    field :discounts, list()
+    field :invoice_id, String.t()
+    field :line_item_discounts, list()
+    field :line_item_taxes, list()
+    field :line_item_tiers, list()
+    field :line_items, list()
+    field :name, String.t()
+    field :notes, list()
+    field :operation_type, operation_type()
+    field :po_number, String.t()
+    field :price_type, price_type()
+    field :resource_version, non_neg_integer()
+    field :shipping_address, map()
+    field :status, status()
+    field :sub_total, non_neg_integer()
+    field :subscription_id, String.t()
+    field :taxes, list()
+    field :total, non_neg_integer()
+    field :total_payable, non_neg_integer()
+    field :updated_at, non_neg_integer()
+    field :valid_till, non_neg_integer()
+    field :vat_number, String.t()
+    field :vat_number_prefix, String.t()
+    field :version, pos_integer()
+    field :resources, map(), default: %{}
+  end
 
-  use Chargebeex.Resource,
-    resource: "quote",
-    only: [:retrieve, :list]
-
+  @moduledoc """
+  Struct that represent a Chargebee's API quote.
+  """
   def build(raw_data) do
     attrs = %{
       id: raw_data["id"],

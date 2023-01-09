@@ -1,50 +1,51 @@
 defmodule Chargebeex.Invoice do
-  defstruct [
-    :adjustment_credit_notes,
-    :amount_adjusted,
-    :amount_due,
-    :amount_paid,
-    :amount_to_collect,
-    :applied_credits,
-    :base_currency_code,
-    :billing_address,
-    :credits_applied,
-    :currency_code,
-    :customer_id,
-    :date,
-    :deleted,
-    :due_date,
-    :dunning_attempts,
-    :exchange_rate,
-    :first_invoice,
-    :has_advance_charges,
-    :id,
-    :is_gifted,
-    :issued_credit_notes,
-    :line_items,
-    :linked_orders,
-    :linked_payments,
-    :net_term_days,
-    :new_sales_amount,
-    :object,
-    :paid_at,
-    :price_type,
-    :recurring,
-    :resource_version,
-    :round_off_amount,
-    :shipping_address,
-    :status,
-    :sub_total,
-    :subscription_id,
-    :tax,
-    :term_finalized,
-    :total,
-    :updated_at,
-    :write_off_amount,
-    resources: %{}
-  ]
-
+  use TypedStruct
   use Chargebeex.Resource, resource: "invoice"
+
+  typedstruct do
+    field :adjustment_credit_notes, list()
+    field :amount_adjusted, integer()
+    field :amount_due, integer()
+    field :amount_paid, integer()
+    field :amount_to_collect, integer()
+    field :applied_credits, list()
+    field :base_currency_code, String.t()
+    field :billing_address, map()
+    field :credits_applied, integer()
+    field :currency_code, String.t()
+    field :customer_id, String.t()
+    field :date, integer()
+    field :deleted, boolean()
+    field :due_date, integer()
+    field :dunning_attempts, list()
+    field :exchange_rate, integer()
+    field :first_invoice, boolean()
+    field :has_advance_charges, boolean()
+    field :id, String.t()
+    field :is_gifted, boolean()
+    field :issued_credit_notes, list()
+    field :line_items, list()
+    field :linked_orders, list()
+    field :linked_payments, list()
+    field :net_term_days, integer()
+    field :new_sales_amount, integer()
+    field :object, map()
+    field :paid_at, integer()
+    field :price_type, String.t()
+    field :recurring, boolean()
+    field :resource_version, integer()
+    field :round_off_amount, integer()
+    field :shipping_address, map()
+    field :status, String.t()
+    field :sub_total, integer()
+    field :subscription_id, String.t()
+    field :tax, integer()
+    field :term_finalized, boolean()
+    field :total, integer()
+    field :updated_at, integer()
+    field :write_off_amount, integer()
+    field :resources, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs = %{

@@ -1,45 +1,11 @@
 defmodule Chargebeex.ItemPrice do
+  use TypedStruct
+
+  use Chargebeex.Resource, resource: "item_price"
+
   @moduledoc """
   Struct that represent a Chargebee's API item price resource.
   """
-
-  defstruct [
-    :id,
-    :name,
-    :item_family_id,
-    :item_id,
-    :description,
-    :status,
-    :external_name,
-    :pricing_model,
-    :resource_version,
-    :price,
-    :price_in_decimal,
-    :period,
-    :currency_code,
-    :period_unit,
-    :trial_period,
-    :trial_period_unit,
-    :trial_end_action,
-    :shipping_period,
-    :shipping_period_unit,
-    :billing_cycles,
-    :free_quantity,
-    :free_quantity_in_decimal,
-    :channel,
-    :updated_at,
-    :created_at,
-    :archived_at,
-    :invoice_notes,
-    :item_type,
-    :show_description_in_invoices,
-    :show_description_in_quotes,
-    is_taxable: true,
-    metadata: %{},
-    tiers: %{},
-    tax_detail: %{},
-    accounting_detail: %{}
-  ]
 
   @typedoc """
   "active" | "archived" | "deleted"
@@ -76,45 +42,43 @@ defmodule Chargebeex.ItemPrice do
   """
   @type trial_end_action :: String.t()
 
-  @type t :: %__MODULE__{
-          id: String.t(),
-          name: String.t(),
-          item_family_id: String.t(),
-          item_id: String.t(),
-          description: String.t(),
-          status: status(),
-          external_name: String.t(),
-          pricing_model: pricing_model(),
-          resource_version: String.t(),
-          price: non_neg_integer(),
-          price_in_decimal: String.t(),
-          period: non_neg_integer(),
-          currency_code: String.t(),
-          period_unit: period_unit(),
-          trial_period: non_neg_integer(),
-          trial_period_unit: String.t(),
-          trial_end_action: trial_end_action(),
-          shipping_period: non_neg_integer(),
-          shipping_period_unit: period_unit(),
-          billing_cycles: non_neg_integer(),
-          free_quantity: non_neg_integer(),
-          free_quantity_in_decimal: String.t(),
-          channel: channel(),
-          updated_at: non_neg_integer(),
-          created_at: non_neg_integer(),
-          archived_at: non_neg_integer(),
-          invoice_notes: String.t(),
-          metadata: map(),
-          item_type: type(),
-          show_description_in_invoices: boolean,
-          show_description_in_quotes: boolean,
-          is_taxable: boolean(),
-          tiers: %{},
-          tax_detail: %{},
-          accounting_detail: %{}
-        }
-
-  use Chargebeex.Resource, resource: "item_price"
+  typedstruct do
+    field :id, String.t()
+    field :name, String.t()
+    field :item_family_id, String.t()
+    field :item_id, String.t()
+    field :description, String.t()
+    field :status, status()
+    field :external_name, String.t()
+    field :pricing_model, pricing_model()
+    field :resource_version, String.t()
+    field :price, non_neg_integer()
+    field :price_in_decimal, String.t()
+    field :period, non_neg_integer()
+    field :currency_code, String.t()
+    field :period_unit, non_neg_integer()
+    field :trial_period, non_neg_integer()
+    field :trial_period_unit, String.t()
+    field :trial_end_action, trial_end_action()
+    field :shipping_period, non_neg_integer()
+    field :shipping_period_unit, period_unit()
+    field :billing_cycles, non_neg_integer()
+    field :free_quantity, non_neg_integer()
+    field :free_quantity_in_decimal, String.t()
+    field :channel, channel()
+    field :updated_at, non_neg_integer()
+    field :created_at, non_neg_integer()
+    field :archived_at, non_neg_integer()
+    field :invoice_notes, String.t()
+    field :item_type, type()
+    field :show_description_in_invoices, boolean()
+    field :show_description_in_quotes, boolean()
+    field :is_taxable, boolean(), default: true
+    field :metadata, map(), default: %{}
+    field :tiers, map(), default: %{}
+    field :tax_detail, map(), default: %{}
+    field :accounting_detail, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs = %{

@@ -1,29 +1,31 @@
 defmodule Chargebeex.HostedPage do
-  defstruct [
-    :id,
-    :type,
-    :url,
-    :state,
-    :pass_thru_content,
-    :created_at,
-    :expires_at,
-    :content,
-    :updated_at,
-    :resource_version,
-    :checkout_info,
-    :business_entity_id,
-    # FIXME: "embed" field is present in the returned API fields example, but
-    # not as a hosted page attribute definition
-    :embed,
-    :object
-  ]
-
-  alias Chargebeex.Client
-  alias Chargebeex.Builder
+  use TypedStruct
 
   use Chargebeex.Resource,
     resource: "hosted_page",
     only: [:retrieve, :list]
+
+  alias Chargebeex.Client
+  alias Chargebeex.Builder
+
+  typedstruct do
+    field :id, String.t()
+    field :type, String.t()
+    field :url, String.t()
+    field :state, String.t()
+    field :pass_thru_content, String.t()
+    field :created_at, integer()
+    field :expires_at, integer()
+    field :content, map
+    field :updated_at, integer()
+    field :resource_version, integer()
+    field :checkout_info, map()
+    field :business_entity_id, String.t()
+    # FIXME:"embed" field is present in the returned API fields example, but
+    # not as a hosted page attribute definition
+    field :embed, String.t()
+    field :object, map()
+  end
 
   def build(raw_data) do
     attrs = %{

@@ -1,31 +1,32 @@
 defmodule Chargebeex.PaymentSource do
-  defstruct [
-    :id,
-    :resource_version,
-    :updated_at,
-    :created_at,
-    :customer_id,
-    :type,
-    :reference_id,
-    :status,
-    :gateway,
-    :gateway_account_id,
-    :ip_address,
-    :issuing_country,
-    :deleted,
-    :business_entity_id,
-    :card,
-    :bank_account,
-    :amazon_payment,
-    :upi,
-    :paypal,
-    :mandates,
-    resources: %{}
-  ]
+  use TypedStruct
+  use Chargebeex.Resource, resource: "payment_source", only: [:retrieve, :list, :delete]
 
   alias Chargebeex.{BankAccount, Card}
 
-  use Chargebeex.Resource, resource: "payment_source", only: [:retrieve, :list, :delete]
+  typedstruct do
+    field :id, String.t()
+    field :resource_version, non_neg_integer()
+    field :updated_at, non_neg_integer()
+    field :created_at, non_neg_integer()
+    field :customer_id, String.t()
+    field :type, String.t()
+    field :reference_id, String.t()
+    field :status, String.t()
+    field :gateway, String.t()
+    field :gateway_account_id, String.t()
+    field :ip_address, String.t()
+    field :issuing_country, String.t()
+    field :deleted, boolean()
+    field :business_entity_id, String.t()
+    field :card, map()
+    field :bank_account, map()
+    field :amazon_payment, map()
+    field :upi, map()
+    field :paypal, map()
+    field :mandates, list()
+    field :resources, map(), default: %{}
+  end
 
   def build(raw_data) do
     attrs = %{
