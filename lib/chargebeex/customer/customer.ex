@@ -40,44 +40,12 @@ defmodule Chargebeex.Customer do
     field :custom_fields, map(), default: %{}
   end
 
-  def build(raw_data) do
-    attrs =
-      %{
-        allow_direct_debit: raw_data["allow_direct_debit"],
-        auto_collection: raw_data["auto_collection"],
-        billing_address: raw_data["billing_address"],
-        business_customer_without_vat_number: raw_data["business_customer_without_vat_number"],
-        card_status: raw_data["card_status"],
-        channel: raw_data["channel"],
-        company: raw_data["company"],
-        created_at: raw_data["created_at"],
-        deleted: raw_data["deleted"],
-        email: raw_data["email"],
-        excess_payments: raw_data["excess_payments"],
-        first_name: raw_data["first_name"],
-        id: raw_data["id"],
-        last_name: raw_data["last_name"],
-        locale: raw_data["locale"],
-        net_term_days: raw_data["net_term_days"],
-        object: raw_data["object"],
-        pii_cleared: raw_data["pii_cleared"],
-        preferred_currency_code: raw_data["preferred_currency_code"],
-        promotional_credits: raw_data["promotional_credits"],
-        refundable_credits: raw_data["refundable_credits"],
-        resource_version: raw_data["resource_version"],
-        taxability: raw_data["taxability"],
-        unbilled_charges: raw_data["unbilled_charges"],
-        updated_at: raw_data["updated_at"],
-        vat_number: raw_data["vat_number"],
-        vat_number_validated_time: raw_data["vat_number_validated_time"],
-        vat_number_status: raw_data["vat_number_status"],
-        primary_payment_source_id: raw_data["primary_payment_source_id"],
-        backup_payment_source_id: raw_data["backup_payment_source_id"],
-        relationship: raw_data["relationship"]
-      }
-      |> Chargebeex.Resource.add_custom_fields(raw_data)
+  use ExConstructor, :build
 
-    struct(__MODULE__, attrs)
+  def build(raw_data) do
+    raw_data
+    |> super()
+    |> Chargebeex.Resource.add_custom_fields(raw_data)
   end
 
   @doc """

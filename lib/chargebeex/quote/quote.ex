@@ -64,49 +64,7 @@ defmodule Chargebeex.Quote do
   @moduledoc """
   Struct that represent a Chargebee's API quote.
   """
-  def build(raw_data) do
-    attrs = %{
-      id: raw_data["id"],
-      amount_due: raw_data["amount_due"],
-      amount_paid: raw_data["amount_paid"],
-      billing_address: raw_data["billing_address"],
-      business_entity_id: raw_data["business_entity_id"],
-      charge_on_acceptance: raw_data["charge_on_acceptance"],
-      contract_term_end: raw_data["contract_term_end"],
-      contract_term_start: raw_data["contract_term_start"],
-      contract_term_termination_fee: raw_data["contract_term_termination_fee"],
-      credits_applied: raw_data["credits_applied"],
-      currency_code: raw_data["currency_code"],
-      customer_id: raw_data["customer_id"],
-      date: raw_data["date"],
-      discounts: raw_data["discounts"],
-      invoice_id: raw_data["invoice_id"],
-      line_item_discounts: raw_data["line_item_discounts"],
-      line_item_taxes: raw_data["line_item_taxes"],
-      line_item_tiers: raw_data["line_item_tiers"],
-      line_items: raw_data["line_items"],
-      name: raw_data["name"],
-      notes: raw_data["notes"],
-      operation_type: raw_data["operation_type"],
-      po_number: raw_data["po_number"],
-      price_type: raw_data["price_type"],
-      resource_version: raw_data["resource_version"],
-      shipping_address: raw_data["shipping_address"],
-      status: raw_data["status"],
-      sub_total: raw_data["sub_total"],
-      subscription_id: raw_data["subscription_id"],
-      taxes: raw_data["taxes"],
-      total: raw_data["total"],
-      total_payable: raw_data["total_payable"],
-      updated_at: raw_data["updated_at"],
-      valid_till: raw_data["valid_till"],
-      vat_number: raw_data["vat_number"],
-      vat_number_prefix: raw_data["vat_number_prefix"],
-      version: raw_data["version"]
-    }
-
-    struct(__MODULE__, attrs)
-  end
+  use ExConstructor, :build
 
   @doc """
     Changes the quote produced for creating a new subscription items

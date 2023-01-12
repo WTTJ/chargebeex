@@ -58,34 +58,5 @@ defmodule Chargebeex.Item do
     field :applicable_items, list(), default: []
   end
 
-  def build(raw_data) do
-    attrs = %{
-      id: raw_data["id"],
-      name: raw_data["name"],
-      external_name: raw_data["external_name"],
-      description: raw_data["description"],
-      status: raw_data["status"],
-      resource_version: raw_data["resource_version"],
-      updated_at: raw_data["updated_at"],
-      item_family_id: raw_data["item_family_id"],
-      type: raw_data["type"],
-      redirect_url: raw_data["redirect_url"],
-      included_in_mrr: raw_data["included_in_mrr"],
-      item_applicability: raw_data["item_applicability"],
-      gift_claim_redirect_url: raw_data["gift_claim_redirect_url"],
-      unit: raw_data["unit"],
-      usage_calculation: raw_data["usage_calculation"],
-      archived_at: raw_data["archived_at"],
-      channel: raw_data["channel"],
-      is_shippable: raw_data["is_shippable"],
-      is_giftable: raw_data["is_giftable"],
-      enabled_for_checkout: raw_data["enabled_for_checkout"],
-      enabled_in_portal: raw_data["enabled_in_portal"],
-      metered: raw_data["metered"],
-      metadata: raw_data["metadata"],
-      applicable_items: raw_data["applicable_items"]
-    }
-
-    struct(__MODULE__, attrs)
-  end
+  use ExConstructor, :build
 end

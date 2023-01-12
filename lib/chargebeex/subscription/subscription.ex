@@ -92,74 +92,11 @@ defmodule Chargebeex.Subscription do
     field :contract_term, map(), default: %{}
   end
 
-  def build(raw_data) do
-    attrs =
-      %{
-        id: Map.get(raw_data, "id"),
-        currency_code: Map.get(raw_data, "currency_code"),
-        start_date: Map.get(raw_data, "start_date"),
-        trial_end: Map.get(raw_data, "trial_end"),
-        billing_period: Map.get(raw_data, "billing_period"),
-        object: Map.get(raw_data, "object"),
-        billing_period_unit: Map.get(raw_data, "billing_period_unit"),
-        remaining_billing_cycles: Map.get(raw_data, "remaining_billing_cycles"),
-        po_number: Map.get(raw_data, "po_number"),
-        plan_quantity_in_decimal: Map.get(raw_data, "plan_quantity_in_decimal"),
-        plan_unit_price_in_decimal: Map.get(raw_data, "plan_unit_price_in_decimal"),
-        customer_id: Map.get(raw_data, "customer_id"),
-        status: Map.get(raw_data, "status"),
-        trial_start: Map.get(raw_data, "trial_start"),
-        trial_end_action: Map.get(raw_data, "trial_end_action"),
-        current_term_start: Map.get(raw_data, "current_term_start"),
-        current_term_end: Map.get(raw_data, "current_term_end"),
-        next_billing_at: Map.get(raw_data, "next_billing_at"),
-        created_at: Map.get(raw_data, "created_at"),
-        started_at: Map.get(raw_data, "started_at"),
-        activated_at: Map.get(raw_data, "activated_at"),
-        contract_term_billing_cycle_on_renewal:
-          Map.get(raw_data, "contract_term_billing_cycle_on_renewal"),
-        override_relationship: Map.get(raw_data, "override_relationship"),
-        pause_date: Map.get(raw_data, "pause_date"),
-        resume_date: Map.get(raw_data, "resume_date"),
-        cancelled_at: Map.get(raw_data, "cancelled_at"),
-        cancel_reason: Map.get(raw_data, "cancel_reason"),
-        created_from_ip: Map.get(raw_data, "created_from_ip"),
-        resource_version: Map.get(raw_data, "resource_version"),
-        updated_at: Map.get(raw_data, "updated_at"),
-        payment_source_id: Map.get(raw_data, "payment_source_id"),
-        plan_free_quantity_in_decimal: Map.get(raw_data, "plan_free_quantity_in_decimalz"),
-        plan_amount_in_decimal: Map.get(raw_data, "plan_amount_in_decimal"),
-        cancel_schedule_created_at: Map.get(raw_data, "cancel_schedule_created_at"),
-        channel: Map.get(raw_data, "channel"),
-        net_term_days: Map.get(raw_data, "net_term_days"),
-        due_invoices_count: Map.get(raw_data, "due_invoices_count"),
-        due_since: Map.get(raw_data, "due_since"),
-        total_dues: Map.get(raw_data, "total_dues"),
-        mrr: Map.get(raw_data, "mrr"),
-        exchange_rate: Map.get(raw_data, "exchange_rate"),
-        base_currency_code: Map.get(raw_data, "base_currency_code"),
-        invoice_notes: Map.get(raw_data, "invoice_notes"),
-        deleted: Map.get(raw_data, "deleted"),
-        changes_scheduled_at: Map.get(raw_data, "changes_scheduled_at"),
-        cancel_reason_code: Map.get(raw_data, "cancel_reason_code"),
-        free_period: Map.get(raw_data, "free_period"),
-        free_period_unit: Map.get(raw_data, "free_period_unit"),
-        create_pending_invoices: Map.get(raw_data, "create_pending_invoices"),
-        auto_close_invoices: Map.get(raw_data, "auto_close_invoices"),
-        business_entity_id: Map.get(raw_data, "business_entity_id"),
-        has_scheduled_advance_invoices: Map.get(raw_data, "has_scheduled_advance_invoices"),
-        has_scheduled_changes: Map.get(raw_data, "has_scheduled_changes"),
-        metadata: Map.get(raw_data, "metadata"),
-        subscription_items: Map.get(raw_data, "subscription_items"),
-        item_tiers: Map.get(raw_data, "item_tiers"),
-        charged_items: Map.get(raw_data, "charged_items"),
-        coupons: Map.get(raw_data, "coupons"),
-        shipping_address: Map.get(raw_data, "shipping_address"),
-        referral_info: Map.get(raw_data, "referral_info"),
-        contract_term: Map.get(raw_data, "contract_term")
-      }
-      |> Chargebeex.Resource.add_custom_fields(raw_data)
+  use ExConstructor, :build
 
-    struct(__MODULE__, attrs)
+  def build(raw_data) do
+    raw_data
+    |> super()
+    |> Chargebeex.Resource.add_custom_fields(raw_data)
   end
 end
