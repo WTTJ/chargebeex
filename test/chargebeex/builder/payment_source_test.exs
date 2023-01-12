@@ -2,7 +2,7 @@ defmodule Chargebeex.Builder.PaymentSourceTest do
   use ExUnit.Case, async: true
 
   alias Chargebeex.Builder
-  alias Chargebeex.Card
+  alias Chargebeex.{BankAccount, Card}
   alias Chargebeex.Fixtures.PaymentSource, as: PaymentSourceFixture
   alias Chargebeex.PaymentSource
 
@@ -53,6 +53,7 @@ defmodule Chargebeex.Builder.PaymentSourceTest do
       assert payment_source.customer_id == Map.get(params, "customer_id")
 
       assert %Card{} = payment_source.card
+      assert %BankAccount{} = payment_source.bank_account
     end
   end
 end
