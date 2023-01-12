@@ -16,23 +16,7 @@ defmodule Chargebeex.TimeMachine do
     field :resources, map(), defualt: %{}
   end
 
-  @moduledoc """
-  Struct that represent a Chargebee's API TimeMachine.
-  """
-  def build(raw_data) do
-    attrs = %{
-      name: raw_data["name"],
-      time_travel_status: raw_data["time_travel_status"],
-      genesis_time: raw_data["genesis_time"],
-      destination_time: raw_data["destination_time"],
-      failure_code: raw_data["failure_code"],
-      failure_reason: raw_data["failure_reason"],
-      error_json: raw_data["error_json"],
-      object: raw_data["object"]
-    }
-
-    struct(__MODULE__, attrs)
-  end
+  use ExConstructor, :build
 
   @doc """
     Restart the time machine.
