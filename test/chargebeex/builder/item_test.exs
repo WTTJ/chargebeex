@@ -45,9 +45,14 @@ defmodule Chargebeex.Builder.ItemTest do
       assert item.is_giftable == Map.get(params, "is_giftable")
       assert item.enabled_for_checkout == Map.get(params, "enabled_for_checkout")
       assert item.enabled_in_portal == Map.get(params, "enabled_in_portal")
-      assert item.metered == Map.get(params, "metered")
-      assert item.metadata == Map.get(params, "metadata")
-      assert item.applicable_items == Map.get(params, "applicable_items")
+
+      # sets default values if none given
+      assert item.metered == false
+      refute Map.has_key?(params, "metered")
+      assert item.metadata == %{}
+      refute Map.has_key?(params, "metadata")
+      assert item.applicable_items == []
+      refute Map.has_key?(params, "applicable_items")
     end
   end
 end

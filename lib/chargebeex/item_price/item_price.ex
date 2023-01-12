@@ -80,45 +80,5 @@ defmodule Chargebeex.ItemPrice do
     field :accounting_detail, map(), default: %{}
   end
 
-  def build(raw_data) do
-    attrs = %{
-      id: raw_data["id"],
-      name: raw_data["name"],
-      item_family_id: raw_data["item_family_id"],
-      item_id: raw_data["item_id"],
-      description: raw_data["description"],
-      status: raw_data["status"],
-      external_name: raw_data["external_name"],
-      pricing_model: raw_data["pricing_model"],
-      resource_version: raw_data["resource_version"],
-      price: raw_data["price"],
-      price_in_decimal: raw_data["price_in_decimal"],
-      period: raw_data["period"],
-      currency_code: raw_data["currency_code"],
-      period_unit: raw_data["period_unit"],
-      trial_period: raw_data["trial_period"],
-      trial_period_unit: raw_data["trial_period_unit"],
-      trial_end_action: raw_data["trial_end_action"],
-      shipping_period: raw_data["shipping_period"],
-      shipping_period_unit: raw_data["shipping_period_unit"],
-      billing_cycles: raw_data["billing_cycles"],
-      free_quantity: raw_data["free_quantity"],
-      free_quantity_in_decimal: raw_data["free_quantity_in_decimal"],
-      channel: raw_data["channel"],
-      updated_at: raw_data["updated_at"],
-      created_at: raw_data["created_at"],
-      archived_at: raw_data["archived_at"],
-      invoice_notes: raw_data["invoice_notes"],
-      item_type: raw_data["item_type"],
-      show_description_in_invoices: raw_data["show_description_in_invoices"],
-      show_description_in_quotes: raw_data["show_description_in_quotes"],
-      is_taxable: raw_data["is_taxable"],
-      metadata: raw_data["metadata"],
-      tiers: raw_data["tiers"],
-      tax_detail: raw_data["tax_detail"],
-      accounting_detail: raw_data["accounting_detail"]
-    }
-
-    struct(__MODULE__, attrs)
-  end
+  use ExConstructor, :build
 end

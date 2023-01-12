@@ -28,30 +28,17 @@ defmodule Chargebeex.PaymentSource do
     field :resources, map(), default: %{}
   end
 
-  def build(raw_data) do
-    attrs = %{
-      id: raw_data["id"],
-      resource_version: raw_data["resource_version"],
-      updated_at: raw_data["updated_at"],
-      created_at: raw_data["created_at"],
-      customer_id: raw_data["customer_id"],
-      type: raw_data["type"],
-      reference_id: raw_data["reference_id"],
-      status: raw_data["status"],
-      gateway: raw_data["gateway"],
-      gateway_account_id: raw_data["gateway_account_id"],
-      ip_address: raw_data["ip_address"],
-      issuing_country: raw_data["issuing_country"],
-      deleted: raw_data["deleted"],
-      business_entity_id: raw_data["business_entity_id"],
-      card: Card.build(raw_data["card"]),
-      bank_account: BankAccount.build(raw_data["bank_account"]),
-      amazon_payment: raw_data["amazon_payment"],
-      upi: raw_data["upi"],
-      paypal: raw_data["paypal"],
-      mandates: raw_data["mandates"]
-    }
+  use ExConstructor, :build
 
-    struct(__MODULE__, attrs)
+  def build(raw_data, opts \\ []) do
+    card = raw_data |> Map.get("card", %{}) |> Card.build(opts)
+    bank_account = raw_data |> Map.get("bank_account", %{}) |> BankAccount.build(opts)
+
+    raw_data
+    |> super(opts)
+    |> Map.merge(%{
+      card: card,
+      bank_account: bank_account
+    })
   end
 end

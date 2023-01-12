@@ -52,7 +52,9 @@ defmodule Chargebeex.MixProject do
       {:hammox, "~> 0.5", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:typed_struct, "~> 0.3.0"}
+      {:typed_struct, "~> 0.3.0"},
+      {:dialyxir, ">= 0.0.0", only: [:dev], runtime: false},
+      {:exconstructor, "~> 1.2.7"}
     ]
   end
 
