@@ -19,6 +19,25 @@ defmodule Chargebeex.Action do
     end
   end
 
+  def list_stream(resource, params \\ %{}) do
+    path = resource_base_path(resource)
+    next_offset = Map.get(params, "next_offset", 0)
+
+    Stream.unfold(next_offset, fn
+      nil ->
+        nil
+
+      offset ->
+        params = Map.merge(params, %{"offset" => offset})
+        {:ok, _status_code, _headers, response} = Client.get(path, params)
+
+        {Map.get(response, "list"), Map.get(response, "next_offset")}
+    end)
+    |> Stream.flat_map(& &1)
+    |> Stream.map(&Builder.build/1)
+    |> Stream.map(&put_resources(&1, resource))
+  end
+
   def create(resource, params) do
     with path <- resource_base_path(resource),
          {:ok, _status_code, _headers, content} <- Client.post(path, params),

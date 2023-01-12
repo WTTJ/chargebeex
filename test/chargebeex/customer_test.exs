@@ -119,6 +119,45 @@ defmodule Chargebeex.CustomerTest do
     end
   end
 
+  describe "stream_list" do
+    test "with bad authentication should fail" do
+      unauthorized = Common.unauthorized()
+
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn url, body, headers ->
+          assert "https://test-namespace.chargebee.com/api/v2/customers" <> _ = url
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
+          {:ok, 401, [], Jason.encode!(unauthorized)}
+        end
+      )
+
+      assert_raise MatchError, fn ->
+        Customer.list_stream() |> Stream.run()
+      end
+    end
+
+    test "with no param, call with offset 0" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers?offset=0"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
+          {:ok, 200, [], Jason.encode!(%{list: [%{customer: %{}}, %{customer: %{}}]})}
+        end
+      )
+
+      stream = Customer.list_stream()
+      assert [%Customer{}, %Customer{}] = Enum.to_list(stream)
+    end
+  end
+
   describe "create" do
     test "with bad authentication should fail" do
       unauthorized = Common.unauthorized()
