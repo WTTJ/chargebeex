@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" />
+</p>
+
 # Chargebeex
 
 Chargebeex is an Elixir implementation of [Chargebee
@@ -5,6 +9,10 @@ API](https://apidocs.chargebee.com/docs/api).
 
 This is a heavily inspired fork of the original work by [Nicolas
 Marlier](https://github.com/NicolasMarlier/chargebee-elixir)
+
+## Project status
+
+Chargebeex is used for several months in production at Welcome to the Jungle.
 
 ## Installation
 
