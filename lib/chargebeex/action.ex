@@ -27,6 +27,11 @@ defmodule Chargebeex.Action do
       nil ->
         nil
 
+      0 ->
+        {:ok, _status_code, _headers, response} = Client.get(path, params)
+
+        {Map.get(response, "list"), Map.get(response, "next_offset")}
+
       offset ->
         params = Map.merge(params, %{"offset" => offset})
         {:ok, _status_code, _headers, response} = Client.get(path, params)
