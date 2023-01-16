@@ -145,7 +145,7 @@ defmodule Chargebeex.CustomerTest do
         Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/customers?offset=0"
+          assert url == "https://test-namespace.chargebee.com/api/v2/customers"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
