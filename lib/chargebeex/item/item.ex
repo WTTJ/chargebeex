@@ -56,7 +56,14 @@ defmodule Chargebeex.Item do
     field :metered, boolean(), default: false
     field :metadata, map(), default: %{}
     field :applicable_items, list(), default: []
+    field :custom_fields, map(), default: %{}
   end
 
   use ExConstructor, :build
+
+  def build(raw_data) do
+    raw_data
+    |> super()
+    |> Chargebeex.Resource.add_custom_fields(raw_data)
+  end
 end
