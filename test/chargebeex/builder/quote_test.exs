@@ -88,6 +88,15 @@ defmodule Chargebeex.Builder.QuoteTest do
       assert quoted_subscription.billing_period == Map.get(params, "billing_period")
       assert quoted_subscription.billing_period_unit == Map.get(params, "billing_period_unit")
 
+      assert quoted_subscription.contract_term_billing_cycle_on_renewal ==
+               Map.get(params, "contract_term_billing_cycle_on_renewal")
+
+      assert quoted_subscription.changes_scheduled_at == Map.get(params, "changes_scheduled_at")
+      assert quoted_subscription.change_option == Map.get(params, "change_option")
+
+      assert quoted_subscription.start_date == Map.get(params, "start_date")
+      assert quoted_subscription.trial_end == Map.get(params, "trial_end")
+
       assert quoted_subscription.remaining_billing_cycles ==
                Map.get(params, "remaining_billing_cycles")
 
