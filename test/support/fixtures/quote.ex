@@ -77,6 +77,11 @@ defmodule Chargebeex.Fixtures.Quote do
     {
       "billing_period": 1,
       "billing_period_unit": "year",
+      "contract_term_billing_cycle_on_renewal": 2,
+      "changes_scheduled_at": 1677625200,
+      "change_option": "specific_date",
+      "start_date": 1679007600,
+      "trial_end": 1679007611,
       "remaining_billing_cycles": 1,
       "object": "quoted_subscription",
       "subscription_items": [{
