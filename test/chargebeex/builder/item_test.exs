@@ -54,5 +54,26 @@ defmodule Chargebeex.Builder.ItemTest do
       assert item.applicable_items == []
       refute Map.has_key?(params, "applicable_items")
     end
+
+    test "should build custom fields" do
+      item =
+        ItemFixture.retrieve()
+        |> Jason.decode!()
+        |> Map.get("item")
+        |> Map.merge(%{
+          "cf_foo" => "baz",
+          "cf_bar" => "baz"
+        })
+
+      assert %Item{
+               custom_fields: %{
+                 "cf_foo" => "baz",
+                 "cf_bar" => "baz"
+               }
+             } =
+               %{"item" => item}
+               |> Builder.build()
+               |> Map.get("item")
+    end
   end
 end
