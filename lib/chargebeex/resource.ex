@@ -18,6 +18,12 @@ defmodule Chargebeex.Resource do
     List a resource
   """
   @callback list(params :: map()) :: {:ok, list(), map()}
+
+  @doc """
+    List resources in a stream
+  """
+  @callback list_stream(params :: map()) :: Enumerable.t()
+
   @doc """
     Create a resource
   """
@@ -31,7 +37,7 @@ defmodule Chargebeex.Resource do
   """
   @callback delete(id :: String.t()) :: {:ok, struct()}
 
-  @optional_callbacks retrieve: 1, list: 1, create: 1, update: 2, delete: 1
+  @optional_callbacks retrieve: 1, list: 1, list_stream: 1, create: 1, update: 2, delete: 1
 
   defmacro __using__(opts) do
     only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update, :delete])
@@ -43,6 +49,7 @@ defmodule Chargebeex.Resource do
         only: [
           retrieve: 2,
           list: 2,
+          list_stream: 2,
           create: 2,
           update: 3,
           delete: 2,
@@ -59,6 +66,10 @@ defmodule Chargebeex.Resource do
         def list(params \\ %{}), do: list(@resource, params)
         defoverridable list: 0
         defoverridable list: 1
+
+        def list_stream(params \\ %{}), do: list_stream(@resource, params)
+        defoverridable list_stream: 0
+        defoverridable list_stream: 1
       end
 
       if :create in only do
