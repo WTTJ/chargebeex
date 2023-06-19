@@ -28,3 +28,4 @@ chargebeex-*.tar
 .elixir_ls
 generate_doc.sh
 .env
+.lexical
