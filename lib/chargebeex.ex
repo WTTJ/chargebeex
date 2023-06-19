@@ -7,7 +7,8 @@ defmodule Chargebeex do
 
   ## Installation
 
-  The package can be installed by adding `chargebeex` to your list of dependencies in `mix.exs`:
+  The package can be installed by adding `chargebeex` to your list of
+  dependencies in `mix.exs`:
 
   ```elixir
   # mix.exs
@@ -20,14 +21,16 @@ defmodule Chargebeex do
 
   ## Configuration
 
-  Chargebeex can be configured using [Config](https://hexdocs.pm/elixir/1.12/Config.html) or environment variables.
+  Chargebeex can be configured using
+  [Config](https://hexdocs.pm/elixir/1.12/Config.html) or environment variables.
 
   ### Config
 
   ```elixir
   config :chargebeex,
-  namespace: "my-namespace",
-  api_key: "my-api-key"
+    namespace: "my-namespace",
+    api_key: "my-api-key"
+
   ```
 
   ### Environment variables
@@ -45,6 +48,25 @@ defmodule Chargebeex do
   {:ok, %Chargebeex.Customer{}} = Chargebeex.Customer.delete("foobar")
   ```
 
+  ### With Multiple Sites
+
+  To interact with multiple Chargebee sites, scope your Chargebee config to an
+  atom or module representing the site. For example, if you have a site called "my_site", you can do the following:
+
+  ```elixir
+  config :chargebeex, :my_site,
+    namespace: "my-other-namespace",
+    api_key: "my-second-api-key"
+  ```
+
+  And specify the site when calling the API:
+  ```elixir
+  {:ok, %Chargebeex.Customer{}} = Chargebeex.Customer.retrieve("foobar", site: :my_site)
+  {:ok, [%Chargebeex.Customer{}], [%Chargebeex.Customer{}]} = Chargebeex.Customer.list(site: :my_site)
+  {:ok, %Chargebeex.Customer{}} = Chargebeex.Customer.update("foobar", %{name: "updated"}, site: :my_site)
+  {:ok, %Chargebeex.Customer{}} = Chargebeex.Customer.delete("foobar", site: :my_site)
+  ```
+
   ### Custom Fields
 
   Chargebee provides a way to add user-specific fields for resources like
@@ -52,9 +74,9 @@ defmodule Chargebeex do
   Fields](https://www.chargebee.com/docs/2.0/custom_fields.html).
 
   These fields are prepended with the `cf_` prefix. These fields can be accessed
-  in the special `custom_fields` field of the structure. Please note Custom Fields
-  are only available for Customers, Subscriptions, Product Families, Plans,
-  Addons and Price Points.
+  in the special `custom_fields` field of the structure. Please note Custom
+  Fields are only available for Customers, Subscriptions, Product Families,
+  Plans, Addons and Price Points.
 
   #### Example:
 

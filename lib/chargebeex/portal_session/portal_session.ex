@@ -26,11 +26,12 @@ defmodule Chargebeex.PortalSession do
     Logs out the portal session. This should be called when customers logout of
     your application.
   """
-  def logout(id), do: generic_action(:post, @resource, "logout", id)
+  def logout(id, opts \\ []), do: generic_action(:post, @resource, "logout", id, opts)
 
   @doc """
     When an user is sent back to your return URL with session details, you
     should validate that information by calling this API.
   """
-  def activate(id, params), do: generic_action(:post, @resource, "activate", id, params)
+  def activate(id, params, opts \\ []),
+    do: generic_action(:post, @resource, "activate", id, params, opts)
 end

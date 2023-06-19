@@ -14,24 +14,38 @@ defmodule Chargebeex.Resource do
     Retrieve a resource
   """
   @callback retrieve(id :: String.t()) :: {:ok, struct()}
+  @callback retrieve(id :: String.t(), opts :: list()) :: {:ok, struct()}
   @doc """
     List a resource
   """
   @callback list(params :: map()) :: {:ok, list(), map()}
+  @callback list(params :: map(), opts :: list()) :: {:ok, list(), map()}
   @doc """
     Create a resource
   """
   @callback create(params :: map()) :: {:ok, struct()}
+  @callback create(params :: map(), opts :: list()) :: {:ok, struct()}
   @doc """
     Update a resource
   """
   @callback update(id :: String.t(), params :: map()) :: {:ok, struct()}
+  @callback update(id :: String.t(), params :: map(), opts :: list()) :: {:ok, struct()}
   @doc """
     Delete a resource
   """
   @callback delete(id :: String.t()) :: {:ok, struct()}
+  @callback delete(id :: String.t(), opts :: list()) :: {:ok, struct()}
 
-  @optional_callbacks retrieve: 1, list: 1, create: 1, update: 2, delete: 1
+  @optional_callbacks retrieve: 1,
+                      retrieve: 2,
+                      list: 1,
+                      list: 2,
+                      create: 1,
+                      create: 2,
+                      update: 2,
+                      update: 3,
+                      delete: 1,
+                      delete: 2
 
   defmacro __using__(opts) do
     only = Keyword.get(opts, :only, [:retrieve, :list, :create, :update, :delete])
@@ -41,39 +55,45 @@ defmodule Chargebeex.Resource do
       @resource Keyword.fetch!(opts, :resource)
       import Chargebeex.Action,
         only: [
-          retrieve: 2,
-          list: 2,
-          create: 2,
-          update: 3,
-          delete: 2,
+          retrieve: 3,
+          list: 3,
+          create: 3,
+          update: 4,
+          delete: 3,
           generic_action: 4,
-          generic_action: 5
+          generic_action: 5,
+          generic_action: 6
         ]
 
       if :retrieve in only do
-        def retrieve(id), do: retrieve(@resource, id)
+        def retrieve(id, opts \\ []), do: retrieve(@resource, id, opts)
         defoverridable retrieve: 1
+        defoverridable retrieve: 2
       end
 
       if :list in only do
-        def list(params \\ %{}), do: list(@resource, params)
+        def list(params \\ %{}, opts \\ []), do: list(@resource, params, opts)
         defoverridable list: 0
         defoverridable list: 1
+        defoverridable list: 2
       end
 
       if :create in only do
-        def create(params), do: create(@resource, params)
+        def create(params, opts \\ []), do: create(@resource, params, opts)
         defoverridable create: 1
+        defoverridable create: 2
       end
 
       if :update in only do
-        def update(id, params), do: update(@resource, id, params)
+        def update(id, params, opts \\ []), do: update(@resource, id, params, opts)
         defoverridable update: 2
+        defoverridable update: 3
       end
 
       if :delete in only do
-        def delete(id), do: delete(@resource, id)
+        def delete(id, opts \\ []), do: delete(@resource, id, opts)
         defoverridable delete: 1
+        defoverridable delete: 2
       end
     end
   end
