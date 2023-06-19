@@ -1,9 +1,24 @@
 defmodule Chargebeex.Client do
   @moduledoc false
-  def endpoint(path, params \\ %{}) do
-    namespace = Application.get_env(:chargebeex, :namespace)
-    host = Application.get_env(:chargebeex, :host)
-    base_path = Application.get_env(:chargebeex, :path)
+
+  defp config(site, path) do
+    default = Application.get_env(:chargebeex, path)
+
+    case site do
+      :default ->
+        default
+
+      site ->
+        :chargebeex
+        |> Application.get_env(site)
+        |> Keyword.get(path, default)
+    end
+  end
+
+  def endpoint(site, path, params \\ %{}) do
+    namespace = config(site, :namespace)
+    host = config(site, :host)
+    base_path = config(site, :path)
 
     uri = %URI{
       host: "#{namespace}.#{host}",
@@ -21,10 +36,12 @@ defmodule Chargebeex.Client do
     |> URI.to_string()
   end
 
-  def get(path, params \\ %{}) do
-    url = endpoint(path, params)
+  def get(path, params \\ %{}, opts \\ []) do
+    site = Keyword.get(opts, :site, :default)
 
-    case apply(http_client(), :get, [url, "", default_headers()]) do
+    url = endpoint(site, path, params)
+
+    case apply(http_client(), :get, [url, "", default_headers(site)]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
         {:ok, status_code, headers, get_body_from_response(body)}
 
@@ -33,15 +50,17 @@ defmodule Chargebeex.Client do
     end
   end
 
-  def post(path, params \\ %{}) do
+  def post(path, params \\ %{}, opts \\ []) do
+    site = Keyword.get(opts, :site, :default)
+
     body =
       params
       |> transform_arrays_for_chargebee
       |> Plug.Conn.Query.encode()
 
-    url = endpoint(path)
+    url = endpoint(site, path)
 
-    case apply(http_client(), :post, [url, body, default_headers(:post)]) do
+    case apply(http_client(), :post, [url, body, default_headers(site, :post)]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
         {:ok, status_code, headers, get_body_from_response(body)}
 
@@ -61,14 +80,14 @@ defmodule Chargebeex.Client do
     Application.get_env(:chargebeex, :http_client, Chargebeex.Client.Hackney)
   end
 
-  defp default_headers(verb \\ :get) do
+  defp default_headers(site, verb \\ :get) do
     []
-    |> add_basic_auth(verb)
+    |> add_basic_auth(site)
     |> add_content_type(verb)
   end
 
-  defp add_basic_auth(headers, _verb) do
-    api_key = Application.get_env(:chargebeex, :api_key)
+  defp add_basic_auth(headers, site) do
+    api_key = config(site, :api_key)
     headers ++ [{"Authorization", "Basic #{"#{api_key}:" |> Base.encode64()}"}]
   end
 

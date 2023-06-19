@@ -29,9 +29,9 @@ defmodule Chargebeex.HostedPage do
 
   use ExConstructor, :build
 
-  def collect_now(params) do
+  def collect_now(params, opts \\ []) do
     with path <- Chargebeex.Action.resource_path_generic_without_id("hosted_page", "collect_now"),
-         {:ok, _status_code, _headers, content} <- Client.post(path, params),
+         {:ok, _status_code, _headers, content} <- Client.post(path, params, opts),
          builded <- Builder.build(content) do
       {:ok, Map.get(builded, "hosted_page")}
     end

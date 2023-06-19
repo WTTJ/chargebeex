@@ -307,57 +307,57 @@ defmodule Chargebeex.Customer do
           updated_at: 1648489755
           }}
   """
-  def delete(id), do: super(id)
+  def delete(id, opts \\ []), do: super(id, opts)
 
-  def update_payment_method(id, params) do
-    generic_action(:post, @resource, "update_payment_method", id, params)
+  def update_payment_method(id, params, opts \\ []) do
+    generic_action(:post, @resource, "update_payment_method", id, params, opts)
   end
 
-  def update_billing_info(id, params) do
-    generic_action(:post, @resource, "update_billing_info", id, params)
+  def update_billing_info(id, params, opts \\ []) do
+    generic_action(:post, @resource, "update_billing_info", id, params, opts)
   end
 
-  def assign_payment_role(id, params) do
-    generic_action(:post, @resource, "assign_payment_role", id, params)
+  def assign_payment_role(id, params, opts \\ []) do
+    generic_action(:post, @resource, "assign_payment_role", id, params, opts)
   end
 
-  def record_excess_payment(id, params) do
-    generic_action(:post, @resource, "record_excess_payment", id, params)
+  def record_excess_payment(id, params, opts \\ []) do
+    generic_action(:post, @resource, "record_excess_payment", id, params, opts)
   end
 
-  def collect_payment(id, params) do
-    generic_action(:post, @resource, "collect_payment", id, params)
+  def collect_payment(id, params, opts \\ []) do
+    generic_action(:post, @resource, "collect_payment", id, params, opts)
   end
 
-  def move(id, params) do
-    generic_action(:post, @resource, "move", id, params)
+  def move(id, params, opts \\ []) do
+    generic_action(:post, @resource, "move", id, params, opts)
   end
 
-  def change_billing_date(id, params) do
-    generic_action(:post, @resource, "change_billing_date", id, params)
+  def change_billing_date(id, params, opts \\ []) do
+    generic_action(:post, @resource, "change_billing_date", id, params, opts)
   end
 
-  def merge(id, params) do
-    generic_action(:post, @resource, "merge", id, params)
+  def merge(id, params, opts \\ []) do
+    generic_action(:post, @resource, "merge", id, params, opts)
   end
 
-  def clear_personal_data(id) do
-    generic_action(:post, @resource, "clear_personal_data", id)
+  def clear_personal_data(id, opts \\ []) do
+    generic_action(:post, @resource, "clear_personal_data", id, opts)
   end
 
-  def relationships(id, params) do
-    generic_action(:post, @resource, "relationships", id, params)
+  def relationships(id, params, opts \\ []) do
+    generic_action(:post, @resource, "relationships", id, params, opts)
   end
 
-  def delete_relationship(id) do
-    generic_action(:post, @resource, "delete_relationship", id)
+  def delete_relationship(id, opts \\ []) do
+    generic_action(:post, @resource, "delete_relationship", id, opts)
   end
 
-  def hierarchy(id, params) do
-    generic_action(:get, @resource, "hierarchy", id, params)
+  def hierarchy(id, params, opts \\ []) do
+    generic_action(:get, @resource, "hierarchy", id, params, opts)
   end
 
-  def update_hierarchy_settings(id, params) do
-    generic_action(:post, @resource, "update_hierarchy_settings", id, params)
+  def update_hierarchy_settings(id, params, opts \\ []) do
+    generic_action(:post, @resource, "update_hierarchy_settings", id, params, opts)
   end
 end
