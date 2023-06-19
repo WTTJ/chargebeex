@@ -1,17 +1,25 @@
 defmodule Chargebeex.Client do
   @moduledoc false
 
+  defp config(:default, path) do
+    Application.get_env(:chargebeex, path)
+  end
+
   defp config(site, path) do
     default = Application.get_env(:chargebeex, path)
 
-    case site do
-      :default ->
-        default
+    if site in [:host, :path, :namespace, :api_key] do
+      raise ArgumentError, "Site `#{inspect(site)}` is not permitted"
+    end
 
-      site ->
-        :chargebeex
-        |> Application.get_env(site)
-        |> Keyword.get(path, default)
+    case Application.get_env(:chargebeex, site) do
+      nil ->
+        raise ArgumentError, "Site `#{inspect(site)}` is not configured"
+
+      config ->
+        # Falls back to default config if the site config does not have the
+        # specified key. i.e. `:host` or `:path` is not configured
+        Keyword.get(config, path, default)
     end
   end
 
