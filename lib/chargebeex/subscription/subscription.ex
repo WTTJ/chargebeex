@@ -1,6 +1,11 @@
 defmodule Chargebeex.Subscription do
   use TypedStruct
-  use Chargebeex.Resource, resource: "subscription", only: [:list, :retrieve, :update]
+
+  @resource "subscription"
+  use Chargebeex.Resource, resource: @resource, only: [:list, :retrieve, :update]
+
+  alias Chargebeex.Builder
+  alias Chargebeex.Client
 
   @typedoc """
   "future" | "in_trial" | "active" | "non_renewing" | "paused" | "cancelled"
@@ -98,5 +103,17 @@ defmodule Chargebeex.Subscription do
     raw_data
     |> super()
     |> Chargebeex.Resource.add_custom_fields(raw_data)
+  end
+
+  def create_with_items(customer_id, params, opts \\ []) do
+    with path <-
+           Chargebeex.Action.nested_resource_path_generic_without_id(
+             [customer: customer_id],
+             "subscription_for_items"
+           ),
+         {:ok, _status_code, _headers, content} <- Client.post(path, params, opts),
+         builded <- Builder.build(content) do
+      {:ok, Map.get(builded, @resource)}
+    end
   end
 end
