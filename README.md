@@ -22,7 +22,7 @@ The package can be installed by adding `chargebeex` to your list of dependencies
 # mix.exs
 def deps do
   [
-    {:chargebeex, "~> 0.2.0"}
+    {:chargebeex, "~> 0.3.0"}
   ]
 end
 ```
@@ -47,6 +47,7 @@ export CHARGEBEEX_NAMESPACE=my-namespace
 ```
 
 ## Usage
+
 ```elixir
 {:ok, %Chargebeex.Customer{}} = Chargebeex.Customer.retrieve("foobar")
 {:ok, [%Chargebeex.Customer{}], [%Chargebeex.Customer{}]} = Chargebeex.Customer.list()
@@ -112,4 +113,5 @@ mix test
 ```
 
 ## License
+
 MIT
