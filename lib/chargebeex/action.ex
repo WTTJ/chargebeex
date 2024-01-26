@@ -73,6 +73,11 @@ defmodule Chargebeex.Action do
     Path.join([resource_base_path(resource), action])
   end
 
+  def nested_resource_path_generic_without_id(nested_to, action) do
+    path = Enum.map(nested_to, fn {resource, id} -> resource_path(resource, id) end)
+    Path.join(path ++ [action])
+  end
+
   def delete_path(resource, id) do
     Path.join([resource_path(resource, id), "delete"])
   end
