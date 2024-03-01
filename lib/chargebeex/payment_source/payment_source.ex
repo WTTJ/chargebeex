@@ -41,4 +41,12 @@ defmodule Chargebeex.PaymentSource do
       bank_account: bank_account
     })
   end
+
+  def create_card(params, opts \\ []) do
+    generic_action_without_id(:post, @resource, "create_card", params, opts)
+  end
+
+  def create_bank_account(params, opts \\ []) do
+    generic_action_without_id(:post, @resource, "create_bank_account", params, opts)
+  end
 end
