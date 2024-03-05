@@ -49,7 +49,7 @@ defmodule Chargebeex.Client do
 
     url = endpoint(site, path, params)
 
-    case apply(http_client(), :get, [url, "", default_headers(site)]) do
+    case apply(http_client(), :get, [url, "", default_headers(site, opts)]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
         {:ok, status_code, headers, get_body_from_response(body)}
 
@@ -68,7 +68,7 @@ defmodule Chargebeex.Client do
 
     url = endpoint(site, path)
 
-    case apply(http_client(), :post, [url, body, default_headers(site, :post)]) do
+    case apply(http_client(), :post, [url, body, default_headers(site, opts, :post)]) do
       {:ok, status_code, headers, body} when status_code in 200..299 ->
         {:ok, status_code, headers, get_body_from_response(body)}
 
@@ -88,10 +88,27 @@ defmodule Chargebeex.Client do
     Application.get_env(:chargebeex, :http_client, Chargebeex.Client.Hackney)
   end
 
-  defp default_headers(site, verb \\ :get) do
+  defp default_headers(site, opts, verb \\ :get) do
     []
+    |> add_user_details(opts)
     |> add_basic_auth(site)
     |> add_content_type(verb)
+  end
+
+  defp add_user_details(headers, opts) do
+    ip = Keyword.get(opts, :user_ip)
+    device = Keyword.get(opts, :user_device)
+    user = Keyword.get(opts, :user_email)
+    user_encoded = Keyword.get(opts, :user_email_encoded)
+
+    user_details_headers = [
+      {"chargebee-request-origin-ip", ip},
+      {"chargebee-request-origin-device", device},
+      {"chargebee-request-origin-user-encoded", user_encoded},
+      {"chargebee-request-origin-user", user}
+    ]
+
+    headers ++ Enum.reject(user_details_headers, fn {_, value} -> is_nil(value) end)
   end
 
   defp add_basic_auth(headers, site) do
