@@ -205,4 +205,15 @@ defmodule Chargebeex.Subscription do
       {:ok, Map.get(builded, @resource)}
     end
   end
+
+  def update_for_items(subscription_id, params, opts \\ []) do
+    Chargebeex.Action.generic_action(
+      :post,
+      @resource,
+      "update_for_items",
+      subscription_id,
+      params,
+      opts
+    )
+  end
 end
