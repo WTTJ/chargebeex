@@ -65,7 +65,10 @@ defmodule Chargebeex.Resource do
           generic_action: 6,
           generic_action_without_id: 3,
           generic_action_without_id: 4,
-          generic_action_without_id: 5
+          generic_action_without_id: 5,
+          nested_generic_action_without_id: 4,
+          nested_generic_action_without_id: 5,
+          nested_generic_action_without_id: 6
         ]
 
       if :retrieve in only do
