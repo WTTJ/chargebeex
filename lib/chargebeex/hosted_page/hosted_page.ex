@@ -1,9 +1,8 @@
 defmodule Chargebeex.HostedPage do
   use TypedStruct
 
-  use Chargebeex.Resource,
-    resource: "hosted_page",
-    only: [:retrieve, :list]
+  @resource "hosted_page"
+  use Chargebeex.Resource, resource: @resource, only: [:retrieve, :list]
 
   alias Chargebeex.Client
   alias Chargebeex.Builder
@@ -35,5 +34,24 @@ defmodule Chargebeex.HostedPage do
          builded <- Builder.build(content) do
       {:ok, Map.get(builded, "hosted_page")}
     end
+  end
+
+  @doc """
+  Creates a Chargebee hosted page to accept payment details from a customer
+  and checkout to update the subscription.
+
+  ## Examples
+
+      iex> Chargebeex.HostedPage.checkout_existing_for_items(%{
+        subscription: %{id: "subscription_id"},
+        layout: "in_app",
+        subscription_items: [
+          %{item_price_id: "item_price_id", quantity: 1}
+        ]
+      })
+      {:ok, %Chargebeex.HostedPage{}}
+  """
+  def checkout_existing_for_items(params, opts \\ []) do
+    generic_action_without_id(:post, @resource, "checkout_existing_for_items", params, opts)
   end
 end

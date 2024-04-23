@@ -168,4 +168,83 @@ defmodule Chargebeex.HostedPageTest do
       assert {:ok, %HostedPage{}} = HostedPage.collect_now(%{})
     end
   end
+
+  describe "checkout_existing_for_items" do
+    test "with bad authentication should fail" do
+      unauthorized = Common.unauthorized()
+
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/hosted_pages/checkout_existing_for_items"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body == ""
+
+          {:ok, 401, [], Jason.encode!(unauthorized)}
+        end
+      )
+
+      assert {:error, 401, [], ^unauthorized} = HostedPage.checkout_existing_for_items(%{})
+    end
+
+    test "with no param, no offset should succeed" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/hosted_pages/checkout_existing_for_items"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body == ""
+
+          {:ok, 200, [], Jason.encode!(%{hosted_page: %{}})}
+        end
+      )
+
+      assert {:ok, %HostedPage{}} = HostedPage.checkout_existing_for_items(%{})
+    end
+
+    test "with param, without offset should succeed" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn url, body, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/hosted_pages/checkout_existing_for_items"
+
+          assert headers == [
+                   {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+                   {"Content-Type", "application/x-www-form-urlencoded"}
+                 ]
+
+          assert body ==
+                   "layout=in_app&subscription[id]=subscription_id&subscription_items[item_price_id][0]=item_price_id&subscription_items[quantity][0]=1"
+
+          {:ok, 200, [], Jason.encode!(%{hosted_page: %{}})}
+        end
+      )
+
+      params = %{
+        subscription: %{id: "subscription_id"},
+        layout: "in_app",
+        subscription_items: [
+          %{item_price_id: "item_price_id", quantity: 1}
+        ]
+      }
+
+      assert {:ok, %HostedPage{}} = HostedPage.checkout_existing_for_items(params)
+    end
+  end
 end
