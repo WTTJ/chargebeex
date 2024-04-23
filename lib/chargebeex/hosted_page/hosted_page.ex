@@ -4,9 +4,6 @@ defmodule Chargebeex.HostedPage do
   @resource "hosted_page"
   use Chargebeex.Resource, resource: @resource, only: [:retrieve, :list]
 
-  alias Chargebeex.Client
-  alias Chargebeex.Builder
-
   typedstruct do
     field :id, String.t()
     field :type, String.t()
@@ -28,12 +25,23 @@ defmodule Chargebeex.HostedPage do
 
   use ExConstructor, :build
 
+  @doc """
+  Creates a Chargebee hosted page to collect due payments from a customer
+
+  ## Examples
+
+      iex> Chargebeex.HostedPage.collect_now(%{
+        customer: %{
+          id: "customer_id"
+        },
+        card: %{
+          gateway_account_id: "gateway_account_id"
+        }
+      })
+      {:ok, %Chargebeex.HostedPage{}}
+  """
   def collect_now(params, opts \\ []) do
-    with path <- Chargebeex.Action.resource_path_generic_without_id("hosted_page", "collect_now"),
-         {:ok, _status_code, _headers, content} <- Client.post(path, params, opts),
-         builded <- Builder.build(content) do
-      {:ok, Map.get(builded, "hosted_page")}
-    end
+    generic_action_without_id(:post, @resource, "collect_now", params, opts)
   end
 
   @doc """
