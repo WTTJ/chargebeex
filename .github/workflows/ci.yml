@@ -11,11 +11,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: ["23", "24", "25"]
-        elixir: ["1.12.3", "1.13.4", "1.14.5", "1.15.7", "1.16.2"]
+        otp: ["23.x", "24.x", "25.x"]
+        elixir: ["1.12.x", "1.13.x", "1.14.x"]
         exclude:
           - elixir: 1.12.x
             otp: 25.x
+        include:
+          - elixir: 1.15.x
+            otp: 24.x
+          - elixir: 1.15.x
+            otp: 25.x
+          - elixir: 1.15.x
+            otp: 26.x
+          - elixir: 1.16.x
+            otp: 24.x
+          - elixir: 1.16.x
+            otp: 25.x
+          - elixir: 1.16.x
+            otp: 26.x
     steps:
       - uses: actions/checkout@v2
       - name: Set up Elixir
