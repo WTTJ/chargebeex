@@ -81,7 +81,8 @@ defmodule Chargebeex.MixProject do
           Chargebeex.HostedPage,
           Chargebeex.ItemPrice,
           Chargebeex.PaymentSource,
-          Chargebeex.Item
+          Chargebeex.Item,
+          Chargebeex.Usage
         ]
       ]
     ]

@@ -59,6 +59,21 @@ defmodule Chargebeex.Action do
     end
   end
 
+  def nested_generic_action_without_id(
+        verb,
+        nested_to,
+        resource,
+        action,
+        params \\ %{},
+        opts \\ []
+      ) do
+    with path <- nested_resource_path_generic_without_id(nested_to, action),
+         {:ok, _status_code, _headers, content} <- apply(Client, verb, [path, params, opts]),
+         builded <- Builder.build(content) do
+      {:ok, put_resources(builded, resource)}
+    end
+  end
+
   defp put_resources(builded, resource) do
     builded
     |> Map.get(resource, %{})
