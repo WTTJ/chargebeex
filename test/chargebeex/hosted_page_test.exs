@@ -229,8 +229,18 @@ defmodule Chargebeex.HostedPageTest do
                    {"Content-Type", "application/x-www-form-urlencoded"}
                  ]
 
-          assert body ==
-                   "layout=in_app&subscription[id]=subscription_id&subscription_items[item_price_id][0]=item_price_id&subscription_items[quantity][0]=1"
+          expected_body =
+            MapSet.new([
+              "layout=in_app",
+              "subscription[id]=subscription_id",
+              "subscription_items[item_price_id][0]=item_price_id",
+              "subscription_items[quantity][0]=1"
+            ])
+
+          assert MapSet.equal?(
+                   String.split(body, "&") |> MapSet.new(),
+                   expected_body
+                 )
 
           {:ok, 200, [], Jason.encode!(%{hosted_page: %{}})}
         end
