@@ -11,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: ["23.x", "24.x", "25.x"]
-        elixir: ["1.12.x", "1.13.x", "1.14.x", "1.15.x", "1.16.x"]
+        otp: ["23", "24", "25"]
+        elixir: ["1.12", "1.13", "1.14", "1.15", "1.16"]
         exclude:
           - elixir: 1.12.x
             otp: 25.x
