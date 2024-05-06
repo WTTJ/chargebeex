@@ -71,6 +71,7 @@ defmodule Chargebeex.MixProject do
           Chargebeex.Client.Hackney
         ],
         Resources: [
+          Chargebeex.AttachedItem,
           Chargebeex.Card,
           Chargebeex.Customer,
           Chargebeex.Event,
