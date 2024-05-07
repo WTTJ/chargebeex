@@ -49,8 +49,11 @@ defmodule Chargebeex.SubscriptionTest do
                    {"Content-Type", "application/x-www-form-urlencoded"}
                  ]
 
-          assert data ==
-                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=invalid_item_price_id"
+          data = String.split(data, "&")
+
+          assert Enum.count(data) == 2
+          assert "subscription_items[quantity][0]=1" in data
+          assert "subscription_items[item_price_id][0]=invalid_item_price_id" in data
 
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
@@ -80,8 +83,11 @@ defmodule Chargebeex.SubscriptionTest do
                    {"Content-Type", "application/x-www-form-urlencoded"}
                  ]
 
-          assert data ==
-                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=item_price_id"
+          data = String.split(data, "&")
+
+          assert Enum.count(data) == 2
+          assert "subscription_items[quantity][0]=1" in data
+          assert "subscription_items[item_price_id][0]=item_price_id" in data
 
           {:ok, 200, [], Jason.encode!(%{customer: %{}, subscription: %{}})}
         end
@@ -140,8 +146,11 @@ defmodule Chargebeex.SubscriptionTest do
                    {"Content-Type", "application/x-www-form-urlencoded"}
                  ]
 
-          assert data ==
-                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=invalid_item_price_id"
+          data = String.split(data, "&")
+
+          assert Enum.count(data) == 2
+          assert "subscription_items[quantity][0]=1" in data
+          assert "subscription_items[item_price_id][0]=invalid_item_price_id" in data
 
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
@@ -171,8 +180,11 @@ defmodule Chargebeex.SubscriptionTest do
                    {"Content-Type", "application/x-www-form-urlencoded"}
                  ]
 
-          assert data ==
-                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=item_price_id"
+          data = String.split(data, "&")
+
+          assert Enum.count(data) == 2
+          assert "subscription_items[quantity][0]=1" in data
+          assert "subscription_items[item_price_id][0]=item_price_id" in data
 
           {:ok, 200, [], Jason.encode!(%{customer: %{}, subscription: %{}})}
         end
