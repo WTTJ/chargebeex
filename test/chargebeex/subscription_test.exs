@@ -50,7 +50,7 @@ defmodule Chargebeex.SubscriptionTest do
                  ]
 
           assert data ==
-                   "subscription_items[item_price_id][0]=invalid_item_price_id&subscription_items[quantity][0]=1"
+                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=invalid_item_price_id"
 
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
@@ -81,7 +81,7 @@ defmodule Chargebeex.SubscriptionTest do
                  ]
 
           assert data ==
-                   "subscription_items[item_price_id][0]=item_price_id&subscription_items[quantity][0]=1"
+                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=item_price_id"
 
           {:ok, 200, [], Jason.encode!(%{customer: %{}, subscription: %{}})}
         end
@@ -141,7 +141,7 @@ defmodule Chargebeex.SubscriptionTest do
                  ]
 
           assert data ==
-                   "subscription_items[item_price_id][0]=invalid_item_price_id&subscription_items[quantity][0]=1"
+                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=invalid_item_price_id"
 
           {:ok, 400, [], Jason.encode!(bad_request)}
         end
@@ -172,7 +172,7 @@ defmodule Chargebeex.SubscriptionTest do
                  ]
 
           assert data ==
-                   "subscription_items[item_price_id][0]=item_price_id&subscription_items[quantity][0]=1"
+                   "subscription_items[quantity][0]=1&subscription_items[item_price_id][0]=item_price_id"
 
           {:ok, 200, [], Jason.encode!(%{customer: %{}, subscription: %{}})}
         end
