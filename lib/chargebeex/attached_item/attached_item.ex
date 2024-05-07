@@ -48,6 +48,17 @@ defmodule Chargebeex.AttachedItem do
 
   use ExConstructor, :build
 
+  @doc """
+  Allows to list Attached Items
+
+  Available filters can be found here: https://apidocs.eu.chargebee.com/docs/api/attached_items#list_attached_items
+
+  ## Examples
+
+      iex> filters = %{limit: 2}
+      iex(2)> Chargebeex.AttachedItem.list(filters)
+      {:ok, [%Chargebeex.AttachedItem{...}, %Chargebeex.AttachedItem{...}], %{"next_offset" => nil}}
+  """
   def list(item_id, params \\ %{}, opts \\ []) do
     nested_generic_action_without_id(
       :get,
