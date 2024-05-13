@@ -35,7 +35,7 @@ defmodule Chargebeex.Usage do
 
   ## Examples
 
-      iex> Chargebeex.Usage.create(%{item_price_id: "item_eur_monthly", quantity: 42, usage_date: 1599817250})
+      iex> Chargebeex.Usage.create("e49e39cf-a406-4cc9-b14a-85476b3c3ebf", %{item_price_id: "item_eur_monthly", quantity: 42, usage_date: 1599817250})
         {:ok, %Chargebeex.Usage{}}
   """
   def create(subscription_id, params, opts \\ []) do

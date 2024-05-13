@@ -68,9 +68,11 @@ defmodule Chargebeex.Action do
         opts \\ []
       ) do
     with path <- nested_resource_path_generic_without_id(nested_to, action),
-         {:ok, _status_code, _headers, content} <- apply(Client, verb, [path, params, opts]),
-         builded <- Builder.build(content) do
-      {:ok, put_resources(builded, resource)}
+         {:ok, _status_code, _headers, content} <- apply(Client, verb, [path, params, opts]) do
+      case Builder.build(content) do
+        {builded, metadata} -> {:ok, Enum.map(builded, &put_resources(&1, resource)), metadata}
+        builded -> {:ok, put_resources(builded, resource)}
+      end
     end
   end
 
