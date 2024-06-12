@@ -4,9 +4,6 @@ defmodule Chargebeex.Subscription do
   @resource "subscription"
   use Chargebeex.Resource, resource: @resource, only: [:list, :retrieve, :update]
 
-  alias Chargebeex.Builder
-  alias Chargebeex.Client
-
   @typedoc """
   "future" | "in_trial" | "active" | "non_renewing" | "paused" | "cancelled"
   """
@@ -119,13 +116,6 @@ defmodule Chargebeex.Subscription do
                  ]
                })
       {:ok, %Chargebeex.Subscription{
-          id: "GHI456OPQ789",
-          contract_term: %{},
-          referral_info: %{},
-          shipping_address: %{},
-          coupons: nil,
-          charged_items: nil,
-          item_tiers: nil,
           subscription_items: [
             %{
               "amount" => 100,
@@ -138,76 +128,23 @@ defmodule Chargebeex.Subscription do
               "unit_price" => 100
             }
           ],
-          business_entity_id: "ABC123XYZ456",
-          auto_close_invoices: true,
-          custom_fields: %{},
-          metadata: %{},
-          create_pending_invoices: false,
-          free_period_unit: nil,
-          free_period: nil,
-          cancel_reason_code: nil,
-          changes_scheduled_at: nil,
-          deleted: false,
-          invoice_notes: nil,
-          base_currency_code: nil,
-          exchange_rate: nil,
-          mrr: nil,
-          total_dues: nil,
-          due_since: nil,
-          due_invoices_count: 0,
-          net_term_days: nil,
-          channel: "web",
-          cancel_schedule_created_at: nil,
-          plan_amount_in_decimal: nil,
-          plan_free_quantity_in_decimal: nil,
-          payment_source_id: nil,
-          has_scheduled_changes: false,
-          has_scheduled_advance_invoices: false,
-          updated_at: 1705785896,
-          resource_version: 1705785896428,
-          created_from_ip: nil,
-          cancel_reason: nil,
-          cancelled_at: nil,
-          resume_date: nil,
-          pause_date: nil,
-          override_relationship: false,
-          contract_term_billing_cycle_on_renewal: nil,
-          activated_at: nil,
-          started_at: 1705705200,
-          created_at: 1705785896,
-          next_billing_at: 1705878000,
-          current_term_end: nil,
-          current_term_start: nil,
-          trial_end_action: nil,
-          currency_code: nil,
-          start_date: nil,
-          trial_end: nil,
-          billing_period: nil,
-          billing_period_unit: nil,
-          object: nil,
-          remaining_billing_cycles: nil,
-          po_number: nil,
-          plan_quantity_in_decimal: nil,
-          plan_unit_price_in_decimal: nil,
-          customer_id: nil,
-          status: nil,
-          trial_start: nil
+          customer_id: "169ljDT1Op0yuxET",
+          ...
         }}
   """
   def create_with_items(customer_id, params, opts \\ []) do
-    with path <-
-           Chargebeex.Action.nested_resource_path_generic_without_id(
-             [customer: customer_id],
-             "subscription_for_items"
-           ),
-         {:ok, _status_code, _headers, content} <- Client.post(path, params, opts),
-         builded <- Builder.build(content) do
-      {:ok, Map.get(builded, @resource)}
-    end
+    nested_generic_action_without_id(
+      :post,
+      [customer: customer_id],
+      @resource,
+      "subscription_for_items",
+      params,
+      opts
+    )
   end
 
   def update_for_items(subscription_id, params, opts \\ []) do
-    Chargebeex.Action.generic_action(
+    generic_action(
       :post,
       @resource,
       "update_for_items",
