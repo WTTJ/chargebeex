@@ -1,6 +1,8 @@
 defmodule Chargebeex.Invoice do
   use TypedStruct
-  use Chargebeex.Resource, resource: "invoice"
+
+  @resource "invoice"
+  use Chargebeex.Resource, resource: @resource
 
   typedstruct do
     field :adjustment_credit_notes, list()
@@ -48,4 +50,30 @@ defmodule Chargebeex.Invoice do
   end
 
   use ExConstructor, :build
+
+  @doc """
+  Creates an invoice for charge-items and one-time charges.
+
+  ## Examples
+
+      iex> Chargebeex.Invoice.create_for_charge_items_and_charges(%{
+        customer_id: "__test__KyVkkWS1xLskm8",
+        item_prices: [
+          %{
+            item_price_id: "ssl-charge-USD",
+            unit_price: 2000
+          }
+        ]
+      })
+      {:ok, %Chargebeex.Invoice{}}
+  """
+  def create_for_charge_items_and_charges(params, opts \\ []) do
+    generic_action_without_id(
+      :post,
+      @resource,
+      "create_for_charge_items_and_charges",
+      params,
+      opts
+    )
+  end
 end
