@@ -14,7 +14,7 @@ defmodule Chargebeex do
   # mix.exs
   def deps do
   [
-    {:chargebeex, "~> 0.4.1"}
+    {:chargebeex, "~> 0.5.0"}
   ]
   end
   ```
