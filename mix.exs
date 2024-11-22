@@ -74,6 +74,7 @@ defmodule Chargebeex.MixProject do
           Chargebeex.AttachedItem,
           Chargebeex.Card,
           Chargebeex.Customer,
+          Chargebeex.CustomerEntitlement,
           Chargebeex.Event,
           Chargebeex.Invoice,
           Chargebeex.PortalSession,
