@@ -78,6 +78,7 @@ defmodule Chargebeex.MixProject do
           Chargebeex.Invoice,
           Chargebeex.PortalSession,
           Chargebeex.Subscription,
+          Chargebeex.SubscriptionEntitlement,
           Chargebeex.Quote,
           Chargebeex.HostedPage,
           Chargebeex.ItemPrice,
