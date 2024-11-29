@@ -6,6 +6,7 @@ defmodule Chargebeex.Builder do
     BillingAddress,
     Card,
     Customer,
+    CustomerEntitlement,
     Event,
     Invoice,
     HostedPage,
@@ -36,6 +37,7 @@ defmodule Chargebeex.Builder do
 
   def build_resource(%{"subscription" => params}), do: Subscription.build(params)
   def build_resource(%{"customer" => params}), do: Customer.build(params)
+  def build_resource(%{"customer_entitlement" => params}), do: CustomerEntitlement.build(params)
   def build_resource(%{"portal_session" => params}), do: PortalSession.build(params)
   def build_resource(%{"event" => params}), do: Event.build(params)
   def build_resource(%{"card" => params}), do: Card.build(params)
@@ -56,6 +58,7 @@ defmodule Chargebeex.Builder do
 
   def build_resource("subscription", params), do: Subscription.build(params)
   def build_resource("customer", params), do: Customer.build(params)
+  def build_resource("customer_entitlement", params), do: CustomerEntitlement.build(params)
   def build_resource("portal_session", params), do: PortalSession.build(params)
   def build_resource("event", params), do: Event.build(params)
   def build_resource("card", params), do: Card.build(params)
