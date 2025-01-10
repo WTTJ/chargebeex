@@ -76,6 +76,7 @@ defmodule Chargebeex.MixProject do
           Chargebeex.Customer,
           Chargebeex.CustomerEntitlement,
           Chargebeex.Event,
+          Chargebeex.EntitlementOverride,
           Chargebeex.Invoice,
           Chargebeex.PortalSession,
           Chargebeex.Subscription,
