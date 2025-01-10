@@ -46,17 +46,35 @@ defmodule Chargebeex.EntitlementOverride do
           optional(any()) => any()
         }
 
-  # TODO: UPDATEEEEE
   @doc """
-  Allows to list Subscription Entitlements
+  Upserts or removes a set of entitlement_overrides for a subscription depending on the action specified
 
-  Available filters can be found here: https://apidocs.chargebee.com/docs/api/subscription_entitlements#list_subscription_entitlements
+  More info: https://apidocs.eu.chargebee.com/docs/api/entitlement_overrides?lang=curl#upsert/remove_entitlement_overrides_for_a_subscription
 
   ## Examples
 
-      iex> filters = %{limit: 2}
-      iex(2)> Chargebeex.SubscriptionEntitlement.list(filters)
-      {:ok, [%Chargebeex.SubscriptionEntitlement{...}, %Chargebeex.SubscriptionEntitlement{...}], %{"next_offset" => nil}}
+    iex(1)> subscription_id = "BTLybZUInBGCXDMY"
+    "BTLybZUInBGCXDMY"
+    iex(2)> params = %{
+    ...(2)>   "action" => :upsert,
+    ...(2)>   "entitlement_overrides" => [
+    ...(2)>     %{
+    ...(2)>       "feature_id" => "foo",
+    ...(2)>       "value" => "false"
+    ...(2)>     }
+    ...(2)>   ]
+    ...(2)> }
+    %{
+      "action" => :upsert,
+      "entitlement_overrides" => [
+        %{"feature_id" => "foo", "value" => "false"}
+      ]
+    }
+    iex(3)> Chargebeex.EntitlementOverride.upsert_or_remove(subscription_id, params)
+    {:ok,
+     [
+       %Chargebeex.EntitlementOverride{...}
+     ], %{"next_offset" => nil}}
   """
   @spec upsert_or_remove(String.t(), upsert_or_remove_params(), keyword()) :: any()
   def upsert_or_remove(subscription_id, params, opts \\ [])
