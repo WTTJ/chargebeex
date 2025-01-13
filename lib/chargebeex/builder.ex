@@ -8,6 +8,7 @@ defmodule Chargebeex.Builder do
     Customer,
     CustomerEntitlement,
     Event,
+    EntitlementOverride,
     Invoice,
     HostedPage,
     PaymentSource,
@@ -40,6 +41,7 @@ defmodule Chargebeex.Builder do
   def build_resource(%{"customer_entitlement" => params}), do: CustomerEntitlement.build(params)
   def build_resource(%{"portal_session" => params}), do: PortalSession.build(params)
   def build_resource(%{"event" => params}), do: Event.build(params)
+  def build_resource(%{"entitlement_override" => params}), do: EntitlementOverride.build(params)
   def build_resource(%{"card" => params}), do: Card.build(params)
   def build_resource(%{"billing_address" => params}), do: BillingAddress.build(params)
   def build_resource(%{"payment_source" => params}), do: PaymentSource.build(params)
@@ -61,6 +63,7 @@ defmodule Chargebeex.Builder do
   def build_resource("customer_entitlement", params), do: CustomerEntitlement.build(params)
   def build_resource("portal_session", params), do: PortalSession.build(params)
   def build_resource("event", params), do: Event.build(params)
+  def build_resource("entitlement_override", params), do: EntitlementOverride.build(params)
   def build_resource("card", params), do: Card.build(params)
   def build_resource("billing_address", params), do: BillingAddress.build(params)
   def build_resource("payment_source", params), do: PaymentSource.build(params)
