@@ -94,10 +94,12 @@ defmodule Chargebeex.SubscriptionEntitlement do
        [%Chargebeex.SubscriptionEntitlement{...}], %{"next_offset" => nil}}
   """
   @spec set_availability(String.t(), set_availability_params(), keyword()) :: any()
+  def set_availability(subscription_id, params, opts \\ [])
+
   def set_availability(
         subscription_id,
         %{"is_enabled" => _is_enabled, "subscription_entitlements" => _entitlements} = params,
-        opts \\ []
+        opts
       ) do
     nested_generic_action_without_id(
       :post,
@@ -107,5 +109,11 @@ defmodule Chargebeex.SubscriptionEntitlement do
       params,
       opts
     )
+  end
+
+  def set_availability(_subscription_id, _params, _opts) do
+    raise ArgumentError, """
+    Invalid params provided to `set_availability`. Ensure that `params["is_enabled"]` and `params["subscription_entitlements"]` are provided.
+    """
   end
 end

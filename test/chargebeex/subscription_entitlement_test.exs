@@ -131,21 +131,29 @@ defmodule Chargebeex.SubscriptionEntitlementTest do
         end
       )
 
-      subscription_id = "BTLybZUInBGCXDMY"
+      subscription_id = "subscription_id"
 
       params = %{
         "is_enabled" => true,
         "subscription_entitlements" => [
           %{
-            "feature_id" => "shore-bm-customer-feedback"
+            "feature_id" => "foo_feature_id"
           }
         ]
       }
 
-      Chargebeex.SubscriptionEntitlement.set_availability(subscription_id, params)
-
       assert {:ok, [%SubscriptionEntitlement{}], %{"next_offset" => _}} =
                SubscriptionEntitlement.set_availability(subscription_id, params)
+    end
+
+    test "with invalid params should raise error" do
+      subscription_id = "subscription_id"
+
+      invalid_params = %{}
+
+      assert_raise ArgumentError, ~r/Invalid params provided to `set_availability`/, fn ->
+        SubscriptionEntitlement.set_availability(subscription_id, invalid_params)
+      end
     end
   end
 end
