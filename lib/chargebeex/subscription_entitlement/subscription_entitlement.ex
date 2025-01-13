@@ -14,7 +14,7 @@ defmodule Chargebeex.SubscriptionEntitlement do
   @type feature_type :: String.t()
 
   @typedoc """
-  A single entitlement override map.
+  A single subscription entitlement map.
   """
   @type subscription_entitlement :: %{
           required(:feature_id) => String.t()
