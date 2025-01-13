@@ -27,7 +27,6 @@ defmodule Chargebeex.Fixtures.SubscriptionEntitlement do
     """
     {
       "list": [
-        #{retrieve()},
         #{retrieve()}
       ],
       "next_offset": "1612890918000"
