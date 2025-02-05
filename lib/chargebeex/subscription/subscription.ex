@@ -2,7 +2,7 @@ defmodule Chargebeex.Subscription do
   use TypedStruct
 
   @resource "subscription"
-  use Chargebeex.Resource, resource: @resource, only: [:list, :retrieve, :update]
+  use Chargebeex.Resource, resource: @resource, only: [:list, :retrieve, :update, :delete]
 
   @typedoc """
   "future" | "in_trial" | "active" | "non_renewing" | "paused" | "cancelled"
