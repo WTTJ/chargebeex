@@ -49,13 +49,23 @@ defmodule Chargebeex.Client do
 
     url = endpoint(site, path, params)
 
-    case apply(http_client(), :get, [url, "", default_headers(site, opts)]) do
-      {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, get_body_from_response(body)}
+    otel_adapter().with_span(
+      "Chargebeex.Client.get",
+      %{method: :get, url: url, params: params},
+      fn ->
+        case apply(http_client(), :get, [url, "", default_headers(site, opts)]) do
+          {:ok, status_code, headers, body} when status_code in 200..299 ->
+            otel_adapter().ok(status_code)
 
-      {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, get_body_from_response(body)}
-    end
+            {:ok, status_code, headers, get_body_from_response(body)}
+
+          {:ok, status_code, headers, body} ->
+            otel_adapter().error(status_code, body)
+
+            {:error, status_code, headers, get_body_from_response(body)}
+        end
+      end
+    )
   end
 
   def post(path, params \\ %{}, opts \\ []) do
@@ -68,13 +78,23 @@ defmodule Chargebeex.Client do
 
     url = endpoint(site, path)
 
-    case apply(http_client(), :post, [url, body, default_headers(site, opts, :post)]) do
-      {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, get_body_from_response(body)}
+    otel_adapter().with_span(
+      "Chargebeex.Client.post",
+      %{method: :post, url: url, params: params},
+      fn ->
+        case apply(http_client(), :post, [url, body, default_headers(site, opts, :post)]) do
+          {:ok, status_code, headers, body} when status_code in 200..299 ->
+            otel_adapter().ok(status_code)
 
-      {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, get_body_from_response(body)}
-    end
+            {:ok, status_code, headers, get_body_from_response(body)}
+
+          {:ok, status_code, headers, body} ->
+            otel_adapter().error(status_code, body)
+
+            {:error, status_code, headers, get_body_from_response(body)}
+        end
+      end
+    )
   end
 
   defp get_body_from_response(body) do
@@ -86,6 +106,10 @@ defmodule Chargebeex.Client do
 
   defp http_client() do
     Application.get_env(:chargebeex, :http_client, Chargebeex.Client.Hackney)
+  end
+
+  defp otel_adapter() do
+    Application.get_env(:chargebeex, :otel_adapter, Chargebeex.OpenTelemetry.Default)
   end
 
   defp default_headers(site, opts, verb \\ :get) do

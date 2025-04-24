@@ -106,6 +106,73 @@ fields can be accessed in the `resources` field of the structure.
   }
 ```
 
+### OpenTelemetry Integration
+
+Chargebeex now supports OpenTelemetry, allowing users to implement their own span instrumentation for tracing and monitoring. By default, a no-op implementation is provided, but you can define your own adapter by implementing the `Chargebeex.OpenTelemetry.OpenTelemetryBehaviour` module.
+
+#### Default Implementation
+
+The default implementation (`Chargebeex.OpenTelemetry.Default`) does nothing and simply executes the provided function.
+
+#### Custom Implementation Example
+
+To customize OpenTelemetry spans, you can create your own module implementing the `Chargebeex.OpenTelemetry.OpenTelemetryBehaviour`:
+
+```elixir
+defmodule MyApp.OpenTelemetryAdapter do
+  @behaviour Chargebeex.OpenTelemetry.OpenTelemetryBehaviour
+
+  require OpenTelemetry.Tracer
+
+  @impl true
+  def with_span(name, attributes, fun) do
+    OpenTelemetry.Tracer.with_span name, %{attributes: attributes} do
+      fun.()
+    end
+  end
+
+  @impl true
+  def ok(status_code) do
+    OpenTelemetry.Tracer.set_status(OpenTelemetry.status(:ok))
+
+    OpenTelemetry.Tracer.set_attribute(
+      OpenTelemetry.SemConv.HTTPAttributes.http_response_status_code(),
+      status_code
+    )
+  end
+
+  @impl true
+  def error(status_code, body) do
+    OpenTelemetry.Tracer.set_status(OpenTelemetry.status(:error))
+
+    OpenTelemetry.Tracer.set_attributes(%{
+      OpenTelemetry.SemConv.HTTPAttributes.http_response_status_code() => status_code,
+      OpenTelemetry.SemConv.ErrorAttributes.error_type() => body
+    })
+  end
+end
+```
+
+#### Configuration
+
+To use your custom OpenTelemetry adapter, configure it in your application:
+
+```elixir
+config :chargebeex, :otel_adapter, MyApp.OpenTelemetryAdapter
+```
+
+#### Example Usage
+
+When making API calls, spans will automatically be created using the configured adapter:
+
+```elixir
+Chargebeex.Client.get("/customers")
+```
+
+This will create a span with attributes such as the HTTP method, URL, and parameters, which can be customized further in your adapter.
+
+For more information on OpenTelemetry, visit the [official documentation](https://opentelemetry.io/).
+
 ## Run tests
 
 ```sh
