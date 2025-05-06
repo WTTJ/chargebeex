@@ -106,6 +106,27 @@ fields can be accessed in the `resources` field of the structure.
   }
 ```
 
+### Telemetry Integration
+
+Chargebeex now supports `:telemetry`, allowing users to instrument and monitor API calls using telemetry events. This enables integration with various observability tools.
+
+#### Telemetry Events
+
+Chargebeex emits the following telemetry events for each API request:
+
+- `[:chargebeex, :request, :start]`: Emitted when an API request starts.
+- `[:chargebeex, :request, :stop]`: Emitted when an API request completes.
+
+When making API calls, telemetry events will automatically be emitted:
+
+```elixir
+Chargebeex.Client.get("/customers")
+```
+
+This will emit :start and :stop telemetry events with metadata such as the HTTP method, URL, and status code, which can be processed by your telemetry handler.
+
+For more information on `:telemetry`, visit the [official documentation](https://hexdocs.pm/telemetry/).
+
 ## Run tests
 
 ```sh
