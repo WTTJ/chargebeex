@@ -46,35 +46,45 @@ defmodule Chargebeex.Client do
 
   def get(path, params \\ %{}, opts \\ []) do
     site = Keyword.get(opts, :site, :default)
-
     url = endpoint(site, path, params)
 
-    case apply(http_client(), :get, [url, "", default_headers(site, opts)]) do
-      {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, get_body_from_response(body)}
+    :telemetry.span([:chargebeex, :request], %{method: :get, url: url, params: params}, fn ->
+      {status, status_code, _, _} =
+        result =
+        case apply(http_client(), :get, [url, "", default_headers(site, opts)]) do
+          {:ok, status_code, headers, body} when status_code in 200..299 ->
+            {:ok, status_code, headers, get_body_from_response(body)}
 
-      {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, get_body_from_response(body)}
-    end
+          {:ok, status_code, headers, body} ->
+            {:error, status_code, headers, get_body_from_response(body)}
+        end
+
+      {result, %{status: status, status_code: status_code}}
+    end)
   end
 
   def post(path, params \\ %{}, opts \\ []) do
     site = Keyword.get(opts, :site, :default)
+    url = endpoint(site, path)
 
     body =
       params
       |> transform_arrays_for_chargebee
       |> Plug.Conn.Query.encode()
 
-    url = endpoint(site, path)
+    :telemetry.span([:chargebeex, :request], %{method: :post, url: url, params: params}, fn ->
+      {status, status_code, _, _} =
+        result =
+        case apply(http_client(), :post, [url, body, default_headers(site, opts, :post)]) do
+          {:ok, status_code, headers, body} when status_code in 200..299 ->
+            {:ok, status_code, headers, get_body_from_response(body)}
 
-    case apply(http_client(), :post, [url, body, default_headers(site, opts, :post)]) do
-      {:ok, status_code, headers, body} when status_code in 200..299 ->
-        {:ok, status_code, headers, get_body_from_response(body)}
+          {:ok, status_code, headers, body} ->
+            {:error, status_code, headers, get_body_from_response(body)}
+        end
 
-      {:ok, status_code, headers, body} ->
-        {:error, status_code, headers, get_body_from_response(body)}
-    end
+      {result, %{status: status, status_code: status_code}}
+    end)
   end
 
   defp get_body_from_response(body) do
