@@ -16,7 +16,7 @@ defmodule Chargebeex.MixProject do
       },
       source_url: @source_url,
       homepage_url: @source_url,
-      version: "0.5.0",
+      version: "0.6.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -54,7 +54,8 @@ defmodule Chargebeex.MixProject do
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:typed_struct, "~> 0.3.0"},
       {:dialyxir, ">= 0.0.0", only: [:dev], runtime: false},
-      {:exconstructor, "~> 1.2.7"}
+      {:exconstructor, "~> 1.2.7"},
+      {:telemetry, "~> 1.3"}
     ]
   end
 
