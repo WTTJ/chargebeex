@@ -92,6 +92,7 @@ defmodule Chargebeex.Subscription do
     field :shipping_address, map(), default: %{}
     field :referral_info, map(), default: %{}
     field :contract_term, map(), default: %{}
+    field :resources, map(), default: %{}
   end
 
   use ExConstructor, :build
