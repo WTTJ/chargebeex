@@ -8,6 +8,50 @@ defmodule Chargebeex.InvoiceTest do
 
   setup :verify_on_exit!
 
+  describe ".list/1" do
+    test "fails for invalid authentication data" do
+      unauthorized = Common.unauthorized()
+
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn url, body, headers ->
+          assert url == "https://test-namespace.chargebee.com/api/v2/invoices"
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
+          {:ok, 401, [], Jason.encode!(unauthorized)}
+        end
+      )
+
+      assert {:error, 401, [], ^unauthorized} = Invoice.list()
+    end
+
+    test "allows filters" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn url, body, headers ->
+          assert url ==
+                   "https://test-namespace.chargebee.com/api/v2/invoices?limit=1&status%5Bis%5D=not_paid"
+
+          assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
+          assert body == ""
+
+          result = %{
+            list: [%{invoice: %{id: 0000}}],
+            next_offset: "foobar"
+          }
+
+          {:ok, 200, [], Jason.encode!(result)}
+        end
+      )
+
+      assert {:ok, [%Invoice{}], %{"next_offset" => "foobar"}} =
+               Invoice.list(%{"limit" => 1, "status[is]" => "not_paid"})
+    end
+  end
+
   describe "create_for_charge_items_and_charges" do
     test "with bad authentication should fail" do
       unauthorized = Common.unauthorized()

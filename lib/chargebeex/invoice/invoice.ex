@@ -76,4 +76,17 @@ defmodule Chargebeex.Invoice do
       opts
     )
   end
+
+  @doc """
+  Allows to list Invoices
+
+  Available filters can be found here: https://apidocs.chargebee.com/docs/api/invoices?lang=curl#list_invoices
+
+  ## Examples
+
+      iex> filters = %{limit: 2}
+      iex(2)> Chargebeex.Invoice.list(filters)
+      {:ok, [%Chargebeex.Invoice{...}, %Chargebeex.Invoice{...}], %{"next_offset" => nil}}
+  """
+  def list(params), do: super(params)
 end
