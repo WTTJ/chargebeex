@@ -16,7 +16,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
@@ -24,7 +24,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:error, 401, [], ^unauthorized} = Subscription.retrieve(1234)
+      assert {:error, 401, [], ^unauthorized} = Subscription.retrieve("foobar")
     end
 
     test "with resource not found should fail" do
@@ -34,7 +34,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
@@ -42,7 +42,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:error, 404, [], ^not_found} = Subscription.retrieve(1234)
+      assert {:error, 404, [], ^not_found} = Subscription.retrieve("foobar")
     end
 
     test "with resource found should succeed" do
@@ -50,7 +50,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :get,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar"
           assert headers == [{"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"}]
           assert body == ""
 
@@ -58,7 +58,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:ok, %Subscription{}} == Subscription.retrieve(1234)
+      assert {:ok, %Subscription{}} == Subscription.retrieve("foobar")
     end
   end
 
@@ -198,7 +198,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :post,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234/delete"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar/delete"
 
           assert headers == [
                    {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
@@ -211,7 +211,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:error, 401, [], ^unauthorized} = Subscription.delete("1234")
+      assert {:error, 401, [], ^unauthorized} = Subscription.delete("foobar")
     end
 
     test "with resource not found should fail" do
@@ -221,7 +221,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :post,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234/delete"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar/delete"
 
           assert headers == [
                    {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
@@ -234,7 +234,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:error, 404, [], ^not_found} = Subscription.delete("1234")
+      assert {:error, 404, [], ^not_found} = Subscription.delete("foobar")
     end
 
     test "with resource found should succeed" do
@@ -242,7 +242,7 @@ defmodule Chargebeex.SubscriptionTest do
         Chargebeex.HTTPClientMock,
         :post,
         fn url, body, headers ->
-          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/1234/delete"
+          assert url == "https://test-namespace.chargebee.com/api/v2/subscriptions/foobar/delete"
 
           assert headers == [
                    {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
@@ -255,7 +255,7 @@ defmodule Chargebeex.SubscriptionTest do
         end
       )
 
-      assert {:ok, %Subscription{}} == Subscription.delete("1234")
+      assert {:ok, %Subscription{}} == Subscription.delete("foobar")
     end
   end
 
