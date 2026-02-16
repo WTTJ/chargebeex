@@ -46,7 +46,7 @@ defmodule Chargebeex.MixProject do
   defp deps do
     [
       {:jason, "~> 1.0"},
-      {:hackney, "~> 1.18"},
+      {:hackney, "~> 3.0"},
       {:plug, "~>1.11"},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:hammox, "~> 0.5", only: :test},
