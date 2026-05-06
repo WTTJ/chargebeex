@@ -45,17 +45,17 @@ defmodule Chargebeex.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason, "1.4.4"},
-      {:hackney, "1.25.0"},
-      {:plug, "1.19.1"},
-      {:ex_doc, "0.40.1", only: :dev, runtime: false},
-      {:hammox, "0.7.1", only: :test},
-      {:mix_test_watch, "1.4.0", only: [:dev, :test], runtime: false},
-      {:credo, "1.7.18", only: [:dev, :test], runtime: false},
-      {:typed_struct, "0.3.0"},
-      {:dialyxir, "1.4.7", only: [:dev], runtime: false},
-      {:exconstructor, "1.3.1"},
-      {:telemetry, "1.4.1"}
+      {:jason, "~> 1.0"},
+      {:hackney, "~> 1.18"},
+      {:plug, "~>1.11"},
+      {:ex_doc, "~> 0.23", only: :dev, runtime: false},
+      {:hammox, "~> 0.5", only: :test},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:typed_struct, "~> 0.3.0"},
+      {:dialyxir, ">= 0.0.0", only: [:dev], runtime: false},
+      {:exconstructor, "~> 1.3.0"},
+      {:telemetry, "~> 1.3"}
     ]
   end
 
