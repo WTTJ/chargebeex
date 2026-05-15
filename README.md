@@ -22,7 +22,7 @@ The package can be installed by adding `chargebeex` to your list of dependencies
 # mix.exs
 def deps do
   [
-    {:chargebeex, "~> 0.6.0"}
+    {:chargebeex, "~> 0.7.0"}
   ]
 end
 ```
