@@ -47,7 +47,7 @@ defmodule Chargebeex.MixProject do
     [
       {:jason, "~> 1.0"},
       {:hackney, "~> 1.18"},
-      {:plug, "~>1.11"},
+      {:plug, "~> 1.11"},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:hammox, "~> 0.5", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
