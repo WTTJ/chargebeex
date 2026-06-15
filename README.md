@@ -22,7 +22,7 @@ The package can be installed by adding `chargebeex` to your list of dependencies
 # mix.exs
 def deps do
   [
-    {:chargebeex, "~> 0.7.0"}
+    {:chargebeex, "~> 0.8.0"}
   ]
 end
 ```
@@ -66,7 +66,7 @@ in the special `custom_fields` field of the structure. Please note Custom Fields
 are only available for Customers, Subscriptions, Product Families, Plans,
 Addons and Price Points.
 
-#### Example:
+#### Example
 
 ```elixir
  iex> Chargebeex.Customer.retrieve("barbaz")
@@ -87,7 +87,7 @@ querying a Customer, if any card or subscription is linked to this customer,
 these resources will also be returned. For internal API simplification, these
 fields can be accessed in the `resources` field of the structure.
 
-#### Example:
+#### Example
 
 ```elixir
  iex> Chargebeex.Customer.retrieve("barbaz")
