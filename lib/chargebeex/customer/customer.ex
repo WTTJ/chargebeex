@@ -35,6 +35,7 @@ defmodule Chargebeex.Customer do
     field :vat_number_status, String.t()
     field :primary_payment_source_id, String.t()
     field :backup_payment_source_id, String.t()
+    field :business_entity_id, String.t()
     field :relationship, map()
     field :resources, map(), default: %{}
     field :custom_fields, map(), default: %{}
