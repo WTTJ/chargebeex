@@ -16,7 +16,7 @@ defmodule Chargebeex.MixProject do
       },
       source_url: @source_url,
       homepage_url: @source_url,
-      version: "0.8.0",
+      version: "0.9.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
@@ -46,7 +46,7 @@ defmodule Chargebeex.MixProject do
   defp deps do
     [
       {:jason, "~> 1.0"},
-      {:hackney, "~> 4.0"},
+      {:hackney, "~> 1.18 or ~> 4.0"},
       {:plug, "~> 1.11"},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
       {:hammox, "~> 0.5", only: :test},

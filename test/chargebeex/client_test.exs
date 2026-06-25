@@ -101,6 +101,33 @@ defmodule Chargebeex.ClientTest do
                  user_email_encoded: Base.encode64("user@test.com")
                )
     end
+
+    test "should add chargebee-business-entity-id header when business_entity_id is provided" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn _url, _body, headers ->
+          assert {"chargebee-business-entity-id", "BE-FR-123"} in headers
+          {:ok, 200, [], Jason.encode!(%{})}
+        end
+      )
+
+      assert {:ok, 200, [], %{}} =
+               Client.get("/customers", %{}, business_entity_id: "BE-FR-123")
+    end
+
+    test "should not add chargebee-business-entity-id header when business_entity_id is absent" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :get,
+        fn _url, _body, headers ->
+          refute Enum.any?(headers, fn {k, _} -> k == "chargebee-business-entity-id" end)
+          {:ok, 200, [], Jason.encode!(%{})}
+        end
+      )
+
+      assert {:ok, 200, [], %{}} = Client.get("/customers", %{})
+    end
   end
 
   describe "post" do
@@ -163,6 +190,33 @@ defmodule Chargebeex.ClientTest do
                  user_email: "user@test.com",
                  user_email_encoded: Base.encode64("user@test.com")
                )
+    end
+
+    test "should add chargebee-business-entity-id header when business_entity_id is provided" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn _url, _body, headers ->
+          assert {"chargebee-business-entity-id", "BE-UK-456"} in headers
+          {:ok, 200, [], Jason.encode!(%{})}
+        end
+      )
+
+      assert {:ok, 200, [], %{}} =
+               Client.post("/customers", %{}, business_entity_id: "BE-UK-456")
+    end
+
+    test "should not add chargebee-business-entity-id header when business_entity_id is absent" do
+      expect(
+        Chargebeex.HTTPClientMock,
+        :post,
+        fn _url, _body, headers ->
+          refute Enum.any?(headers, fn {k, _} -> k == "chargebee-business-entity-id" end)
+          {:ok, 200, [], Jason.encode!(%{})}
+        end
+      )
+
+      assert {:ok, 200, [], %{}} = Client.post("/customers", %{})
     end
   end
 end
