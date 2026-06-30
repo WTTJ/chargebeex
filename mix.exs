@@ -64,6 +64,7 @@ defmodule Chargebeex.MixProject do
       extras: extras(),
       main: "readme",
       source_url: @source_url,
+      source_ref: "main",
       homepage_url: @source_url,
       formatters: ["html"],
       groups_for_modules: [
