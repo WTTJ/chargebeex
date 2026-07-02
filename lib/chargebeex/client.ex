@@ -101,8 +101,16 @@ defmodule Chargebeex.Client do
   defp default_headers(site, opts, verb \\ :get) do
     []
     |> add_user_details(opts)
+    |> add_business_entity(opts)
     |> add_basic_auth(site)
     |> add_content_type(verb)
+  end
+
+  defp add_business_entity(headers, opts) do
+    case Keyword.get(opts, :business_entity_id) do
+      nil -> headers
+      id -> [{"chargebee-business-entity-id", id} | headers]
+    end
   end
 
   defp add_user_details(headers, opts) do
