@@ -49,7 +49,7 @@ defmodule Chargebeex.MixProject do
       {:hackney, "~> 1.18 or ~> 4.0"},
       {:plug, "~> 1.11"},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
-      {:hammox, "~> 0.5", only: :test},
+      {:hammox, "~> 1.0", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:typed_struct, "~> 0.3.0"},
