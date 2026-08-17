@@ -10,7 +10,17 @@ permissions:
 
 jobs:
   release-please:
-    uses: WTTJ/domain-platform/.github/workflows/common_release_please.yml@v1
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v5
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
   publish:
     needs: release-please
