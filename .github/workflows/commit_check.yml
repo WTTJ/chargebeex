@@ -11,7 +11,7 @@ jobs:
   check-commits:
     runs-on: ubuntu-latest
     container:
-      image: commitizen/commitizen:4.15.1
+      image: commitizen/commitizen:4.18.0
 
     steps:
       - name: Checkout code
