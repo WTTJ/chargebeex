@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.9.2](https://github.com/WTTJ/chargebeex/compare/0.9.1...0.9.2) (2026-09-15)
+
+
+### Bug Fixes
+
+* **ci:** inline commit-check job instead of calling private reusable workflow [PLA-2794] ([8fce36d](https://github.com/WTTJ/chargebeex/commit/8fce36ddd84505690cf4c2c5d9333da1417be727))
+
+
+### Chores
+
+* bump erlang and elixir versions [PLA-2791] ([a323e6d](https://github.com/WTTJ/chargebeex/commit/a323e6d3d05fe9593df17f2101bf0c5454700986))
+* **deps:** lock file maintenance [mix] (mix.exs) ([05a093a](https://github.com/WTTJ/chargebeex/commit/05a093a57677ec754ac8508933dcf3d8b6629790))
+* **deps:** lock file maintenance [mix] (mix.exs) ([27f121b](https://github.com/WTTJ/chargebeex/commit/27f121b76ffa588f901fb0c3f1254048abcecdba))
+* **deps:** update commitizen/commitizen docker tag to v4.18.0 ([d4e6ed7](https://github.com/WTTJ/chargebeex/commit/d4e6ed706f1fcd5d94b559c72e6e6d54f1026055))
+* **deps:** update commitizen/commitizen docker tag to v4.18.0 ([9d7aad3](https://github.com/WTTJ/chargebeex/commit/9d7aad342f1530d3c2a4d70ab93d1cc3b2f796fd))
+* **deps:** update elixir patch updates ([e100b42](https://github.com/WTTJ/chargebeex/commit/e100b427c186a27040d436d9a5fe59756b067e50))
+* **deps:** update elixir patch updates ([01611c3](https://github.com/WTTJ/chargebeex/commit/01611c319652e4ad11bd8760ffba4a89af9645a8))
+
 ## [0.9.1](https://github.com/WTTJ/chargebeex/compare/v0.9.0...0.9.1) (2026-08-17)
 
 
