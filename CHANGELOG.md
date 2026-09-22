@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.10.0](https://github.com/WTTJ/chargebeex/compare/0.9.2...0.10.0) (2026-09-22)
+
+
+### Features
+
+* add `delete/1` to `Subscription` ([319a9ef](https://github.com/WTTJ/chargebeex/commit/319a9ef2ad444ad881e83808a4e8a4b17f0e935c))
+
+
+### Chores
+
+* **deps:** lock file maintenance [mix] (mix.exs) ([bac7f30](https://github.com/WTTJ/chargebeex/commit/bac7f301fd5d19a4ad5ed057431b03dc4b512f22))
+* **deps:** lock file maintenance [mix] (mix.exs) ([9687a09](https://github.com/WTTJ/chargebeex/commit/9687a09ae1c9bebc48ee2e4bbcabdec6f3fc80c9))
+* **deps:** update commitizen/commitizen docker tag to v4.18.1 ([5173a54](https://github.com/WTTJ/chargebeex/commit/5173a542e23812f2769aa846854c5cd280109eae))
+* **deps:** update commitizen/commitizen docker tag to v4.18.1 ([863ec9f](https://github.com/WTTJ/chargebeex/commit/863ec9f1d707c4044089969713ffa9b1a432a185))
+
 ## [0.9.2](https://github.com/WTTJ/chargebeex/compare/0.9.1...0.9.2) (2026-09-15)
 
 
