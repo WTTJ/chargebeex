@@ -16,7 +16,7 @@ defmodule Chargebeex.MixProject do
       },
       source_url: @source_url,
       homepage_url: @source_url,
-      version: "0.10.0",
+      version: "0.10.1",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,

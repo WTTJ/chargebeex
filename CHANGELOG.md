@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1](https://github.com/WTTJ/chargebeex/compare/0.10.0...0.10.1) (2026-10-01)
+
+
+### Chores
+
+* **deps:** lock file maintenance [mix] (mix.exs) ([c46daa2](https://github.com/WTTJ/chargebeex/commit/c46daa2a8a36afa2b7dbbc3c4c2b552bf3d0b04d))
+* **deps:** update commitizen/commitizen docker tag to v4.19.0 ([0c804aa](https://github.com/WTTJ/chargebeex/commit/0c804aa77d9b271d4417145164476f9400b88b51))
+
 ## [0.10.0](https://github.com/WTTJ/chargebeex/compare/0.9.2...0.10.0) (2026-09-22)
 
 
