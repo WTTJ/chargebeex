@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.3](https://github.com/WTTJ/chargebeex/compare/0.10.2...0.10.3) (2026-10-29)
+
+
+### Chores
+
+* **deps:** lock file maintenance [mix] (mix.exs) ([59d5a9c](https://github.com/WTTJ/chargebeex/commit/59d5a9cbedf912611c34c313b3fa0abcb423681d))
+
 ## [0.10.2](https://github.com/WTTJ/chargebeex/compare/0.10.1...0.10.2) (2026-10-22)
 
 
