@@ -109,4 +109,17 @@ defmodule Chargebeex.Fixtures.Invoice do
     }
     """
   end
+
+  def pdf_download() do
+    """
+    {
+      "download": {
+        "download_url": "https://chargebee-test.s3.amazonaws.com/invoices/__demo_inv__1.pdf?X-Amz-Expires=3600",
+        "valid_till": 1517505643,
+        "mime_type": "application/pdf",
+        "object": "download"
+      }
+    }
+    """
+  end
 end

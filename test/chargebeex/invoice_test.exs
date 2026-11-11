@@ -4,6 +4,7 @@ defmodule Chargebeex.InvoiceTest do
   import Hammox
 
   alias Chargebeex.Fixtures.Common
+  alias Chargebeex.Fixtures.Invoice, as: InvoiceFixture
   alias Chargebeex.Invoice
 
   setup :verify_on_exit!
@@ -99,6 +100,82 @@ defmodule Chargebeex.InvoiceTest do
                    }
                  ]
                })
+    end
+  end
+
+  describe "pdf" do
+    @pdf_url "https://test-namespace.chargebee.com/api/v2/invoices/inv_x/pdf"
+    @post_headers [
+      {"Authorization", "Basic dGVzdF9jaGFyZ2VlYmVlX2FwaV9rZXk6"},
+      {"Content-Type", "application/x-www-form-urlencoded"}
+    ]
+
+    test "with bad authentication should fail" do
+      unauthorized = Common.unauthorized()
+
+      expect(Chargebeex.HTTPClientMock, :post, fn url, data, headers ->
+        assert url == @pdf_url
+        assert headers == @post_headers
+        assert data == ""
+
+        {:ok, 401, [], Jason.encode!(unauthorized)}
+      end)
+
+      assert {:error, 401, [], ^unauthorized} = Invoice.pdf("inv_x")
+    end
+
+    test "with unknown invoice should fail" do
+      not_found = Common.not_found()
+
+      expect(Chargebeex.HTTPClientMock, :post, fn url, _data, _headers ->
+        assert url == @pdf_url
+
+        {:ok, 404, [], Jason.encode!(not_found)}
+      end)
+
+      assert {:error, 404, [], ^not_found} = Invoice.pdf("inv_x")
+    end
+
+    test "with disposition_type should return the download map" do
+      expect(Chargebeex.HTTPClientMock, :post, fn url, data, headers ->
+        assert url == @pdf_url
+        assert headers == @post_headers
+        assert data == "disposition_type=inline"
+
+        {:ok, 200, [], InvoiceFixture.pdf_download()}
+      end)
+
+      assert {:ok, download} = Invoice.pdf("inv_x", %{disposition_type: "inline"})
+
+      assert %{
+               "download_url" => url,
+               "valid_till" => valid_till,
+               "mime_type" => "application/pdf",
+               "object" => "download"
+             } = download
+
+      assert is_binary(url)
+      assert is_integer(valid_till)
+      refute is_struct(download)
+    end
+
+    test "without params should send an empty body" do
+      expect(Chargebeex.HTTPClientMock, :post, fn url, data, _headers ->
+        assert url == @pdf_url
+        assert data == ""
+
+        {:ok, 200, [], InvoiceFixture.pdf_download()}
+      end)
+
+      assert {:ok, %{"download_url" => _}} = Invoice.pdf("inv_x")
+    end
+
+    test "with a success response missing the download object should fail" do
+      expect(Chargebeex.HTTPClientMock, :post, fn _url, _data, _headers ->
+        {:ok, 200, [], Jason.encode!(%{invoice: %{id: "inv_x"}})}
+      end)
+
+      assert {:error, :invalid_response} = Invoice.pdf("inv_x")
     end
   end
 end
