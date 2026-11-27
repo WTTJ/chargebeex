@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.10.4](https://github.com/WTTJ/chargebeex/compare/0.10.3...0.10.4) (2026-11-27)
+
+
+### Chores
+
+* **deps:** lock file maintenance [mix] (mix.exs) ([cef342f](https://github.com/WTTJ/chargebeex/commit/cef342f27eccab754336d869f968bd6462d9a8c9))
+* **deps:** update [mix] ex_doc (0.40.4 → 0.40.5) ([4bbf187](https://github.com/WTTJ/chargebeex/commit/4bbf1871c80bce91baffd3069c2134559f4fa06f))
+* **deps:** update [mix] plug (1.20.3 → 1.20.4) [security] ([a9724a5](https://github.com/WTTJ/chargebeex/commit/a9724a574ecbb9719f624db7e57e12a0a8a19ae5))
+* **deps:** update commitizen/commitizen docker tag to v4.19.4 ([076762f](https://github.com/WTTJ/chargebeex/commit/076762fadf216de54c6f7e595f9cb9573c794fd3))
+* **deps:** update elixir patch updates ([9578265](https://github.com/WTTJ/chargebeex/commit/9578265f8ddeea4a10e8b5616dd1ef35b6d5a982))
+
 ## [0.10.3](https://github.com/WTTJ/chargebeex/compare/0.10.2...0.10.3) (2026-11-05)
 
 
